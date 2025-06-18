@@ -177,7 +177,7 @@ export default function CaseStudiesPage() {
                       <div className="w-32 h-64 bg-black rounded-3xl p-1 shadow-xl">
                         <div className="w-full h-full bg-white rounded-3xl overflow-hidden relative">
                           {/* iPhone X notch */}
-                          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-16 h-6 bg-black rounded-b-2xl z-10"></div>
+                          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-3 bg-black rounded-b-xl z-10"></div>
                           <Image
                             src="/images/diva-fitness-mobile-1.png"
                             alt="Diva Fitness Mobile View 1"
@@ -194,7 +194,7 @@ export default function CaseStudiesPage() {
                       <div className="w-32 h-64 bg-black rounded-3xl p-1 shadow-xl">
                         <div className="w-full h-full bg-white rounded-3xl overflow-hidden relative">
                           {/* iPhone X notch */}
-                          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-16 h-6 bg-black rounded-b-2xl z-10"></div>
+                          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-3 bg-black rounded-b-xl z-10"></div>
                           <Image
                             src="/images/diva-fitness-mobile-2.png"
                             alt="Diva Fitness Mobile View 2"
