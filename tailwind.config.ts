@@ -63,7 +63,7 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        accent: "hsl(var(--accent))",
+        accent: "#33D9E0", // Lighter version of Electric Teal (#00C2CB)
         "accent-foreground": "hsl(var(--accent-foreground))",
       },
       borderRadius: {
