@@ -187,7 +187,7 @@ export default function HomePage() {
               <CardHeader>
                 <div className="bg-accent rounded-lg p-8 mb-4 flex items-center justify-center h-64">
                   <Image
-                    src="/placeholder.svg?height=240&width=400&text=Chester+Referees+Website"
+                    src="/placeholder.svg?height=240&width=400&text=Chester+Referees+Association+Website+Mockup"
                     alt="Chester Referees Association Website Mockup"
                     width={400}
                     height={240}
@@ -216,7 +216,7 @@ export default function HomePage() {
               <CardHeader>
                 <div className="bg-accent rounded-lg p-8 mb-4 flex items-center justify-center h-64">
                   <Image
-                    src="/placeholder.svg?height=240&width=400&text=Diva+Fitness+Website"
+                    src="/placeholder.svg?height=240&width=400&text=Diva+Fitness+Website+Mockup"
                     alt="Diva Fitness Website Mockup"
                     width={400}
                     height={240}
