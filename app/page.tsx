@@ -41,12 +41,7 @@ export default function HomePage() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="text-lg px-8 border-white text-white hover:bg-white hover:text-primary dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-primary"
-                  asChild
-                >
+                <Button size="lg" className="text-lg px-8 bg-secondary hover:bg-secondary/90 text-primary" asChild>
                   <Link href="/about">Learn More</Link>
                 </Button>
               </div>
@@ -193,7 +188,7 @@ export default function HomePage() {
                 <Target className="h-8 w-8 text-white" />
               </div>
               <h3 className="font-semibold text-text-light dark:text-text-dark">Systems Thinking</h3>
-              <p className="text-sm text-text-light/70 dark:text-text-dark/70">Long-term scalable solutions</p>
+              <p className="text-sm text-text-light/70 dark:text-text-light/70">Long-term scalable solutions</p>
             </div>
             <div className="text-center space-y-4">
               <div className="w-16 h-16 bg-gradient-to-br from-secondary to-secondary/70 rounded-full flex items-center justify-center mx-auto">
