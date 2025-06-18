@@ -240,7 +240,7 @@ export default function HomePage() {
           </div>
 
           <div className="text-center mt-12">
-            <Button size="lg" className="text-lg px-8 bg-secondary hover:bg-secondary/90 text-primary" asChild>
+            <Button size="lg" className="text-lg px-8 bg-primary hover:bg-primary/90 text-white" asChild>
               <Link href="/case-studies">See All Our Work</Link>
             </Button>
           </div>
