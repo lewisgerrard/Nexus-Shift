@@ -11,7 +11,7 @@ interface CTAProps {
 
 export function CTA({ href, children, variant = "outline", size = "sm" }: CTAProps) {
   return (
-    <Button variant={variant} size={size} asChild>
+    <Button variant={variant} size={size} asChild className="bg-secondary text-primary hover:bg-secondary/90">
       <Link href={href}>{children}</Link>
     </Button>
   )
