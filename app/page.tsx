@@ -229,21 +229,13 @@ export default function HomePage() {
             <Card className="border-0 shadow-lg dark:bg-surface-dark">
               <CardHeader>
                 <div className="bg-gradient-to-br from-primary/10 to-secondary/20 rounded-lg p-8 mb-4 flex items-center justify-center h-64 dark:from-primary/20 dark:to-secondary/30">
-                  {/* Laptop mockup */}
-                  <div className="relative">
-                    <div className="w-80 h-48 bg-gray-800 rounded-lg p-2 shadow-xl">
-                      <div className="w-full h-full bg-white rounded overflow-hidden">
-                        <Image
-                          src="/images/chester-referees-website.png"
-                          alt="Chester Referees Association Website"
-                          width={320}
-                          height={192}
-                          className="w-full h-full object-cover object-top"
-                        />
-                      </div>
-                    </div>
-                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-2 bg-gray-600 rounded-full"></div>
-                  </div>
+                  <Image
+                    src="/images/chester-referees-mockup.png"
+                    alt="Chester Referees Association Website Mockup"
+                    width={400}
+                    height={240}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <Badge variant="outline" className="w-fit mb-2">
                   Digital Transformation
