@@ -44,7 +44,7 @@ export function ContactForm() {
   return (
     <section
       id="contact"
-      className="py-12 md:py-20 bg-gradient-to-r from-primary/10 via-accent/5 to-secondary/10 dark:from-primary/20 dark:via-accent/10 dark:to-secondary/20"
+      className="py-12 md:py-20 bg-gradient-to-r from-primary/10 via-secondary/5 to-primary/5 dark:from-primary/20 dark:via-secondary/10 dark:to-primary/10"
     >
       <div className="container px-4 md:px-6">
         {/* Hero Section */}

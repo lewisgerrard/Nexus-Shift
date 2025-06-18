@@ -50,7 +50,7 @@ export function AboutBlock({ onStartConversation }: AboutBlockProps) {
           </div>
 
           <div className="relative">
-            <div className="bg-gradient-to-br from-primary/10 via-secondary/20 to-accent/10 rounded-2xl p-12 shadow-xl dark:from-primary/20 dark:via-secondary/30 dark:to-accent/20">
+            <div className="bg-gradient-to-br from-primary/10 via-secondary/20 to-primary/5 rounded-2xl p-12 shadow-xl dark:from-primary/20 dark:via-secondary/30 dark:to-primary/10">
               <div className="grid grid-cols-2 gap-8">
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
@@ -138,7 +138,7 @@ export function AboutBlock({ onStartConversation }: AboutBlockProps) {
             </div>
           </div>
 
-          <div className="text-center bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 p-8 rounded-2xl border-l-4 border-secondary dark:from-primary/20 dark:via-secondary/20 dark:to-accent/20">
+          <div className="text-center bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/5 p-8 rounded-2xl border-l-4 border-secondary dark:from-primary/20 dark:via-secondary/20 dark:to-primary/10">
             <p className="text-xl font-semibold text-text-light italic dark:text-text-dark">
               We're a consultancy that sits at the intersection of strategic insight and hands-on technical build.
             </p>
