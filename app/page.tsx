@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { CTA } from "@/components/ui/cta"
 import { Building2, Target, Award, CheckCircle, ArrowRight, Zap, Globe, Code } from "lucide-react"
 import Link from "next/link"
 import { HeaderNav } from "@/components/layout/header-nav"
@@ -206,9 +207,7 @@ export default function HomePage() {
                   <li>• Admin dashboard for user management</li>
                   <li>• Secure booking tools for officials</li>
                 </ul>
-                <Button variant="outline" size="sm" asChild>
-                  <Link href="/case-studies#chester">View Case Study</Link>
-                </Button>
+                <CTA href="/case-studies#chester">View Case Study</CTA>
               </CardContent>
             </Card>
 
@@ -235,9 +234,7 @@ export default function HomePage() {
                   <li>• Session descriptions and pricing</li>
                   <li>• Member progress tracking platform</li>
                 </ul>
-                <Button variant="outline" size="sm" asChild>
-                  <Link href="/case-studies#diva">View Case Study</Link>
-                </Button>
+                <CTA href="/case-studies#diva">View Case Study</CTA>
               </CardContent>
             </Card>
           </div>
