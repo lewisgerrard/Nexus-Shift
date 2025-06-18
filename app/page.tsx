@@ -34,7 +34,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Zap className="h-6 w-6 text-secondary" />
                 </div>
-                <CardTitle className="mb-2 text-white">Digital Transformation</CardTitle>
+                <CardTitle className="mb-4 text-white">Digital Transformation</CardTitle>
                 <CardDescription className="flex-grow text-white/70">
                   Streamline your business operations through strategic digital integration. We analyze your processes,
                   identify inefficiencies, and implement tailored solutions that reduce costs and drive sustainable
@@ -67,7 +67,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Globe className="h-6 w-6 text-secondary" />
                 </div>
-                <CardTitle className="mb-2 text-white">Website Production</CardTitle>
+                <CardTitle className="mb-4 text-white">Website Production</CardTitle>
                 <CardDescription className="flex-grow text-white/70">
                   Create powerful digital experiences that convert visitors into customers. Our websites combine
                   stunning design with technical excellence, featuring fast performance and conversion-focused user
@@ -100,7 +100,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Code className="h-6 w-6 text-secondary" />
                 </div>
-                <CardTitle className="mb-2 text-white">Web-Based Applications</CardTitle>
+                <CardTitle className="mb-4 text-white">Web-Based Applications</CardTitle>
                 <CardDescription className="flex-grow text-white/70">
                   Develop custom software solutions that align with your unique business requirements. We build scalable
                   applications that automate processes, improve efficiency, and grow with your business.
