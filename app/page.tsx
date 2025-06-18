@@ -196,9 +196,7 @@ export default function HomePage() {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <Badge variant="outline" className="w-fit mb-2 bg-secondary text-primary">
-                  Digital Transformation
-                </Badge>
+                <Badge className="w-fit mb-2 bg-secondary text-primary border-0">Digital Transformation</Badge>
                 <CardTitle className="text-white dark:text-white">Chester Referees Association</CardTitle>
                 <CardDescription className="text-white/70 dark:text-white/70">
                   Modernised digital presence with integrated membership platform
