@@ -113,27 +113,16 @@ export default function CaseStudiesPage() {
             </div>
 
             <div className="relative">
-              <div className="bg-gradient-to-br from-primary/10 to-secondary/20 rounded-2xl p-12 shadow-xl dark:from-primary/20 dark:to-secondary/30">
-                <div className="grid grid-cols-2 gap-8 h-96">
-                  <div className="space-y-6">
-                    <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center">
-                      <Users className="h-10 w-10 text-primary" />
-                    </div>
-                    <div className="space-y-3">
-                      <div className="h-3 bg-primary/30 rounded w-3/4"></div>
-                      <div className="h-3 bg-secondary/30 rounded w-1/2"></div>
-                      <div className="h-3 bg-accent/30 rounded w-2/3"></div>
-                    </div>
-                    <div className="flex space-x-2">
-                      <div className="w-8 h-8 bg-primary/40 rounded"></div>
-                      <div className="w-8 h-8 bg-secondary/40 rounded"></div>
-                      <div className="w-8 h-8 bg-accent/40 rounded"></div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <div className="w-32 h-32 bg-gradient-to-br from-secondary to-primary rounded-lg flex items-center justify-center shadow-lg">
-                      <Calendar className="h-16 w-16 text-white" />
-                    </div>
+              <div className="bg-gradient-to-br from-primary/10 to-secondary/20 rounded-2xl p-8 lg:p-12 shadow-xl dark:from-primary/20 dark:to-secondary/30">
+                <div className="flex items-center justify-center h-96">
+                  <div className="relative">
+                    <Image
+                      src="/images/chester-referees-mockup.png"
+                      alt="Chester Referees Association Website Mockup"
+                      width={600}
+                      height={400}
+                      className="w-full max-w-2xl h-auto object-contain drop-shadow-2xl"
+                    />
                   </div>
                 </div>
               </div>
