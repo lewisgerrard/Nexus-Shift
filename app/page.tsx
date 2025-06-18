@@ -13,7 +13,7 @@ export default function HomePage() {
       <HeaderNav />
 
       {/* Hero Section */}
-      <section className="py-12 md:py-20 bg-primary dark:bg-primary">
+      <section className="py-12 md:py-20 bg-gradient-to-r from-primary via-primary/95 to-primary/90 dark:from-primary dark:via-primary/95 dark:to-primary/90">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="space-y-6">
