@@ -196,7 +196,7 @@ export default function HomePage() {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <Badge variant="outline" className="w-fit mb-2">
+                <Badge variant="outline" className="w-fit mb-2 bg-secondary text-primary">
                   Digital Transformation
                 </Badge>
                 <CardTitle className="text-white dark:text-white">Chester Referees Association</CardTitle>
