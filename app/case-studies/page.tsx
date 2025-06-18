@@ -148,6 +148,7 @@ export default function CaseStudiesPage() {
                       width={600}
                       height={400}
                       className="w-full max-w-4xl h-auto object-contain drop-shadow-2xl"
+                      style={{ mixBlendMode: "multiply" }}
                     />
                   </div>
                 </div>
