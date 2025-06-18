@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Building2, Target, Award, CheckCircle, ArrowRight, Zap, Globe, Code, TrendingUp } from "lucide-react"
+import { Building2, Target, Award, CheckCircle, ArrowRight, Zap, Globe, Code } from "lucide-react"
 import Link from "next/link"
 import { HeaderNav } from "@/components/layout/header-nav"
 import { Footer } from "@/components/layout/footer"
@@ -54,34 +54,7 @@ export default function HomePage() {
 
             <div className="relative">
               <div className="relative">
-                <div className="relative bg-gradient-to-br from-secondary/20 via-accent/30 to-primary/20 rounded-2xl p-12 shadow-2xl dark:from-secondary/20 dark:via-accent/30 dark:to-primary/20">
-                  <div className="grid grid-cols-3 gap-8 opacity-20">
-                    <div className="space-y-4">
-                      <div className="w-16 h-16 bg-white/30 rounded-lg flex items-center justify-center">
-                        <Code className="h-8 w-8 text-white" />
-                      </div>
-                      <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                        <Zap className="h-6 w-6 text-white" />
-                      </div>
-                    </div>
-                    <div className="space-y-4 pt-8">
-                      <div className="w-20 h-20 bg-white/40 rounded-full flex items-center justify-center">
-                        <Globe className="h-10 w-10 text-white" />
-                      </div>
-                      <div className="w-14 h-14 bg-white/25 rounded-lg flex items-center justify-center">
-                        <Building2 className="h-7 w-7 text-white" />
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                        <Target className="h-6 w-6 text-white" />
-                      </div>
-                      <div className="w-18 h-18 bg-white/35 rounded-lg flex items-center justify-center">
-                        <TrendingUp className="h-9 w-9 text-white" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <div className="relative"></div>
               </div>
             </div>
           </div>
