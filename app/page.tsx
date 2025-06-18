@@ -260,23 +260,13 @@ export default function HomePage() {
             <Card className="border-0 shadow-lg dark:bg-surface-dark">
               <CardHeader>
                 <div className="bg-gradient-to-br from-secondary/10 to-primary/20 rounded-lg p-8 mb-4 flex items-center justify-center h-64 dark:from-secondary/20 dark:to-primary/30">
-                  {/* Desktop mockup */}
-                  <div className="relative">
-                    <div className="w-72 h-44 bg-gray-900 rounded-t-lg p-3 shadow-xl">
-                      <div className="w-full h-full bg-white rounded overflow-hidden">
-                        <Image
-                          src="/images/diva-fitness-website.jpg"
-                          alt="Diva Fitness Website"
-                          width={288}
-                          height={176}
-                          className="w-full h-full object-cover object-top"
-                        />
-                      </div>
-                    </div>
-                    <div className="w-80 h-4 bg-gray-700 rounded-b-lg -mt-1 relative">
-                      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gray-500 rounded-full"></div>
-                    </div>
-                  </div>
+                  <Image
+                    src="/images/diva-fitness-mockup.png"
+                    alt="Diva Fitness Website Mockup"
+                    width={400}
+                    height={240}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <Badge variant="outline" className="w-fit mb-2">
                   Website + Application
