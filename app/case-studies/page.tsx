@@ -114,14 +114,14 @@ export default function CaseStudiesPage() {
 
             <div className="relative">
               <div className="bg-gradient-to-br from-primary/10 to-secondary/20 rounded-2xl p-8 lg:p-12 shadow-xl dark:from-primary/20 dark:to-secondary/30">
-                <div className="flex items-center justify-center h-96">
+                <div className="flex items-center justify-center h-[32rem]">
                   <div className="relative">
                     <Image
                       src="/images/chester-referees-mockup.png"
                       alt="Chester Referees Association Website Mockup"
                       width={600}
                       height={400}
-                      className="w-full max-w-2xl h-auto object-contain drop-shadow-2xl"
+                      className="w-full max-w-4xl h-auto object-contain drop-shadow-2xl"
                     />
                   </div>
                 </div>
@@ -140,14 +140,14 @@ export default function CaseStudiesPage() {
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-16 items-center">
             <div className="relative order-2 lg:order-1">
               <div className="bg-gradient-to-br from-secondary/5 via-accent/10 to-primary/5 rounded-2xl p-8 lg:p-12 shadow-xl dark:from-secondary/10 dark:via-accent/15 dark:to-primary/10">
-                <div className="flex items-center justify-center h-96">
+                <div className="flex items-center justify-center h-[32rem]">
                   <div className="relative">
                     <Image
                       src="/images/diva-fitness-mockup.png"
                       alt="Diva Fitness Website Mockup"
                       width={600}
                       height={400}
-                      className="w-full max-w-2xl h-auto object-contain drop-shadow-2xl"
+                      className="w-full max-w-4xl h-auto object-contain drop-shadow-2xl"
                     />
                   </div>
                 </div>
