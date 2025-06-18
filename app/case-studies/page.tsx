@@ -1,10 +1,11 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { CheckCircle, Users, Calendar, Shield, Zap } from "lucide-react"
+import { CheckCircle, Users, Calendar, Shield } from "lucide-react"
 import Link from "next/link"
 import { HeaderNav } from "@/components/layout/header-nav"
 import { Footer } from "@/components/layout/footer"
+import Image from "next/image"
 
 export default function CaseStudiesPage() {
   return (
@@ -149,27 +150,22 @@ export default function CaseStudiesPage() {
         <div className="container px-4 md:px-6">
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-16 items-center">
             <div className="relative order-2 lg:order-1">
-              <div className="bg-gradient-to-br from-secondary/10 to-accent/20 rounded-2xl p-12 shadow-xl dark:from-secondary/20 dark:to-accent/30">
-                <div className="grid grid-cols-2 gap-8 h-96">
-                  <div className="flex items-center justify-center">
-                    <div className="w-32 h-32 bg-gradient-to-br from-accent to-secondary rounded-full flex items-center justify-center shadow-lg">
-                      <Zap className="h-16 w-16 text-white" />
+              <div className="bg-gradient-to-br from-secondary/10 to-accent/20 rounded-2xl p-8 shadow-xl dark:from-secondary/20 dark:to-accent/30 flex items-center justify-center">
+                {/* Desktop mockup */}
+                <div className="relative">
+                  <div className="w-80 h-48 bg-gray-900 rounded-t-lg p-3 shadow-xl">
+                    <div className="w-full h-full bg-white rounded overflow-hidden">
+                      <Image
+                        src="/images/diva-fitness-website.jpg"
+                        alt="Diva Fitness Website"
+                        width={320}
+                        height={192}
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
                   </div>
-                  <div className="space-y-6">
-                    <div className="w-20 h-20 bg-secondary/20 rounded-lg flex items-center justify-center">
-                      <Shield className="h-10 w-10 text-secondary" />
-                    </div>
-                    <div className="space-y-3">
-                      <div className="h-3 bg-secondary/30 rounded w-full"></div>
-                      <div className="h-3 bg-accent/30 rounded w-3/4"></div>
-                      <div className="h-3 bg-primary/30 rounded w-1/2"></div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2">
-                      <div className="h-12 bg-secondary/20 rounded"></div>
-                      <div className="h-12 bg-accent/20 rounded"></div>
-                      <div className="h-12 bg-primary/20 rounded"></div>
-                    </div>
+                  <div className="w-86 h-4 bg-gray-700 rounded-b-lg -mt-1 relative">
+                    <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gray-500 rounded-full"></div>
                   </div>
                 </div>
               </div>
