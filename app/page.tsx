@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Building2, Target, Award, CheckCircle, ArrowRight, Zap, Globe, Code, Users, TrendingUp } from "lucide-react"
+import { Building2, Target, Award, CheckCircle, ArrowRight, Zap, Globe, Code, TrendingUp } from "lucide-react"
 import Link from "next/link"
 import { HeaderNav } from "@/components/layout/header-nav"
 import { Footer } from "@/components/layout/footer"
+import Image from "next/image"
 
 export default function HomePage() {
   return (
@@ -254,18 +255,26 @@ export default function HomePage() {
           <div className="grid gap-6 md:grid-cols-2">
             <Card className="border-0 shadow-lg dark:bg-surface-dark">
               <CardHeader>
-                <div className="bg-gradient-to-br from-primary/10 to-secondary/20 rounded-lg p-8 mb-4 flex items-center justify-center h-48 dark:from-primary/20 dark:to-secondary/30">
-                  <div className="text-center space-y-4">
-                    <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
-                      <Users className="h-8 w-8 text-primary" />
+                <div className="bg-gradient-to-br from-primary/10 to-secondary/20 rounded-lg p-8 mb-4 flex items-center justify-center h-64 dark:from-primary/20 dark:to-secondary/30">
+                  {/* Laptop mockup */}
+                  <div className="relative">
+                    <div className="w-80 h-48 bg-gray-800 rounded-lg p-2 shadow-xl">
+                      <div className="w-full h-full bg-white rounded overflow-hidden">
+                        <Image
+                          src="/images/chester-referees-website.png"
+                          alt="Chester Referees Association Website"
+                          width={320}
+                          height={192}
+                          className="w-full h-full object-cover object-top"
+                        />
+                      </div>
                     </div>
-                    <div className="flex space-x-2 justify-center">
-                      <div className="w-3 h-3 bg-secondary rounded-full"></div>
-                      <div className="w-3 h-3 bg-accent rounded-full"></div>
-                      <div className="w-3 h-3 bg-primary rounded-full"></div>
-                    </div>
+                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-2 bg-gray-600 rounded-full"></div>
                   </div>
                 </div>
+                <Badge variant="outline" className="w-fit mb-2">
+                  Digital Transformation
+                </Badge>
                 <CardTitle className="dark:text-text-dark">Chester Referees Association</CardTitle>
                 <CardDescription className="dark:text-text-dark/70">
                   Modernised digital presence with integrated membership platform
@@ -285,18 +294,28 @@ export default function HomePage() {
 
             <Card className="border-0 shadow-lg dark:bg-surface-dark">
               <CardHeader>
-                <div className="bg-gradient-to-br from-secondary/10 to-accent/20 rounded-lg p-8 mb-4 flex items-center justify-center h-48 dark:from-secondary/20 dark:to-accent/30">
-                  <div className="text-center space-y-4">
-                    <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto">
-                      <Zap className="h-8 w-8 text-secondary" />
+                <div className="bg-gradient-to-br from-secondary/10 to-accent/20 rounded-lg p-8 mb-4 flex items-center justify-center h-64 dark:from-secondary/20 dark:to-accent/30">
+                  {/* Desktop mockup */}
+                  <div className="relative">
+                    <div className="w-72 h-44 bg-gray-900 rounded-t-lg p-3 shadow-xl">
+                      <div className="w-full h-full bg-white rounded overflow-hidden">
+                        <Image
+                          src="/images/diva-fitness-website.jpg"
+                          alt="Diva Fitness Website"
+                          width={288}
+                          height={176}
+                          className="w-full h-full object-cover object-top"
+                        />
+                      </div>
                     </div>
-                    <div className="flex space-x-2 justify-center">
-                      <div className="w-3 h-3 bg-accent rounded-full"></div>
-                      <div className="w-3 h-3 bg-primary rounded-full"></div>
-                      <div className="w-3 h-3 bg-secondary rounded-full"></div>
+                    <div className="w-80 h-4 bg-gray-700 rounded-b-lg -mt-1 relative">
+                      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gray-500 rounded-full"></div>
                     </div>
                   </div>
                 </div>
+                <Badge variant="outline" className="w-fit mb-2">
+                  Website + Application
+                </Badge>
                 <CardTitle className="dark:text-text-dark">Diva Fitness</CardTitle>
                 <CardDescription className="dark:text-text-dark/70">
                   Bold, on-brand site with integrated booking and member tracking
