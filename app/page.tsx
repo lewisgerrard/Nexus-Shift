@@ -36,9 +36,9 @@ export default function HomePage() {
                 </div>
                 <CardTitle className="mb-2 text-white">Digital Transformation</CardTitle>
                 <CardDescription className="flex-grow text-white/70">
-                  Transform your business operations through strategic digital integration. We analyze your current
-                  processes, identify inefficiencies, and implement tailored solutions that streamline workflows, reduce
-                  costs, and position your business for sustainable growth in the digital age.
+                  Streamline your business operations through strategic digital integration. We analyze your processes,
+                  identify inefficiencies, and implement tailored solutions that reduce costs and drive sustainable
+                  growth.
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto flex flex-col">
@@ -70,8 +70,8 @@ export default function HomePage() {
                 <CardTitle className="mb-2 text-white">Website Production</CardTitle>
                 <CardDescription className="flex-grow text-white/70">
                   Create powerful digital experiences that convert visitors into customers. Our websites combine
-                  stunning design with technical excellence, featuring lightning-fast performance, mobile optimization,
-                  and conversion-focused user journeys that drive measurable business results.
+                  stunning design with technical excellence, featuring fast performance and conversion-focused user
+                  journeys.
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto flex flex-col">
@@ -102,9 +102,8 @@ export default function HomePage() {
                 </div>
                 <CardTitle className="mb-2 text-white">Web-Based Applications</CardTitle>
                 <CardDescription className="flex-grow text-white/70">
-                  Develop custom software solutions that perfectly align with your unique business requirements. From
-                  client portals to inventory management systems, we build scalable applications that automate
-                  processes, improve efficiency, and grow with your business needs.
+                  Develop custom software solutions that align with your unique business requirements. We build scalable
+                  applications that automate processes, improve efficiency, and grow with your business.
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto flex flex-col">
