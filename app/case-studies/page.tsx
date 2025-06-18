@@ -21,7 +21,7 @@ export default function CaseStudiesPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 gap-8 mb-12">
           {/* Chester Referees Association */}
           <Card className="border-0 shadow-lg dark:bg-surface-dark">
             <CardHeader>
