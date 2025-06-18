@@ -5,7 +5,6 @@ import { Building2, Target, Award, CheckCircle, ArrowRight, Zap, Globe, Code } f
 import Link from "next/link"
 import { HeaderNav } from "@/components/layout/header-nav"
 import { Footer } from "@/components/layout/footer"
-import Image from "next/image"
 import { HeroHome } from "@/components/sections/hero-home"
 
 export default function HomePage() {
@@ -186,13 +185,9 @@ export default function HomePage() {
             <Card className="border-0 shadow-lg bg-primary dark:bg-primary">
               <CardHeader>
                 <div className="bg-accent rounded-lg p-8 mb-4 flex items-center justify-center h-64">
-                  <Image
-                    src="/placeholder.svg?height=240&width=400&text=Chester+Referees+Association+Website+Mockup"
-                    alt="Chester Referees Association Website Mockup"
-                    width={400}
-                    height={240}
-                    className="w-full h-full object-contain"
-                  />
+                  <div className="w-full h-full bg-white/20 rounded flex items-center justify-center text-white font-medium">
+                    Chester Referees Website
+                  </div>
                 </div>
                 <Badge className="w-fit mb-2 bg-secondary text-primary border-0">Digital Transformation</Badge>
                 <CardTitle className="text-white dark:text-white">Chester Referees Association</CardTitle>
@@ -215,13 +210,9 @@ export default function HomePage() {
             <Card className="border-0 shadow-lg bg-primary dark:bg-primary">
               <CardHeader>
                 <div className="bg-accent rounded-lg p-8 mb-4 flex items-center justify-center h-64">
-                  <Image
-                    src="/placeholder.svg?height=240&width=400&text=Diva+Fitness+Website+Mockup"
-                    alt="Diva Fitness Website Mockup"
-                    width={400}
-                    height={240}
-                    className="w-full h-full object-contain"
-                  />
+                  <div className="w-full h-full bg-white/20 rounded flex items-center justify-center text-white font-medium">
+                    Diva Fitness Website
+                  </div>
                 </div>
                 <Badge variant="outline" className="w-fit mb-2">
                   Website + Application
