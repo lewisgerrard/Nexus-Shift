@@ -36,7 +36,9 @@ export default function HomePage() {
                 </div>
                 <CardTitle className="mb-2 text-white">Digital Transformation</CardTitle>
                 <CardDescription className="flex-grow text-white/70">
-                  Optimise your business processes with a strategy-first approach.
+                  Transform your business operations through strategic digital integration. We analyze your current
+                  processes, identify inefficiencies, and implement tailored solutions that streamline workflows, reduce
+                  costs, and position your business for sustainable growth in the digital age.
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto flex flex-col">
@@ -67,7 +69,9 @@ export default function HomePage() {
                 </div>
                 <CardTitle className="mb-2 text-white">Website Production</CardTitle>
                 <CardDescription className="flex-grow text-white/70">
-                  Craft high-impact, conversion-optimised websites.
+                  Create powerful digital experiences that convert visitors into customers. Our websites combine
+                  stunning design with technical excellence, featuring lightning-fast performance, mobile optimization,
+                  and conversion-focused user journeys that drive measurable business results.
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto flex flex-col">
@@ -98,7 +102,9 @@ export default function HomePage() {
                 </div>
                 <CardTitle className="mb-2 text-white">Web-Based Applications</CardTitle>
                 <CardDescription className="flex-grow text-white/70">
-                  Build custom tools that work the way your business does.
+                  Develop custom software solutions that perfectly align with your unique business requirements. From
+                  client portals to inventory management systems, we build scalable applications that automate
+                  processes, improve efficiency, and grow with your business needs.
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto flex flex-col">
