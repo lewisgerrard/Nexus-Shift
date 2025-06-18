@@ -29,18 +29,18 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-3">
-            <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-gradient-to-br from-white to-primary/5 flex flex-col h-full dark:bg-surface-dark dark:from-surface-dark dark:to-primary/10">
+            <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
               <CardHeader className="flex-grow-0 h-48">
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                   <Zap className="h-6 w-6 text-primary" />
                 </div>
-                <CardTitle className="mb-2 dark:text-text-dark">Digital Transformation Consultancy</CardTitle>
-                <CardDescription className="flex-grow dark:text-text-dark/70">
+                <CardTitle className="mb-2 text-white">Digital Transformation Consultancy</CardTitle>
+                <CardDescription className="flex-grow text-white/70">
                   Optimise your business processes with a strategy-first approach.
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto flex flex-col">
-                <ul className="space-y-2 text-sm text-text-light/70 mb-4 flex-grow dark:text-text-dark/70">
+                <ul className="space-y-2 text-sm text-white/70 mb-4 flex-grow">
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Operational audits and process mapping
@@ -60,18 +60,18 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-gradient-to-br from-white to-primary/5 flex flex-col h-full dark:bg-surface-dark dark:from-surface-dark dark:to-primary/10">
+            <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
               <CardHeader className="flex-grow-0 h-48">
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                   <Globe className="h-6 w-6 text-primary" />
                 </div>
-                <CardTitle className="mb-2 dark:text-text-dark">Website Production</CardTitle>
-                <CardDescription className="flex-grow dark:text-text-dark/70">
+                <CardTitle className="mb-2 text-white">Website Production</CardTitle>
+                <CardDescription className="flex-grow text-white/70">
                   Craft high-impact, conversion-optimised websites.
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto flex flex-col">
-                <ul className="space-y-2 text-sm text-text-light/70 mb-4 flex-grow dark:text-text-dark/70">
+                <ul className="space-y-2 text-sm text-white/70 mb-4 flex-grow">
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Fast, secure, and SEO-ready
@@ -91,18 +91,18 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-gradient-to-br from-white to-primary/5 flex flex-col h-full dark:bg-surface-dark dark:from-surface-dark dark:to-primary/10">
+            <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
               <CardHeader className="flex-grow-0 h-48">
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Code className="h-6 w-6 text-secondary" />
                 </div>
-                <CardTitle className="mb-2 dark:text-text-dark">Web-Based Applications</CardTitle>
-                <CardDescription className="flex-grow dark:text-text-dark/70">
+                <CardTitle className="mb-2 text-white">Web-Based Applications</CardTitle>
+                <CardDescription className="flex-grow text-white/70">
                   Build custom tools that work the way your business does.
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto flex flex-col">
-                <ul className="space-y-2 text-sm text-text-light/70 mb-4 flex-grow dark:text-text-dark/70">
+                <ul className="space-y-2 text-sm text-white/70 mb-4 flex-grow">
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Fully responsive interfaces
