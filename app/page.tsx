@@ -16,7 +16,7 @@ export default function HomePage() {
       <HeroHome />
 
       {/* Key Services Overview */}
-      <section className="py-12 md:py-20 bg-background-light dark:bg-background-dark">
+      <section className="py-12 md:py-20 bg-surface-light dark:bg-background-dark">
         <div className="container px-4 md:px-6">
           <div className="text-center space-y-4 mb-16">
             <h2 className="text-3xl font-bold tracking-tight text-text-light sm:text-4xl dark:text-text-dark">
