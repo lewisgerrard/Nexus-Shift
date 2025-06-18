@@ -151,58 +151,55 @@ export default function CaseStudiesPage() {
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-16 items-center">
             <div className="relative order-2 lg:order-1">
               <div className="bg-gradient-to-br from-secondary/10 to-accent/20 rounded-2xl p-8 shadow-xl dark:from-secondary/20 dark:to-accent/30">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-                  {/* Desktop mockup */}
-                  <div className="relative md:col-span-2">
-                    <div className="w-full max-w-md mx-auto bg-gray-900 rounded-t-lg p-3 shadow-xl">
-                      <div className="w-full h-48 bg-white rounded overflow-hidden">
+                <div className="relative flex items-center justify-center h-80">
+                  {/* Desktop mockup - positioned in the back */}
+                  <div className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10">
+                    <div className="w-64 h-40 bg-gray-900 rounded-t-lg p-2 shadow-2xl">
+                      <div className="w-full h-full bg-white rounded overflow-hidden">
                         <Image
                           src="/images/diva-fitness-website.jpg"
                           alt="Diva Fitness Website Desktop"
-                          width={320}
+                          width={256}
+                          height={160}
+                          className="w-full h-full object-cover object-top"
+                        />
+                      </div>
+                    </div>
+                    <div className="w-64 h-3 bg-gray-700 rounded-b-lg -mt-1 relative">
+                      <div className="absolute bottom-0.5 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-gray-500 rounded-full"></div>
+                    </div>
+                  </div>
+
+                  {/* iPhone X mockup 1 - positioned in the middle */}
+                  <div className="absolute left-32 top-1/2 transform -translate-y-1/2 z-20">
+                    <div className="w-24 h-48 bg-black rounded-3xl p-0.5 shadow-2xl">
+                      <div className="w-full h-full bg-white rounded-3xl overflow-hidden relative">
+                        {/* iPhone X notch */}
+                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-2 bg-black rounded-b-lg z-10"></div>
+                        <Image
+                          src="/images/diva-fitness-mobile-1.png"
+                          alt="Diva Fitness Mobile View 1"
+                          width={96}
                           height={192}
                           className="w-full h-full object-cover object-top"
                         />
                       </div>
                     </div>
-                    <div className="w-full max-w-md mx-auto h-4 bg-gray-700 rounded-b-lg -mt-1 relative">
-                      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gray-500 rounded-full"></div>
-                    </div>
                   </div>
 
-                  {/* Mobile mockups */}
-                  <div className="space-y-4">
-                    {/* iPhone X mockup 1 */}
-                    <div className="relative w-32 mx-auto">
-                      <div className="w-32 h-64 bg-black rounded-3xl p-1 shadow-xl">
-                        <div className="w-full h-full bg-white rounded-3xl overflow-hidden relative">
-                          {/* iPhone X notch */}
-                          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-3 bg-black rounded-b-xl z-10"></div>
-                          <Image
-                            src="/images/diva-fitness-mobile-1.png"
-                            alt="Diva Fitness Mobile View 1"
-                            width={128}
-                            height={256}
-                            className="w-full h-full object-cover object-top"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* iPhone X mockup 2 */}
-                    <div className="relative w-32 mx-auto">
-                      <div className="w-32 h-64 bg-black rounded-3xl p-1 shadow-xl">
-                        <div className="w-full h-full bg-white rounded-3xl overflow-hidden relative">
-                          {/* iPhone X notch */}
-                          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-3 bg-black rounded-b-xl z-10"></div>
-                          <Image
-                            src="/images/diva-fitness-mobile-2.png"
-                            alt="Diva Fitness Mobile View 2"
-                            width={128}
-                            height={256}
-                            className="w-full h-full object-cover object-top"
-                          />
-                        </div>
+                  {/* iPhone X mockup 2 - positioned in the front */}
+                  <div className="absolute left-48 top-1/2 transform -translate-y-1/2 z-30">
+                    <div className="w-24 h-48 bg-black rounded-3xl p-0.5 shadow-2xl">
+                      <div className="w-full h-full bg-white rounded-3xl overflow-hidden relative">
+                        {/* iPhone X notch */}
+                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-2 bg-black rounded-b-lg z-10"></div>
+                        <Image
+                          src="/images/diva-fitness-mobile-2.png"
+                          alt="Diva Fitness Mobile View 2"
+                          width={96}
+                          height={192}
+                          className="w-full h-full object-cover object-top"
+                        />
                       </div>
                     </div>
                   </div>
