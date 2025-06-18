@@ -80,11 +80,6 @@ export default function HomePage() {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-24 h-24 bg-white/90 rounded-full flex items-center justify-center shadow-xl">
-                      <ArrowRight className="h-12 w-12 text-primary" />
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
