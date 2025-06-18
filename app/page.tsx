@@ -134,9 +134,7 @@ export default function HomePage() {
       <section className="py-12 md:py-20 bg-primary">
         <div className="container px-4 md:px-6">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-text-light sm:text-4xl dark:text-text-dark">
-              The Nexus Shift Difference
-            </h2>
+            <h2 className="text-3xl font-bold tracking-tight text-secondary sm:text-4xl">The Nexus Shift Difference</h2>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -144,29 +142,29 @@ export default function HomePage() {
               <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto">
                 <Building2 className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="font-semibold text-text-light dark:text-text-dark">Engineer's Mindset</h3>
-              <p className="text-sm text-text-light/70 dark:text-text-dark/70">Grounded in efficiency and accuracy</p>
+              <h3 className="font-semibold text-secondary">Engineer's Mindset</h3>
+              <p className="text-sm text-secondary/70">Grounded in efficiency and accuracy</p>
             </div>
             <div className="text-center space-y-4">
               <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto">
                 <Target className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="font-semibold text-text-light dark:text-text-dark">Systems Thinking</h3>
-              <p className="text-sm text-text-light/70 dark:text-text-dark/70">Long-term scalable solutions</p>
+              <h3 className="font-semibold text-secondary">Systems Thinking</h3>
+              <p className="text-sm text-secondary/70">Long-term scalable solutions</p>
             </div>
             <div className="text-center space-y-4">
               <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto">
                 <Zap className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="font-semibold text-text-light dark:text-text-dark">Digital-First Delivery</h3>
-              <p className="text-sm text-text-light/70 dark:text-text-dark/70">Supporting sustainable growth</p>
+              <h3 className="font-semibold text-secondary">Digital-First Delivery</h3>
+              <p className="text-sm text-secondary/70">Supporting sustainable growth</p>
             </div>
             <div className="text-center space-y-4">
               <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto">
                 <Award className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="font-semibold text-text-light dark:text-text-dark">Affordable Packages</h3>
-              <p className="text-sm text-text-light/70 dark:text-text-dark/70">Tailored for SMEs</p>
+              <h3 className="font-semibold text-secondary">Affordable Packages</h3>
+              <p className="text-sm text-secondary/70">Tailored for SMEs</p>
             </div>
           </div>
         </div>
