@@ -328,7 +328,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 md:py-20 bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20 dark:from-primary/30 dark:via-accent/20 dark:to-secondary/30">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-primary/20 to-secondary/20 dark:from-primary/30 dark:to-secondary/30">
         <div className="container px-4 md:px-6">
           <div className="text-center space-y-6">
             <h2 className="text-3xl font-bold tracking-tight text-text-light sm:text-4xl dark:text-text-dark">
