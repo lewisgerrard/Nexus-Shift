@@ -30,7 +30,7 @@ export default function HomePage() {
 
           <div className="grid gap-6 md:grid-cols-3">
             <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
-              <CardHeader className="flex-grow-0 h-48">
+              <CardHeader className="flex-grow-0 h-56">
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Zap className="h-6 w-6 text-secondary" />
                 </div>
@@ -61,7 +61,7 @@ export default function HomePage() {
             </Card>
 
             <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
-              <CardHeader className="flex-grow-0 h-48">
+              <CardHeader className="flex-grow-0 h-56">
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Globe className="h-6 w-6 text-secondary" />
                 </div>
@@ -92,7 +92,7 @@ export default function HomePage() {
             </Card>
 
             <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
-              <CardHeader className="flex-grow-0 h-48">
+              <CardHeader className="flex-grow-0 h-56">
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Code className="h-6 w-6 text-secondary" />
                 </div>
@@ -147,7 +147,7 @@ export default function HomePage() {
                 <Target className="h-8 w-8 text-white" />
               </div>
               <h3 className="font-semibold text-text-light dark:text-text-dark">Systems Thinking</h3>
-              <p className="text-sm text-text-light/70 dark:text-text-light/70">Long-term scalable solutions</p>
+              <p className="text-sm text-text-light/70 dark:text-text-dark/70">Long-term scalable solutions</p>
             </div>
             <div className="text-center space-y-4">
               <div className="w-16 h-16 bg-gradient-to-br from-secondary to-secondary/70 rounded-full flex items-center justify-center mx-auto">
