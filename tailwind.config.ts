@@ -31,7 +31,7 @@ const config = {
         },
         background: {
           light: "#F5F8FB", // Cloud White
-          dark: "#0A0E17", // Jet Black Blue
+          dark: "#0B1D3A", // Updated to match your request
         },
         surface: {
           light: "#FFFFFF",

@@ -60,10 +60,10 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-secondary/20 shadow-lg hover:shadow-xl hover:border-secondary/40 transition-all bg-gradient-to-br from-white to-secondary/5 flex flex-col h-full dark:bg-surface-dark dark:from-surface-dark dark:to-secondary/10">
+            <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-gradient-to-br from-white to-primary/5 flex flex-col h-full dark:bg-surface-dark dark:from-surface-dark dark:to-primary/10">
               <CardHeader className="flex-grow-0 h-48">
-                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
-                  <Globe className="h-6 w-6 text-secondary" />
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                  <Globe className="h-6 w-6 text-primary" />
                 </div>
                 <CardTitle className="mb-2 dark:text-text-dark">Website Production</CardTitle>
                 <CardDescription className="flex-grow dark:text-text-dark/70">
@@ -91,10 +91,10 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-secondary/20 shadow-lg hover:shadow-xl hover:border-secondary/40 transition-all bg-gradient-to-br from-white to-secondary/5 flex flex-col h-full dark:bg-surface-dark dark:from-surface-dark dark:to-secondary/10">
+            <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-gradient-to-br from-white to-primary/5 flex flex-col h-full dark:bg-surface-dark dark:from-surface-dark dark:to-primary/10">
               <CardHeader className="flex-grow-0 h-48">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                  <Code className="h-6 w-6 text-primary" />
+                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
+                  <Code className="h-6 w-6 text-secondary" />
                 </div>
                 <CardTitle className="mb-2 dark:text-text-dark">Web-Based Applications</CardTitle>
                 <CardDescription className="flex-grow dark:text-text-dark/70">
