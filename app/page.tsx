@@ -223,9 +223,7 @@ export default function HomePage() {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <Badge variant="outline" className="w-fit mb-2">
-                  Website + Application
-                </Badge>
+                <Badge className="w-fit mb-2 bg-secondary text-primary border-0">Website + Application</Badge>
                 <CardTitle className="text-white dark:text-white">Diva Fitness</CardTitle>
                 <CardDescription className="text-white/70 dark:text-white/70">
                   Bold, on-brand site with integrated booking and member tracking
