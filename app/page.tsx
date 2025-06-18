@@ -34,7 +34,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Zap className="h-6 w-6 text-secondary" />
                 </div>
-                <CardTitle className="mb-2 text-white">Digital Transformation Consultancy</CardTitle>
+                <CardTitle className="mb-2 text-white">Digital Transformation</CardTitle>
                 <CardDescription className="flex-grow text-white/70">
                   Optimise your business processes with a strategy-first approach.
                 </CardDescription>
