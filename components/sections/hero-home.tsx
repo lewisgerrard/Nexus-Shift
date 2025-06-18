@@ -106,11 +106,9 @@ export function HeroHome() {
 
                     {/* Tech Labels */}
                     <div className="flex flex-wrap gap-2 justify-center">
-                      <span className="px-3 py-1 bg-secondary/30 text-white text-xs rounded-full">AI Systems</span>
-                      <span className="px-3 py-1 bg-secondary/30 text-white text-xs rounded-full">Data Analytics</span>
-                      <span className="px-3 py-1 bg-secondary/30 text-white text-xs rounded-full">
-                        Process Automation
-                      </span>
+                      <span className="px-3 py-1 bg-secondary/30 text-white text-xs rounded-full">Innovate</span>
+                      <span className="px-3 py-1 bg-secondary/30 text-white text-xs rounded-full">Digitise</span>
+                      <span className="px-3 py-1 bg-secondary/30 text-white text-xs rounded-full">Structure</span>
                     </div>
                   </div>
                 </div>
