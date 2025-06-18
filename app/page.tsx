@@ -173,7 +173,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Case Studies */}
-      <section className="py-12 md:py-20 bg-gradient-to-l from-primary/10 via-secondary/5 to-primary/5 dark:from-primary/20 dark:via-secondary/10 dark:to-primary/10">
+      <section className="py-12 md:py-20 bg-surface-light dark:bg-background-dark">
         <div className="container px-4 md:px-6">
           <div className="text-center space-y-4 mb-16">
             <h2 className="text-3xl font-bold tracking-tight text-text-light sm:text-4xl dark:text-text-dark">
