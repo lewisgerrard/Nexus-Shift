@@ -299,7 +299,7 @@ export default function HomePage() {
             <blockquote className="text-2xl font-medium text-white mb-6 dark:text-white">
               "Nexus Shift helped us rebuild from the ground up — visually, operationally, and strategically."
             </blockquote>
-            <cite className="text-white/80 dark:text-white/80">— Satisfied Client</cite>
+            <cite className="text-white/80 dark:text-white/80">— Emma Fisher</cite>
           </div>
         </div>
       </section>
