@@ -187,7 +187,7 @@ export default function HomePage() {
           <div className="grid gap-6 md:grid-cols-2">
             <Card className="border-0 shadow-lg bg-primary dark:bg-primary">
               <CardHeader>
-                <div className="bg-gradient-to-br from-primary/10 to-secondary/20 rounded-lg p-8 mb-4 flex items-center justify-center h-64 dark:from-primary/20 dark:to-secondary/30">
+                <div className="bg-accent rounded-lg p-8 mb-4 flex items-center justify-center h-64">
                   <Image
                     src="/images/chester-referees-mockup.png"
                     alt="Chester Referees Association Website Mockup"
@@ -218,7 +218,7 @@ export default function HomePage() {
 
             <Card className="border-0 shadow-lg bg-primary dark:bg-primary">
               <CardHeader>
-                <div className="bg-gradient-to-br from-secondary/10 to-primary/20 rounded-lg p-8 mb-4 flex items-center justify-center h-64 dark:from-secondary/20 dark:to-primary/30">
+                <div className="bg-accent rounded-lg p-8 mb-4 flex items-center justify-center h-64">
                   <Image
                     src="/images/diva-fitness-mockup.png"
                     alt="Diva Fitness Website Mockup"
