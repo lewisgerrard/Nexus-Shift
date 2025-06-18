@@ -30,29 +30,29 @@ export default function HomePage() {
 
           <div className="grid gap-6 md:grid-cols-3">
             <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
-              <CardHeader className="flex-grow-0 p-6 pb-4">
-                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-6">
+              <CardHeader className="flex-grow-0 h-56">
+                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Zap className="h-6 w-6 text-secondary" />
                 </div>
-                <CardTitle className="mb-4 text-white text-xl">Digital Transformation</CardTitle>
-                <CardDescription className="flex-grow text-white/70 leading-relaxed">
+                <CardTitle className="mb-4 text-white">Digital Transformation</CardTitle>
+                <CardDescription className="flex-grow text-white/70">
                   Streamline your business operations through strategic digital integration. We analyze your processes,
                   identify inefficiencies, and implement tailored solutions that reduce costs and drive sustainable
                   growth.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="mt-auto flex flex-col p-6 pt-2">
-                <ul className="space-y-3 text-sm text-white/70 mb-6 flex-grow">
+              <CardContent className="mt-auto flex flex-col">
+                <ul className="space-y-2 text-sm text-white/70 mb-4 flex-grow">
                   <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Operational audits and process mapping
                   </li>
                   <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Digital tooling recommendations
                   </li>
                   <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Scalable growth roadmaps
                   </li>
                 </ul>
@@ -63,29 +63,29 @@ export default function HomePage() {
             </Card>
 
             <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
-              <CardHeader className="flex-grow-0 p-6 pb-4">
-                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-6">
+              <CardHeader className="flex-grow-0 h-56">
+                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Globe className="h-6 w-6 text-secondary" />
                 </div>
-                <CardTitle className="mb-4 text-white text-xl">Website Production</CardTitle>
-                <CardDescription className="flex-grow text-white/70 leading-relaxed">
+                <CardTitle className="mb-4 text-white">Website Production</CardTitle>
+                <CardDescription className="flex-grow text-white/70">
                   Create powerful digital experiences that convert visitors into customers. Our websites combine
                   stunning design with technical excellence, featuring fast performance and conversion-focused user
                   journeys.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="mt-auto flex flex-col p-6 pt-2">
-                <ul className="space-y-3 text-sm text-white/70 mb-6 flex-grow">
+              <CardContent className="mt-auto flex flex-col">
+                <ul className="space-y-2 text-sm text-white/70 mb-4 flex-grow">
                   <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Fast, secure, and SEO-ready
                   </li>
                   <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Conversion-focused design
                   </li>
                   <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Easily maintainable
                   </li>
                 </ul>
@@ -96,28 +96,28 @@ export default function HomePage() {
             </Card>
 
             <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
-              <CardHeader className="flex-grow-0 p-6 pb-4">
-                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-6">
+              <CardHeader className="flex-grow-0 h-56">
+                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Code className="h-6 w-6 text-secondary" />
                 </div>
-                <CardTitle className="mb-4 text-white text-xl">Web-Based Applications</CardTitle>
-                <CardDescription className="flex-grow text-white/70 leading-relaxed">
+                <CardTitle className="mb-4 text-white">Web-Based Applications</CardTitle>
+                <CardDescription className="flex-grow text-white/70">
                   Develop custom software solutions that align with your unique business requirements. We build scalable
                   applications that automate processes, improve efficiency, and grow with your business.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="mt-auto flex flex-col p-6 pt-2">
-                <ul className="space-y-3 text-sm text-white/70 mb-6 flex-grow">
+              <CardContent className="mt-auto flex flex-col">
+                <ul className="space-y-2 text-sm text-white/70 mb-4 flex-grow">
                   <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Fully responsive interfaces
                   </li>
                   <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Third-party integrations
                   </li>
                   <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Security-first development
                   </li>
                 </ul>
@@ -142,28 +142,28 @@ export default function HomePage() {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <div className="text-center space-y-4">
               <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center mx-auto">
-                <Building2 className="h-8 w-8 text-white" />
+                <Building2 className="h-8 w-8 text-primary" />
               </div>
               <h3 className="font-semibold text-text-light dark:text-text-dark">Engineer's Mindset</h3>
               <p className="text-sm text-text-light/70 dark:text-text-dark/70">Grounded in efficiency and accuracy</p>
             </div>
             <div className="text-center space-y-4">
               <div className="w-16 h-16 bg-gradient-to-br from-secondary to-secondary/70 rounded-full flex items-center justify-center mx-auto">
-                <Target className="h-8 w-8 text-white" />
+                <Target className="h-8 w-8 text-primary" />
               </div>
               <h3 className="font-semibold text-text-light dark:text-text-dark">Systems Thinking</h3>
               <p className="text-sm text-text-light/70 dark:text-text-dark/70">Long-term scalable solutions</p>
             </div>
             <div className="text-center space-y-4">
               <div className="w-16 h-16 bg-gradient-to-br from-secondary to-secondary/70 rounded-full flex items-center justify-center mx-auto">
-                <Zap className="h-8 w-8 text-white" />
+                <Zap className="h-8 w-8 text-primary" />
               </div>
               <h3 className="font-semibold text-text-light dark:text-text-dark">Digital-First Delivery</h3>
               <p className="text-sm text-text-light/70 dark:text-text-dark/70">Supporting sustainable growth</p>
             </div>
             <div className="text-center space-y-4">
               <div className="w-16 h-16 bg-gradient-to-br from-primary/80 to-secondary/60 rounded-full flex items-center justify-center mx-auto">
-                <Award className="h-8 w-8 text-white" />
+                <Award className="h-8 w-8 text-primary" />
               </div>
               <h3 className="font-semibold text-text-light dark:text-text-dark">Affordable Packages</h3>
               <p className="text-sm text-text-light/70 dark:text-text-dark/70">Tailored for SMEs</p>
