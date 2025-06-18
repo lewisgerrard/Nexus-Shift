@@ -185,7 +185,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <Card className="border-0 shadow-lg dark:bg-surface-dark">
+            <Card className="border-0 shadow-lg bg-primary dark:bg-primary">
               <CardHeader>
                 <div className="bg-gradient-to-br from-primary/10 to-secondary/20 rounded-lg p-8 mb-4 flex items-center justify-center h-64 dark:from-primary/20 dark:to-secondary/30">
                   <Image
@@ -199,13 +199,13 @@ export default function HomePage() {
                 <Badge variant="outline" className="w-fit mb-2">
                   Digital Transformation
                 </Badge>
-                <CardTitle className="dark:text-text-dark">Chester Referees Association</CardTitle>
-                <CardDescription className="dark:text-text-dark/70">
+                <CardTitle className="text-white dark:text-white">Chester Referees Association</CardTitle>
+                <CardDescription className="text-white/70 dark:text-white/70">
                   Modernised digital presence with integrated membership platform
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2 text-sm text-text-light/70 mb-4 dark:text-text-dark/70">
+                <ul className="space-y-2 text-sm text-white/70 mb-4 dark:text-white/70">
                   <li>• Public-facing site for membership promotion</li>
                   <li>• Admin dashboard for user management</li>
                   <li>• Secure booking tools for officials</li>
@@ -216,7 +216,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-lg dark:bg-surface-dark">
+            <Card className="border-0 shadow-lg bg-primary dark:bg-primary">
               <CardHeader>
                 <div className="bg-gradient-to-br from-secondary/10 to-primary/20 rounded-lg p-8 mb-4 flex items-center justify-center h-64 dark:from-secondary/20 dark:to-primary/30">
                   <Image
@@ -230,13 +230,13 @@ export default function HomePage() {
                 <Badge variant="outline" className="w-fit mb-2">
                   Website + Application
                 </Badge>
-                <CardTitle className="dark:text-text-dark">Diva Fitness</CardTitle>
-                <CardDescription className="dark:text-text-dark/70">
+                <CardTitle className="text-white dark:text-white">Diva Fitness</CardTitle>
+                <CardDescription className="text-white/70 dark:text-white/70">
                   Bold, on-brand site with integrated booking and member tracking
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2 text-sm text-text-light/70 mb-4 dark:text-text-dark/70">
+                <ul className="space-y-2 text-sm text-white/70 mb-4 dark:text-white/70">
                   <li>• Online booking with payment options</li>
                   <li>• Session descriptions and pricing</li>
                   <li>• Member progress tracking platform</li>
