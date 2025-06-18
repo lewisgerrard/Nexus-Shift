@@ -155,24 +155,24 @@ export default function CaseStudiesPage() {
                 <div className="hidden md:block relative h-96 lg:h-[28rem]">
                   {/* Laptop mockup - background */}
                   <div className="absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 z-10">
-                    <div className="w-72 lg:w-80 xl:w-96 h-44 lg:h-48 xl:h-56 bg-gray-900 rounded-t-xl p-2 lg:p-3 shadow-2xl">
+                    <div className="w-64 lg:w-72 xl:w-80 h-40 lg:h-44 xl:h-48 bg-gray-900 rounded-t-xl p-2 lg:p-3 shadow-2xl">
                       <div className="w-full h-full bg-white rounded-lg overflow-hidden">
                         <Image
                           src="/images/diva-fitness-website.jpg"
                           alt="Diva Fitness Website Desktop"
-                          width={384}
-                          height={224}
+                          width={320}
+                          height={192}
                           className="w-full h-full object-cover object-top"
                         />
                       </div>
                     </div>
-                    <div className="w-72 lg:w-80 xl:w-96 h-3 lg:h-4 bg-gray-700 rounded-b-xl -mt-1 relative shadow-lg">
+                    <div className="w-64 lg:w-72 xl:w-80 h-3 lg:h-4 bg-gray-700 rounded-b-xl -mt-1 relative shadow-lg">
                       <div className="absolute bottom-0.5 lg:bottom-1 left-1/2 transform -translate-x-1/2 w-6 lg:w-8 h-0.5 lg:h-1 bg-gray-500 rounded-full"></div>
                     </div>
                   </div>
 
                   {/* Mobile mockup 1 - middle layer */}
-                  <div className="absolute right-20 lg:right-24 xl:right-32 top-1/2 transform -translate-y-1/2 z-20">
+                  <div className="absolute right-16 lg:right-20 xl:right-24 top-1/2 transform -translate-y-1/2 z-20">
                     <div className="w-28 lg:w-32 xl:w-36 h-56 lg:h-64 xl:h-72 bg-black rounded-3xl p-0.5 lg:p-1 shadow-2xl">
                       <div className="w-full h-full bg-white rounded-3xl overflow-hidden relative">
                         {/* iPhone notch */}
@@ -189,7 +189,7 @@ export default function CaseStudiesPage() {
                   </div>
 
                   {/* Mobile mockup 2 - front layer */}
-                  <div className="absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 translate-y-4 lg:translate-y-6 z-30">
+                  <div className="absolute right-8 lg:right-12 top-1/2 transform -translate-y-1/2 z-30">
                     <div className="w-28 lg:w-32 xl:w-36 h-56 lg:h-64 xl:h-72 bg-black rounded-3xl p-0.5 lg:p-1 shadow-2xl">
                       <div className="w-full h-full bg-white rounded-3xl overflow-hidden relative">
                         {/* iPhone notch */}
