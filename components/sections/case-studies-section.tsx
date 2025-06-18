@@ -36,7 +36,7 @@ const projects: ProjectCardProps[] = [
           </div>
           <div className="flex space-x-2 justify-center">
             <div className="w-3 h-3 bg-secondary rounded-full"></div>
-            <div className="w-3 h-3 bg-accent rounded-full"></div>
+            <div className="w-3 h-3 bg-secondary rounded-full"></div>
             <div className="w-3 h-3 bg-primary rounded-full"></div>
           </div>
         </div>
@@ -53,7 +53,7 @@ const projects: ProjectCardProps[] = [
     ],
     results: [
       {
-        icon: <Shield className="h-8 w-8 text-accent" />,
+        icon: <Shield className="h-8 w-8 text-primary" />,
         title: "Professional Image",
         description: "Enhanced brand credibility",
       },
@@ -72,7 +72,7 @@ const projects: ProjectCardProps[] = [
             <Zap className="h-8 w-8 text-secondary" />
           </div>
           <div className="flex space-x-2 justify-center">
-            <div className="w-3 h-3 bg-accent rounded-full"></div>
+            <div className="w-3 h-3 bg-secondary rounded-full"></div>
             <div className="w-3 h-3 bg-primary rounded-full"></div>
             <div className="w-3 h-3 bg-secondary rounded-full"></div>
           </div>

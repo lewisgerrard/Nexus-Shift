@@ -66,14 +66,14 @@ export function AboutBlock({ onStartConversation }: AboutBlockProps) {
                     <div className="flex-1 h-2 bg-gradient-to-r from-secondary/30 to-accent/30 rounded"></div>
                   </div>
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center">
-                      <Target className="h-6 w-6 text-accent" />
+                    <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center">
+                      <Target className="h-6 w-6 text-secondary" />
                     </div>
-                    <div className="flex-1 h-2 bg-gradient-to-r from-accent/30 to-primary/30 rounded"></div>
+                    <div className="flex-1 h-2 bg-gradient-to-r from-secondary/30 to-primary/30 rounded"></div>
                   </div>
                 </div>
                 <div className="flex items-center justify-center">
-                  <div className="w-32 h-32 bg-gradient-to-br from-primary via-secondary to-accent rounded-full flex items-center justify-center shadow-lg">
+                  <div className="w-32 h-32 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg">
                     <TrendingUp className="h-16 w-16 text-white" />
                   </div>
                 </div>
@@ -182,8 +182,8 @@ export function AboutBlock({ onStartConversation }: AboutBlockProps) {
 
           <Card className="border-0 shadow-lg text-center p-6 dark:bg-surface-dark">
             <CardContent className="space-y-4">
-              <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto">
-                <Target className="h-6 w-6 text-accent" />
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
+                <Target className="h-6 w-6 text-primary" />
               </div>
               <h3 className="font-semibold text-text-light dark:text-text-dark">Strategic Design</h3>
               <p className="text-sm text-text-light/70 dark:text-text-dark/70">

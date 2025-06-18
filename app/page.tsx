@@ -137,10 +137,10 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-accent/20 shadow-lg hover:shadow-xl hover:border-accent/40 transition-all bg-gradient-to-br from-white to-accent/5 flex flex-col h-full dark:bg-surface-dark dark:from-surface-dark dark:to-accent/10">
+            <Card className="border-2 border-secondary/20 shadow-lg hover:shadow-xl hover:border-secondary/40 transition-all bg-gradient-to-br from-white to-secondary/5 flex flex-col h-full dark:bg-surface-dark dark:from-surface-dark dark:to-secondary/10">
               <CardHeader className="flex-grow-0 h-48">
-                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
-                  <Code className="h-6 w-6 text-accent" />
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                  <Code className="h-6 w-6 text-primary" />
                 </div>
                 <CardTitle className="mb-2 dark:text-text-dark">Web-Based Applications</CardTitle>
                 <CardDescription className="flex-grow dark:text-text-dark/70">
@@ -172,7 +172,7 @@ export default function HomePage() {
       </section>
 
       {/* Unique Value Proposition */}
-      <section className="py-12 md:py-20 bg-gradient-to-br from-accent/10 via-primary/5 to-secondary/10 dark:from-accent/20 dark:via-primary/10 dark:to-secondary/20">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-secondary/10 via-primary/5 to-secondary/5 dark:from-secondary/20 dark:via-primary/10 dark:to-secondary/10">
         <div className="container px-4 md:px-6">
           <div className="text-center space-y-4 mb-16">
             <h2 className="text-3xl font-bold tracking-tight text-text-light sm:text-4xl dark:text-text-dark">
@@ -196,7 +196,7 @@ export default function HomePage() {
               <p className="text-sm text-text-light/70 dark:text-text-dark/70">Long-term scalable solutions</p>
             </div>
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-accent to-accent/70 rounded-full flex items-center justify-center mx-auto">
+              <div className="w-16 h-16 bg-gradient-to-br from-secondary to-secondary/70 rounded-full flex items-center justify-center mx-auto">
                 <Zap className="h-8 w-8 text-white" />
               </div>
               <h3 className="font-semibold text-text-light dark:text-text-dark">Digital-First Delivery</h3>
@@ -214,7 +214,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Case Studies */}
-      <section className="py-12 md:py-20 bg-gradient-to-l from-primary/10 via-secondary/5 to-accent/10 dark:from-primary/20 dark:via-secondary/10 dark:to-accent/20">
+      <section className="py-12 md:py-20 bg-gradient-to-l from-primary/10 via-secondary/5 to-primary/5 dark:from-primary/20 dark:via-secondary/10 dark:to-primary/10">
         <div className="container px-4 md:px-6">
           <div className="text-center space-y-4 mb-16">
             <h2 className="text-3xl font-bold tracking-tight text-text-light sm:text-4xl dark:text-text-dark">
@@ -267,7 +267,7 @@ export default function HomePage() {
 
             <Card className="border-0 shadow-lg dark:bg-surface-dark">
               <CardHeader>
-                <div className="bg-gradient-to-br from-secondary/10 to-accent/20 rounded-lg p-8 mb-4 flex items-center justify-center h-64 dark:from-secondary/20 dark:to-accent/30">
+                <div className="bg-gradient-to-br from-secondary/10 to-primary/20 rounded-lg p-8 mb-4 flex items-center justify-center h-64 dark:from-secondary/20 dark:to-primary/30">
                   {/* Desktop mockup */}
                   <div className="relative">
                     <div className="w-72 h-44 bg-gray-900 rounded-t-lg p-3 shadow-xl">
@@ -316,7 +316,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonial */}
-      <section className="py-12 md:py-20 bg-gradient-to-r from-secondary via-secondary/90 to-accent/30 dark:from-secondary dark:via-secondary/90 dark:to-accent/30">
+      <section className="py-12 md:py-20 bg-gradient-to-r from-secondary via-secondary/90 to-primary/30 dark:from-secondary dark:via-secondary/90 dark:to-primary/30">
         <div className="container px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <blockquote className="text-2xl font-medium text-white mb-6 dark:text-white">

@@ -95,8 +95,8 @@ export function ContactForm() {
               </div>
 
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
-                  <Clock className="h-6 w-6 text-accent" />
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <Clock className="h-6 w-6 text-primary" />
                 </div>
                 <div>
                   <div className="font-semibold text-text-light dark:text-text-dark">Response Time</div>

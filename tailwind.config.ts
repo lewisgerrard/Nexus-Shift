@@ -29,10 +29,6 @@ const config = {
           DEFAULT: "#00C2CB", // Electric Teal
           foreground: "#0A0E17", // Jet Black Blue
         },
-        accent: {
-          DEFAULT: "#A45EE5", // Neon Purple
-          foreground: "#E2E8F0", // Frosted White
-        },
         background: {
           light: "#F5F8FB", // Cloud White
           dark: "#0A0E17", // Jet Black Blue
@@ -67,6 +63,8 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        accent: "hsl(var(--accent))",
+        "accent-foreground": "hsl(var(--accent-foreground))",
       },
       borderRadius: {
         lg: "var(--radius)",
