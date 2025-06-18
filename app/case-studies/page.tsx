@@ -7,30 +7,32 @@ export default function CaseStudies() {
 
       <section className="w-full max-w-5xl">
         <h2 className="text-3xl font-semibold mb-4">Chester Referees Association</h2>
-        <div className="flex justify-center items-center h-[32rem] bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-2">
-          <Image
-            src="/images/chester-referees-mockup.png"
-            alt="Chester Referees Association website mockup"
-            width={800}
-            height={600}
-            className="max-w-4xl h-auto rounded-lg shadow-2xl object-cover object-center"
-            style={{ aspectRatio: "4/3" }}
-          />
+        <div className="flex items-center justify-center h-[32rem]">
+          <div className="relative w-full h-full">
+            <Image
+              src="/images/chester-referees-mockup.png"
+              alt="Chester Referees Association Website Mockup"
+              width={600}
+              height={400}
+              className="w-full h-full object-contain object-center drop-shadow-2xl"
+            />
+          </div>
         </div>
         <p className="mt-4">A website designed and built for the Chester Referees Association.</p>
       </section>
 
       <section className="w-full max-w-5xl mt-12">
         <h2 className="text-3xl font-semibold mb-4">Diva Fitness</h2>
-        <div className="flex justify-center items-center h-[32rem] bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-2">
-          <Image
-            src="/images/diva-fitness-mockup.png"
-            alt="Diva Fitness website mockup showing laptop and mobile views"
-            width={800}
-            height={600}
-            className="max-w-4xl h-auto rounded-lg shadow-2xl object-cover object-center"
-            style={{ aspectRatio: "4/3" }}
-          />
+        <div className="flex items-center justify-center h-[32rem]">
+          <div className="relative w-full h-full">
+            <Image
+              src="/images/diva-fitness-mockup.png"
+              alt="Diva Fitness Website Mockup"
+              width={600}
+              height={400}
+              className="w-full h-full object-contain object-center drop-shadow-2xl"
+            />
+          </div>
         </div>
         <p className="mt-4">A website designed and built for Diva Fitness, showcasing their classes and trainers.</p>
       </section>
