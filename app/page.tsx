@@ -247,18 +247,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonial */}
-      <section className="py-12 md:py-20 bg-gradient-to-r from-secondary via-secondary/90 to-primary/30 dark:from-secondary dark:via-secondary/90 dark:to-primary/30">
-        <div className="container px-4 md:px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <blockquote className="text-2xl font-medium text-white mb-6 dark:text-white">
-              "Nexus Shift helped us rebuild from the ground up — visually, operationally, and strategically."
-            </blockquote>
-            <cite className="text-white/80 dark:text-white/80">— Emma Fisher</cite>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-12 md:py-20 bg-gradient-to-br from-primary/20 to-secondary/20 dark:from-primary/30 dark:to-secondary/30">
         <div className="container px-4 md:px-6">
