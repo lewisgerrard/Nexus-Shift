@@ -150,12 +150,68 @@ export default function CaseStudiesPage() {
         <div className="container px-4 md:px-6">
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-16 items-center">
             <div className="relative order-2 lg:order-1">
-              <div className="bg-gradient-to-br from-secondary/10 to-accent/20 rounded-2xl p-12 shadow-xl dark:from-secondary/20 dark:to-accent/30">
-                <div className="relative flex items-center justify-center h-96">
-                  {/* Desktop mockup - positioned in the back */}
-                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
-                    <div className="w-80 h-48 bg-gray-900 rounded-t-lg p-3 shadow-2xl">
-                      <div className="w-full h-full bg-white rounded overflow-hidden">
+              <div className="bg-gradient-to-br from-secondary/5 via-accent/10 to-primary/5 rounded-2xl p-8 lg:p-12 shadow-xl dark:from-secondary/10 dark:via-accent/15 dark:to-primary/10">
+                {/* Desktop view - collage layout */}
+                <div className="hidden md:block relative h-96 lg:h-[28rem]">
+                  {/* Laptop mockup - background */}
+                  <div className="absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 z-10">
+                    <div className="w-72 lg:w-80 xl:w-96 h-44 lg:h-48 xl:h-56 bg-gray-900 rounded-t-xl p-2 lg:p-3 shadow-2xl">
+                      <div className="w-full h-full bg-white rounded-lg overflow-hidden">
+                        <Image
+                          src="/images/diva-fitness-website.jpg"
+                          alt="Diva Fitness Website Desktop"
+                          width={384}
+                          height={224}
+                          className="w-full h-full object-cover object-top"
+                        />
+                      </div>
+                    </div>
+                    <div className="w-72 lg:w-80 xl:w-96 h-3 lg:h-4 bg-gray-700 rounded-b-xl -mt-1 relative shadow-lg">
+                      <div className="absolute bottom-0.5 lg:bottom-1 left-1/2 transform -translate-x-1/2 w-6 lg:w-8 h-0.5 lg:h-1 bg-gray-500 rounded-full"></div>
+                    </div>
+                  </div>
+
+                  {/* Mobile mockup 1 - middle layer */}
+                  <div className="absolute right-20 lg:right-24 xl:right-32 top-1/2 transform -translate-y-1/2 z-20">
+                    <div className="w-28 lg:w-32 xl:w-36 h-56 lg:h-64 xl:h-72 bg-black rounded-3xl p-0.5 lg:p-1 shadow-2xl">
+                      <div className="w-full h-full bg-white rounded-3xl overflow-hidden relative">
+                        {/* iPhone notch */}
+                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 lg:w-10 h-2 lg:h-3 bg-black rounded-b-xl z-10"></div>
+                        <Image
+                          src="/images/diva-fitness-mobile-1.png"
+                          alt="Diva Fitness Mobile View 1"
+                          width={144}
+                          height={288}
+                          className="w-full h-full object-cover object-top"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Mobile mockup 2 - front layer */}
+                  <div className="absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 translate-y-4 lg:translate-y-6 z-30">
+                    <div className="w-28 lg:w-32 xl:w-36 h-56 lg:h-64 xl:h-72 bg-black rounded-3xl p-0.5 lg:p-1 shadow-2xl">
+                      <div className="w-full h-full bg-white rounded-3xl overflow-hidden relative">
+                        {/* iPhone notch */}
+                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 lg:w-10 h-2 lg:h-3 bg-black rounded-b-xl z-10"></div>
+                        <Image
+                          src="/images/diva-fitness-mobile-2.png"
+                          alt="Diva Fitness Mobile View 2"
+                          width={144}
+                          height={288}
+                          className="w-full h-full object-cover object-top"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mobile view - stacked layout */}
+                <div className="md:hidden space-y-8">
+                  {/* Laptop mockup */}
+                  <div className="flex justify-center">
+                    <div className="w-80 h-48 bg-gray-900 rounded-t-xl p-3 shadow-xl">
+                      <div className="w-full h-full bg-white rounded-lg overflow-hidden">
                         <Image
                           src="/images/diva-fitness-website.jpg"
                           alt="Diva Fitness Website Desktop"
@@ -165,17 +221,13 @@ export default function CaseStudiesPage() {
                         />
                       </div>
                     </div>
-                    <div className="w-80 h-4 bg-gray-700 rounded-b-lg -mt-1 relative">
-                      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gray-500 rounded-full"></div>
-                    </div>
                   </div>
 
-                  {/* iPhone X mockup 1 - positioned in the middle */}
-                  <div className="absolute left-48 top-1/2 transform -translate-y-1/2 z-20">
-                    <div className="w-32 h-64 bg-black rounded-3xl p-1 shadow-2xl">
+                  {/* Mobile mockups side by side */}
+                  <div className="flex justify-center space-x-6">
+                    <div className="w-32 h-64 bg-black rounded-3xl p-1 shadow-xl">
                       <div className="w-full h-full bg-white rounded-3xl overflow-hidden relative">
-                        {/* iPhone X notch */}
-                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-2 bg-black rounded-b-lg z-10"></div>
+                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-10 h-3 bg-black rounded-b-xl z-10"></div>
                         <Image
                           src="/images/diva-fitness-mobile-1.png"
                           alt="Diva Fitness Mobile View 1"
@@ -185,14 +237,9 @@ export default function CaseStudiesPage() {
                         />
                       </div>
                     </div>
-                  </div>
-
-                  {/* iPhone X mockup 2 - positioned in the front */}
-                  <div className="absolute left-64 top-1/2 transform -translate-y-1/2 z-30">
-                    <div className="w-32 h-64 bg-black rounded-3xl p-1 shadow-2xl">
+                    <div className="w-32 h-64 bg-black rounded-3xl p-1 shadow-xl">
                       <div className="w-full h-full bg-white rounded-3xl overflow-hidden relative">
-                        {/* iPhone X notch */}
-                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-2 bg-black rounded-b-lg z-10"></div>
+                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-10 h-3 bg-black rounded-b-xl z-10"></div>
                         <Image
                           src="/images/diva-fitness-mobile-2.png"
                           alt="Diva Fitness Mobile View 2"
