@@ -41,12 +41,7 @@ export default function HomePage() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="text-lg px-8 border-white text-white hover:bg-white hover:text-primary dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-primary"
-                  asChild
-                >
+                <Button size="lg" className="text-lg px-8 bg-secondary hover:bg-secondary/90 text-primary" asChild>
                   <Link href="/about">Learn More</Link>
                 </Button>
               </div>
@@ -319,7 +314,7 @@ export default function HomePage() {
             <p className="text-lg text-text-light/70 max-w-2xl mx-auto dark:text-text-dark/70">
               Join our growing list of forward-thinking businesses who've already made the shift.
             </p>
-            <Button size="lg" className="text-lg px-8" asChild>
+            <Button size="lg" className="text-lg px-8 bg-secondary hover:bg-secondary/90 text-primary" asChild>
               <Link href="/contact">
                 Get in Touch
                 <ArrowRight className="ml-2 h-5 w-5" />
