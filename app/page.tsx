@@ -35,7 +35,7 @@ export default function HomePage() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="text-lg px-8" asChild>
+                <Button size="lg" className="text-lg px-8 bg-secondary hover:bg-secondary/90 text-primary" asChild>
                   <Link href="/contact">
                     Start Your Shift
                     <ArrowRight className="ml-2 h-5 w-5" />
