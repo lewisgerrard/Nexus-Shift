@@ -131,7 +131,7 @@ export default function HomePage() {
       </section>
 
       {/* Unique Value Proposition */}
-      <section className="py-12 md:py-20 bg-background-dark dark:bg-background-light">
+      <section className="py-12 md:py-20 bg-primary">
         <div className="container px-4 md:px-6">
           <div className="text-center space-y-4 mb-16">
             <h2 className="text-3xl font-bold tracking-tight text-text-light sm:text-4xl dark:text-text-dark">
