@@ -28,9 +28,9 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3 lg:gap-10">
             <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
-              <CardHeader className="flex-grow-0 h-56">
+              <CardHeader className="flex-grow-0 h-64 p-6">
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Zap className="h-6 w-6 text-secondary" />
                 </div>
@@ -41,7 +41,7 @@ export default function HomePage() {
                   growth.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="mt-auto flex flex-col">
+              <CardContent className="mt-auto flex flex-col p-6 pt-0">
                 <ul className="space-y-2 text-sm text-white/70 mb-4 flex-grow">
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
@@ -63,7 +63,7 @@ export default function HomePage() {
             </Card>
 
             <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
-              <CardHeader className="flex-grow-0 h-56">
+              <CardHeader className="flex-grow-0 h-64 p-6">
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Globe className="h-6 w-6 text-secondary" />
                 </div>
@@ -74,7 +74,7 @@ export default function HomePage() {
                   journeys.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="mt-auto flex flex-col">
+              <CardContent className="mt-auto flex flex-col p-6 pt-0">
                 <ul className="space-y-2 text-sm text-white/70 mb-4 flex-grow">
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
@@ -96,7 +96,7 @@ export default function HomePage() {
             </Card>
 
             <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
-              <CardHeader className="flex-grow-0 h-56">
+              <CardHeader className="flex-grow-0 h-64 p-6">
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Code className="h-6 w-6 text-secondary" />
                 </div>
@@ -106,7 +106,7 @@ export default function HomePage() {
                   applications that automate processes, improve efficiency, and grow with your business.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="mt-auto flex flex-col">
+              <CardContent className="mt-auto flex flex-col p-6 pt-0">
                 <ul className="space-y-2 text-sm text-white/70 mb-4 flex-grow">
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
