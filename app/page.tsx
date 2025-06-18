@@ -31,8 +31,8 @@ export default function HomePage() {
           <div className="grid gap-6 md:grid-cols-3">
             <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
               <CardHeader className="flex-grow-0 h-48">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                  <Zap className="h-6 w-6 text-primary" />
+                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
+                  <Zap className="h-6 w-6 text-secondary" />
                 </div>
                 <CardTitle className="mb-2 text-white">Digital Transformation Consultancy</CardTitle>
                 <CardDescription className="flex-grow text-white/70">
@@ -62,8 +62,8 @@ export default function HomePage() {
 
             <Card className="border-2 border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all bg-primary flex flex-col h-full">
               <CardHeader className="flex-grow-0 h-48">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                  <Globe className="h-6 w-6 text-primary" />
+                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
+                  <Globe className="h-6 w-6 text-secondary" />
                 </div>
                 <CardTitle className="mb-2 text-white">Website Production</CardTitle>
                 <CardDescription className="flex-grow text-white/70">
