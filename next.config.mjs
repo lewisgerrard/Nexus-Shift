@@ -12,8 +12,6 @@ const nextConfig = {
   output: 'export',
   trailingSlash: true,
   basePath: '',
-  // Add transpilation for antd
-  transpilePackages: ['antd'],
 }
 
 export default nextConfig

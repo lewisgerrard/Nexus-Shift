@@ -16,6 +16,21 @@ export function AntdProvider({ children }: AntdProviderProps) {
 
   useEffect(() => {
     setMounted(true)
+
+    // Dynamically load Ant Design CSS
+    const loadAntdStyles = () => {
+      if (typeof document !== "undefined") {
+        const existingLink = document.querySelector('link[href*="antd"]')
+        if (!existingLink) {
+          const link = document.createElement("link")
+          link.rel = "stylesheet"
+          link.href = "https://cdn.jsdelivr.net/npm/antd@5.12.8/dist/reset.css"
+          document.head.appendChild(link)
+        }
+      }
+    }
+
+    loadAntdStyles()
   }, [])
 
   if (!mounted) {
@@ -31,6 +46,18 @@ export function AntdProvider({ children }: AntdProviderProps) {
           colorInfo: "#00C2CB", // Your secondary color
           borderRadius: 8,
           fontFamily: "Inter, sans-serif",
+        },
+        components: {
+          Button: {
+            colorPrimary: "#0B1F3A",
+            algorithm: true,
+          },
+          Input: {
+            colorPrimary: "#0B1F3A",
+          },
+          Card: {
+            colorBorderSecondary: "#f0f0f0",
+          },
         },
       }}
     >
