@@ -248,13 +248,13 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 md:py-20 bg-gradient-to-br from-primary/20 to-secondary/20 dark:from-primary/30 dark:to-secondary/30">
+      <section className="py-12 md:py-20 bg-primary">
         <div className="container px-4 md:px-6">
           <div className="text-center space-y-6">
-            <h2 className="text-3xl font-bold tracking-tight text-text-light sm:text-4xl dark:text-text-dark">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Ready to take your business to the next level?
             </h2>
-            <p className="text-lg text-text-light/70 max-w-2xl mx-auto dark:text-text-dark/70">
+            <p className="text-lg text-white/70 max-w-2xl mx-auto">
               Join our growing list of forward-thinking businesses who've already made the shift.
             </p>
             <Button size="lg" className="text-lg px-8 bg-secondary hover:bg-secondary/90 text-primary" asChild>
