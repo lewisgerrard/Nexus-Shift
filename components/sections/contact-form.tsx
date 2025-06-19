@@ -44,7 +44,7 @@ export function ContactForm() {
   return (
     <section
       id="contact"
-      className="py-12 md:py-20 bg-gradient-to-r from-primary/10 via-accent/5 to-secondary/10 dark:from-primary/20 dark:via-accent/10 dark:to-secondary/20"
+      className="py-12 md:py-20 bg-gradient-to-r from-primary/10 via-secondary/5 to-primary/5 dark:from-primary/20 dark:via-secondary/10 dark:to-primary/10"
     >
       <div className="container px-4 md:px-6">
         {/* Hero Section */}
@@ -95,8 +95,8 @@ export function ContactForm() {
               </div>
 
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
-                  <Clock className="h-6 w-6 text-accent" />
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <Clock className="h-6 w-6 text-primary" />
                 </div>
                 <div>
                   <div className="font-semibold text-text-light dark:text-text-dark">Response Time</div>

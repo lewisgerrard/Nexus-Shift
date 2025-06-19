@@ -13,7 +13,7 @@ export function HeroSection({ onGetStarted, onLearnMore }: HeroSectionProps) {
   return (
     <section
       id="home"
-      className="py-12 md:py-20 bg-gradient-to-br from-primary via-primary/90 to-secondary/20 dark:from-primary dark:via-primary/90 dark:to-secondary/20"
+      className="py-12 md:py-20 bg-gradient-to-br from-primary via-primary/80 to-secondary/30 dark:from-primary dark:via-primary/90 dark:to-secondary/20"
     >
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
@@ -53,7 +53,7 @@ export function HeroSection({ onGetStarted, onLearnMore }: HeroSectionProps) {
 
           <div className="relative">
             <div className="relative">
-              <div className="relative bg-gradient-to-br from-secondary/20 via-accent/30 to-primary/20 rounded-2xl p-12 shadow-2xl dark:from-secondary/20 dark:via-accent/30 dark:to-primary/20">
+              <div className="relative bg-gradient-to-br from-secondary/20 via-secondary/10 to-primary/20 rounded-2xl p-12 shadow-2xl dark:from-secondary/20 dark:via-accent/30 dark:to-primary/20">
                 <div className="grid grid-cols-3 gap-8 opacity-20">
                   <div className="space-y-4">
                     <div className="w-16 h-16 bg-white/30 rounded-lg flex items-center justify-center">

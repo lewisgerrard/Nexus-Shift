@@ -29,14 +29,14 @@ const projects: ProjectCardProps[] = [
     badge: "Digital Transformation",
     link: "#case-studies",
     visual: (
-      <div className="bg-gradient-to-br from-primary/10 to-secondary/20 rounded-lg p-8 flex items-center justify-center h-48">
+      <div className="bg-gradient-to-br from-primary/10 to-secondary/15 rounded-lg p-8 flex items-center justify-center h-48">
         <div className="text-center space-y-4">
           <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
             <Users className="h-8 w-8 text-primary" />
           </div>
           <div className="flex space-x-2 justify-center">
             <div className="w-3 h-3 bg-secondary rounded-full"></div>
-            <div className="w-3 h-3 bg-accent rounded-full"></div>
+            <div className="w-3 h-3 bg-secondary rounded-full"></div>
             <div className="w-3 h-3 bg-primary rounded-full"></div>
           </div>
         </div>
@@ -53,7 +53,7 @@ const projects: ProjectCardProps[] = [
     ],
     results: [
       {
-        icon: <Shield className="h-8 w-8 text-accent" />,
+        icon: <Shield className="h-8 w-8 text-primary" />,
         title: "Professional Image",
         description: "Enhanced brand credibility",
       },
@@ -66,13 +66,13 @@ const projects: ProjectCardProps[] = [
     badge: "Website + Application",
     link: "#case-studies",
     visual: (
-      <div className="bg-gradient-to-br from-secondary/10 to-accent/20 rounded-lg p-8 flex items-center justify-center h-48">
+      <div className="bg-gradient-to-br from-secondary/10 to-primary/15 rounded-lg p-8 flex items-center justify-center h-48">
         <div className="text-center space-y-4">
           <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto">
             <Zap className="h-8 w-8 text-secondary" />
           </div>
           <div className="flex space-x-2 justify-center">
-            <div className="w-3 h-3 bg-accent rounded-full"></div>
+            <div className="w-3 h-3 bg-secondary rounded-full"></div>
             <div className="w-3 h-3 bg-primary rounded-full"></div>
             <div className="w-3 h-3 bg-secondary rounded-full"></div>
           </div>
@@ -90,7 +90,7 @@ export function CaseStudiesSection({ onViewAllWork }: CaseStudiesSectionProps) {
   return (
     <section
       id="case-studies"
-      className="py-12 md:py-20 bg-gradient-to-l from-primary/10 via-secondary/5 to-accent/10 dark:from-primary/20 dark:via-secondary/10 dark:to-accent/20"
+      className="py-12 md:py-20 bg-gradient-to-l from-primary/10 via-secondary/5 to-primary/5 dark:from-primary/20 dark:via-secondary/10 dark:to-primary/10"
     >
       <div className="container px-4 md:px-6">
         <div className="text-center space-y-4 mb-16">

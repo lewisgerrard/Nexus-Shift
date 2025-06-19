@@ -50,7 +50,7 @@ export function AboutBlock({ onStartConversation }: AboutBlockProps) {
           </div>
 
           <div className="relative">
-            <div className="bg-gradient-to-br from-primary/10 via-secondary/20 to-accent/10 rounded-2xl p-12 shadow-xl dark:from-primary/20 dark:via-secondary/30 dark:to-accent/20">
+            <div className="bg-gradient-to-br from-primary/10 via-secondary/20 to-primary/5 rounded-2xl p-12 shadow-xl dark:from-primary/20 dark:via-secondary/30 dark:to-primary/10">
               <div className="grid grid-cols-2 gap-8">
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
@@ -66,14 +66,14 @@ export function AboutBlock({ onStartConversation }: AboutBlockProps) {
                     <div className="flex-1 h-2 bg-gradient-to-r from-secondary/30 to-accent/30 rounded"></div>
                   </div>
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center">
-                      <Target className="h-6 w-6 text-accent" />
+                    <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center">
+                      <Target className="h-6 w-6 text-secondary" />
                     </div>
-                    <div className="flex-1 h-2 bg-gradient-to-r from-accent/30 to-primary/30 rounded"></div>
+                    <div className="flex-1 h-2 bg-gradient-to-r from-secondary/30 to-primary/30 rounded"></div>
                   </div>
                 </div>
                 <div className="flex items-center justify-center">
-                  <div className="w-32 h-32 bg-gradient-to-br from-primary via-secondary to-accent rounded-full flex items-center justify-center shadow-lg">
+                  <div className="w-32 h-32 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg">
                     <TrendingUp className="h-16 w-16 text-white" />
                   </div>
                 </div>
@@ -138,7 +138,7 @@ export function AboutBlock({ onStartConversation }: AboutBlockProps) {
             </div>
           </div>
 
-          <div className="text-center bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 p-8 rounded-2xl border-l-4 border-secondary dark:from-primary/20 dark:via-secondary/20 dark:to-accent/20">
+          <div className="text-center bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/5 p-8 rounded-2xl border-l-4 border-secondary dark:from-primary/20 dark:via-secondary/20 dark:to-primary/10">
             <p className="text-xl font-semibold text-text-light italic dark:text-text-dark">
               We're a consultancy that sits at the intersection of strategic insight and hands-on technical build.
             </p>
@@ -182,8 +182,8 @@ export function AboutBlock({ onStartConversation }: AboutBlockProps) {
 
           <Card className="border-0 shadow-lg text-center p-6 dark:bg-surface-dark">
             <CardContent className="space-y-4">
-              <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto">
-                <Target className="h-6 w-6 text-accent" />
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
+                <Target className="h-6 w-6 text-primary" />
               </div>
               <h3 className="font-semibold text-text-light dark:text-text-dark">Strategic Design</h3>
               <p className="text-sm text-text-light/70 dark:text-text-dark/70">

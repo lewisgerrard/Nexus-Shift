@@ -29,13 +29,9 @@ const config = {
           DEFAULT: "#00C2CB", // Electric Teal
           foreground: "#0A0E17", // Jet Black Blue
         },
-        accent: {
-          DEFAULT: "#A45EE5", // Neon Purple
-          foreground: "#E2E8F0", // Frosted White
-        },
         background: {
           light: "#F5F8FB", // Cloud White
-          dark: "#0A0E17", // Jet Black Blue
+          dark: "#0B1D3A", // Updated to match your request
         },
         surface: {
           light: "#FFFFFF",
@@ -67,6 +63,8 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        accent: "#E6F9FA", // Very light version of Electric Teal, much closer to white
+        "accent-foreground": "hsl(var(--accent-foreground))",
       },
       borderRadius: {
         lg: "var(--radius)",

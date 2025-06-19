@@ -10,7 +10,7 @@ const testimonials: TestimonialCardProps[] = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-12 md:py-20 bg-gradient-to-r from-secondary via-secondary/90 to-accent/30 dark:from-secondary dark:via-secondary/90 dark:to-accent/30">
+    <section className="py-12 md:py-20 bg-gradient-to-r from-secondary via-secondary/90 to-primary/20 dark:from-secondary dark:via-secondary/90 dark:to-primary/20">
       <div className="container px-4 md:px-6">
         {testimonials.map((testimonial, index) => (
           <TestimonialCard key={index} {...testimonial} />
