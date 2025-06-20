@@ -42,30 +42,30 @@ export default function AboutPage() {
             </div>
 
             <div className="relative">
-              <div className="bg-gradient-to-br from-primary/10 via-secondary/20 to-accent/10 rounded-2xl p-12 shadow-xl dark:from-primary/20 dark:via-secondary/30 dark:to-accent/20">
+              <div className="bg-gradient-to-br from-primary/10 via-secondary/20 to-accent/10 rounded-2xl p-12 shadow-xl dark:from-primary/20 dark:via-secondary/30 dark:to-accent/20 hover:scale-105 transition-transform duration-300">
                 <div className="grid grid-cols-2 gap-8">
                   <div className="space-y-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
+                    <div className="flex items-center space-x-4 group">
+                      <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         <Building2 className="h-6 w-6 text-primary" />
                       </div>
                       <div className="flex-1 h-2 bg-gradient-to-r from-primary/30 to-secondary/30 rounded"></div>
                     </div>
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center">
+                    <div className="flex items-center space-x-4 group">
+                      <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         <Code className="h-6 w-6 text-secondary" />
                       </div>
                       <div className="flex-1 h-2 bg-gradient-to-r from-secondary/30 to-accent/30 rounded"></div>
                     </div>
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center">
+                    <div className="flex items-center space-x-4 group">
+                      <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         <Target className="h-6 w-6 text-accent" />
                       </div>
                       <div className="flex-1 h-2 bg-gradient-to-r from-accent/30 to-primary/30 rounded"></div>
                     </div>
                   </div>
                   <div className="flex items-center justify-center">
-                    <div className="w-32 h-32 bg-gradient-to-br from-primary via-secondary to-accent rounded-full flex items-center justify-center shadow-lg">
+                    <div className="w-32 h-32 bg-gradient-to-br from-primary via-secondary to-accent rounded-full flex items-center justify-center shadow-lg hover:scale-110 hover:rotate-12 transition-all duration-500">
                       <TrendingUp className="h-16 w-16 text-white" />
                     </div>
                   </div>
@@ -80,12 +80,14 @@ export default function AboutPage() {
       <section className="py-12 md:py-20 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 dark:from-primary/20 dark:via-secondary/20 dark:to-accent/20">
         <div className="container px-4 md:px-6">
           <div className="grid gap-8 md:grid-cols-2">
-            <Card className="border-0 shadow-lg p-8 dark:bg-surface-dark">
+            <Card className="border-0 shadow-lg p-8 dark:bg-surface-dark hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
               <div className="space-y-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
                   <Target className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="text-2xl font-bold text-text-light dark:text-text-dark">Our Mission</h3>
+                <h3 className="text-2xl font-bold text-text-light dark:text-text-dark group-hover:text-primary transition-colors duration-300">
+                  Our Mission
+                </h3>
                 <p className="text-text-light/70 dark:text-text-dark/70">
                   To help ambitious small-to-medium enterprises unlock transformative growth by aligning their goals
                   with efficient, scalable digital systems.
@@ -93,12 +95,14 @@ export default function AboutPage() {
               </div>
             </Card>
 
-            <Card className="border-0 shadow-lg p-8 dark:bg-surface-dark">
+            <Card className="border-0 shadow-lg p-8 dark:bg-surface-dark hover:scale-105 hover:-translate-y-2 transition-all duration-300 group">
               <div className="space-y-4">
-                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
                   <TrendingUp className="h-6 w-6 text-secondary" />
                 </div>
-                <h3 className="text-2xl font-bold text-text-light dark:text-text-dark">Our Vision</h3>
+                <h3 className="text-2xl font-bold text-text-light dark:text-text-dark group-hover:text-secondary transition-colors duration-300">
+                  Our Vision
+                </h3>
                 <p className="text-text-light/70 dark:text-text-dark/70">
                   A future where even small businesses operate with the intelligence, structure, and digital confidence
                   of enterprise-level organisations.
@@ -120,8 +124,10 @@ export default function AboutPage() {
             </div>
 
             <div className="grid gap-8 md:grid-cols-2">
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-text-light dark:text-text-dark">The Nexus</h3>
+              <div className="space-y-4 group">
+                <h3 className="text-xl font-semibold text-text-light dark:text-text-dark group-hover:text-primary transition-colors duration-300">
+                  The Nexus
+                </h3>
                 <p className="text-text-light/70 dark:text-text-dark/70">
                   We sit at the intersection (the nexus) of people, process, and technology. This convergence point
                   allows us to understand how these three critical elements work together to create successful digital
@@ -129,8 +135,10 @@ export default function AboutPage() {
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-text-light dark:text-text-dark">The Shift</h3>
+              <div className="space-y-4 group">
+                <h3 className="text-xl font-semibold text-text-light dark:text-text-dark group-hover:text-secondary transition-colors duration-300">
+                  The Shift
+                </h3>
                 <p className="text-text-light/70 dark:text-text-dark/70">
                   We help businesses shift into a smarter, more structured future. This isn't just about adopting new
                   technology — it's about fundamentally changing how you operate for sustainable growth.
@@ -138,7 +146,7 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="text-center bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 p-8 rounded-2xl border-l-4 border-secondary dark:from-primary/20 dark:via-secondary/20 dark:to-accent/20">
+            <div className="text-center bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 p-8 rounded-2xl border-l-4 border-secondary dark:from-primary/20 dark:via-secondary/20 dark:to-accent/20 hover:scale-105 transition-all duration-300">
               <p className="text-xl font-semibold text-text-light italic dark:text-text-dark">
                 We're a consultancy that sits at the intersection of strategic insight and hands-on technical build.
               </p>
@@ -160,48 +168,56 @@ export default function AboutPage() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            <Card className="border-0 shadow-lg text-center p-6 dark:bg-surface-dark">
+            <Card className="border-0 shadow-lg text-center p-6 dark:bg-surface-dark hover:scale-110 hover:-translate-y-4 transition-all duration-300 group">
               <CardContent className="space-y-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
                   <CheckCircle className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="font-semibold text-text-light dark:text-text-dark">Clarity</h3>
+                <h3 className="font-semibold text-text-light dark:text-text-dark group-hover:text-primary transition-colors duration-300">
+                  Clarity
+                </h3>
                 <p className="text-sm text-text-light/70 dark:text-text-dark/70">
                   In communication, structure, and outcomes. We believe transparency leads to better results.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-lg text-center p-6 dark:bg-surface-dark">
+            <Card className="border-0 shadow-lg text-center p-6 dark:bg-surface-dark hover:scale-110 hover:-translate-y-4 transition-all duration-300 group">
               <CardContent className="space-y-4">
-                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
                   <DollarSign className="h-6 w-6 text-secondary" />
                 </div>
-                <h3 className="font-semibold text-text-light dark:text-text-dark">Affordability</h3>
+                <h3 className="font-semibold text-text-light dark:text-text-dark group-hover:text-secondary transition-colors duration-300">
+                  Affordability
+                </h3>
                 <p className="text-sm text-text-light/70 dark:text-text-dark/70">
                   Always delivering value that makes commercial sense for growing businesses.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-lg text-center p-6 dark:bg-surface-dark">
+            <Card className="border-0 shadow-lg text-center p-6 dark:bg-surface-dark hover:scale-110 hover:-translate-y-4 transition-all duration-300 group">
               <CardContent className="space-y-4">
-                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
                   <Target className="h-6 w-6 text-accent" />
                 </div>
-                <h3 className="font-semibold text-text-light dark:text-text-dark">Strategic Design</h3>
+                <h3 className="font-semibold text-text-light dark:text-text-dark group-hover:text-accent transition-colors duration-300">
+                  Strategic Design
+                </h3>
                 <p className="text-sm text-text-light/70 dark:text-text-dark/70">
                   Ensuring every product and service is aligned with a clear business goal.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-lg text-center p-6 dark:bg-surface-dark">
+            <Card className="border-0 shadow-lg text-center p-6 dark:bg-surface-dark hover:scale-110 hover:-translate-y-4 transition-all duration-300 group">
               <CardContent className="space-y-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
                   <TrendingUp className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="font-semibold text-text-light dark:text-text-dark">Measurable Impact</h3>
+                <h3 className="font-semibold text-text-light dark:text-text-dark group-hover:text-primary transition-colors duration-300">
+                  Measurable Impact
+                </h3>
                 <p className="text-sm text-text-light/70 dark:text-text-dark/70">
                   From better decision-making to improved operations — results you can measure.
                 </p>
@@ -221,7 +237,7 @@ export default function AboutPage() {
             <p className="text-lg text-text-light/70 max-w-2xl mx-auto dark:text-text-dark/70">
               Let's discuss how our structured approach can help your business achieve its digital transformation goals.
             </p>
-            <Button size="lg" className="text-lg px-8" asChild>
+            <Button size="lg" className="text-lg px-8 hover:scale-110 transition-all duration-300" asChild>
               <Link href="/contact">Start the Conversation</Link>
             </Button>
           </div>
