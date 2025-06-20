@@ -1,8 +1,6 @@
 "use client"
 
 import type React from "react"
-
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -12,6 +10,7 @@ import { Mail, MessageSquare, Clock } from "lucide-react"
 import { useState } from "react"
 import { HeaderNav } from "@/components/layout/header-nav"
 import { Footer } from "@/components/layout/footer"
+import { HeroPage } from "@/components/sections/hero-page"
 
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -53,22 +52,15 @@ export default function ContactPage() {
     <div className="min-h-screen bg-white dark:bg-background-dark">
       <HeaderNav />
 
-      {/* Hero Section */}
-      <section className="py-12 md:py-20 bg-gradient-to-br from-secondary via-secondary/90 to-accent/30 dark:from-secondary dark:via-secondary/90 dark:to-accent/30">
-        <div className="container px-4 md:px-6">
-          <div className="max-w-4xl mx-auto text-center space-y-6">
-            <Badge variant="secondary" className="w-fit mx-auto bg-primary text-white dark:bg-primary dark:text-white">
-              Get In Touch
-            </Badge>
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl dark:text-white">
-              Let's talk about what's <span className="text-accent">next for your business</span>
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto dark:text-white/90">
-              Whether you need a new website, a custom platform, or a complete systems overhaul, we're here to help.
-            </p>
-          </div>
-        </div>
-      </section>
+      <HeroPage
+        badge="Get In Touch"
+        title="Let's talk about what's"
+        highlightText="next for your business"
+        description="Whether you need a new website, a custom platform, or a complete systems overhaul, we're here to help."
+        gradientFrom="from-secondary"
+        gradientVia="via-secondary/90"
+        gradientTo="to-accent/30"
+      />
 
       {/* Contact Form Section */}
       <section className="py-12 md:py-20 bg-gradient-to-r from-primary/10 via-accent/5 to-secondary/10 dark:from-primary/20 dark:via-accent/10 dark:to-secondary/20">

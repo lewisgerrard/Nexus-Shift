@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge" // Small colored labels
 import { Button } from "@/components/ui/button" // Clickable buttons
 import Link from "next/link" // For navigation between pages
 import Image from "next/image" // Optimized image component
+import { HeroPage } from "@/components/sections/hero-page"
 
 // Main page component - this is what gets displayed when someone visits /case-studies
 export default function CaseStudiesPage() {
@@ -21,149 +22,131 @@ export default function CaseStudiesPage() {
       {/* HEADER NAVIGATION */}
       <HeaderNav />
 
+      <HeroPage
+        badge="Case Studies"
+        title="Real results for"
+        highlightText="real businesses"
+        description="See how we've helped businesses like yours transform their digital presence and achieve measurable growth through our structured approach."
+        gradientFrom="from-primary"
+        gradientVia="via-primary/80"
+        gradientTo="to-secondary/30"
+      />
+
       {/* MAIN CONTENT AREA */}
       <div className="container mx-auto py-12 px-4 md:px-6">
-        {/* PAGE TITLE SECTION */}
-        <div className="text-center space-y-4 mb-16">
-          <h1 className="text-3xl font-bold tracking-tight text-text-light sm:text-4xl dark:text-text-dark">
-            Case Studies
-          </h1>
-          <p className="text-lg text-text-light/70 max-w-3xl mx-auto dark:text-text-dark/70">
-            Discover how we've helped businesses transform their digital presence and streamline their operations.
-          </p>
-        </div>
-
-        {/* CASE STUDIES GRID - Currently set to single column (vertical stack) */}
-        {/* To make them side-by-side, change "grid-cols-1" to "grid-cols-1 md:grid-cols-2" */}
-        <div className="grid grid-cols-1 gap-8 mb-12">
+        {/* CASE STUDIES GRID - Now with side-by-side photo and text layout */}
+        <div className="space-y-12 mb-12">
           {/* =================================================================== */}
-          {/* CASE STUDY 1: CHESTER REFEREES ASSOCIATION */}
+          {/* CASE STUDY 1: CHESTER REFEREES ASSOCIATION - Photo on LEFT */}
           {/* =================================================================== */}
           <Card className="border-0 shadow-lg dark:bg-surface-dark">
-            {/* Card Header - Contains image, badge, title, and description */}
-            <CardHeader>
-              {/* Image Container - Shows the website mockup */}
-              <div className="bg-gradient-to-br from-primary/10 to-secondary/20 rounded-lg p-8 mb-4 flex items-center justify-center h-64 dark:from-primary/20 dark:to-secondary/30">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Image Container - LEFT SIDE */}
+              <div className="bg-gradient-to-br from-primary/10 to-secondary/20 rounded-lg p-8 flex items-center justify-center h-64 lg:h-auto dark:from-primary/20 dark:to-secondary/30">
                 <Image
-                  src="/images/chester-referees-mockup.png" // Path to the image file
-                  alt="Chester Referees Association Website Mockup" // Description for screen readers
-                  width={400} // Image width
-                  height={240} // Image height
-                  className="w-full h-full object-contain" // Makes image fit nicely
+                  src="/images/chester-referees-mockup.png"
+                  alt="Chester Referees Association Website Mockup"
+                  width={400}
+                  height={240}
+                  className="w-full h-full object-contain"
                 />
               </div>
 
-              {/* Project Type Badge */}
-              <Badge variant="outline" className="w-fit mb-2">
-                Digital Transformation
-              </Badge>
+              {/* Content - RIGHT SIDE */}
+              <div className="flex flex-col justify-center">
+                <CardHeader className="pb-4">
+                  <Badge variant="outline" className="w-fit mb-2">
+                    Digital Transformation
+                  </Badge>
+                  <CardTitle className="dark:text-text-dark">Chester Referees Association</CardTitle>
+                  <CardDescription className="dark:text-text-dark/70">
+                    Modernised digital presence with integrated membership platform for football referees.
+                  </CardDescription>
+                </CardHeader>
 
-              {/* Project Title */}
-              <CardTitle className="dark:text-text-dark">Chester Referees Association</CardTitle>
+                <CardContent>
+                  <div className="space-y-4">
+                    {/* What We Delivered Section */}
+                    <div>
+                      <h4 className="font-semibold text-text-light dark:text-text-dark mb-2">What We Delivered:</h4>
+                      <ul className="space-y-2 text-sm text-text-light/70 dark:text-text-dark/70">
+                        <li>• Public-facing site for membership promotion</li>
+                        <li>• Admin dashboard for user management</li>
+                        <li>• Secure booking tools for officials</li>
+                        <li>• Member directory and communication tools</li>
+                      </ul>
+                    </div>
 
-              {/* Project Description */}
-              <CardDescription className="dark:text-text-dark/70">
-                Modernised digital presence with integrated membership platform for football referees.
-              </CardDescription>
-            </CardHeader>
-
-            {/* Card Content - Contains detailed information about what we delivered and results */}
-            <CardContent>
-              <div className="space-y-4">
-                {/* What We Delivered Section */}
-                <div>
-                  <h4 className="font-semibold text-text-light dark:text-text-dark mb-2">What We Delivered:</h4>
-                  {/* List of deliverables - you can add/remove items here */}
-                  <ul className="space-y-2 text-sm text-text-light/70 dark:text-text-dark/70">
-                    <li>• Public-facing site for membership promotion</li>
-                    <li>• Admin dashboard for user management</li>
-                    <li>• Secure booking tools for officials</li>
-                    <li>• Member directory and communication tools</li>
-                  </ul>
-                </div>
-
-                {/* Results Section */}
-                <div>
-                  <h4 className="font-semibold text-text-light dark:text-text-dark mb-2">Results:</h4>
-                  {/* List of results - you can add/remove items here */}
-                  <ul className="space-y-2 text-sm text-text-light/70 dark:text-text-dark/70">
-                    <li>• 40% increase in new member registrations</li>
-                    <li>• 60% reduction in administrative overhead</li>
-                    <li>• Streamlined match assignment process</li>
-                  </ul>
-                </div>
+                    {/* Results Section */}
+                    <div>
+                      <h4 className="font-semibold text-text-light dark:text-text-dark mb-2">Results:</h4>
+                      <ul className="space-y-2 text-sm text-text-light/70 dark:text-text-dark/70">
+                        <li>• 40% increase in new member registrations</li>
+                        <li>• 60% reduction in administrative overhead</li>
+                        <li>• Streamlined match assignment process</li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
               </div>
-            </CardContent>
+            </div>
           </Card>
 
           {/* =================================================================== */}
-          {/* CASE STUDY 2: DIVA FITNESS */}
+          {/* CASE STUDY 2: DIVA FITNESS - Photo on RIGHT */}
           {/* =================================================================== */}
           <Card className="border-0 shadow-lg dark:bg-surface-dark">
-            {/* Card Header */}
-            <CardHeader>
-              {/* Image Container */}
-              <div className="bg-gradient-to-br from-secondary/10 to-primary/20 rounded-lg p-8 mb-4 flex items-center justify-center h-64 dark:from-secondary/20 dark:to-primary/30">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Content - LEFT SIDE */}
+              <div className="flex flex-col justify-center lg:order-1">
+                <CardHeader className="pb-4">
+                  <Badge variant="outline" className="w-fit mb-2">
+                    Website + Application
+                  </Badge>
+                  <CardTitle className="dark:text-text-dark">Diva Fitness</CardTitle>
+                  <CardDescription className="dark:text-text-dark/70">
+                    Bold, on-brand site with integrated booking and member tracking for a boutique fitness studio.
+                  </CardDescription>
+                </CardHeader>
+
+                <CardContent>
+                  <div className="space-y-4">
+                    {/* What We Delivered Section */}
+                    <div>
+                      <h4 className="font-semibold text-text-light dark:text-text-dark mb-2">What We Delivered:</h4>
+                      <ul className="space-y-2 text-sm text-text-light/70 dark:text-text-dark/70">
+                        <li>• Online booking with payment options</li>
+                        <li>• Session descriptions and pricing</li>
+                        <li>• Member progress tracking platform</li>
+                        <li>• Mobile-responsive design</li>
+                      </ul>
+                    </div>
+
+                    {/* Results Section */}
+                    <div>
+                      <h4 className="font-semibold text-text-light dark:text-text-dark mb-2">Results:</h4>
+                      <ul className="space-y-2 text-sm text-text-light/70 dark:text-text-dark/70">
+                        <li>• 75% increase in online bookings</li>
+                        <li>• Enhanced professional brand image</li>
+                        <li>• Automated member onboarding</li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </div>
+
+              {/* Image Container - RIGHT SIDE */}
+              <div className="bg-gradient-to-br from-secondary/10 to-primary/20 rounded-lg p-8 flex items-center justify-center h-64 lg:h-auto lg:order-2 dark:from-secondary/20 dark:to-primary/30">
                 <Image
-                  src="/images/diva-fitness-mockup.png" // Path to the image file
-                  alt="Diva Fitness Website Mockup" // Description for screen readers
-                  width={400} // Image width
-                  height={240} // Image height
-                  className="w-full h-full object-contain" // Makes image fit nicely
+                  src="/images/diva-fitness-mockup.png"
+                  alt="Diva Fitness Website Mockup"
+                  width={400}
+                  height={240}
+                  className="w-full h-full object-contain"
                 />
               </div>
-
-              {/* Project Type Badge */}
-              <Badge variant="outline" className="w-fit mb-2">
-                Website + Application
-              </Badge>
-
-              {/* Project Title */}
-              <CardTitle className="dark:text-text-dark">Diva Fitness</CardTitle>
-
-              {/* Project Description */}
-              <CardDescription className="dark:text-text-dark/70">
-                Bold, on-brand site with integrated booking and member tracking for a boutique fitness studio.
-              </CardDescription>
-            </CardHeader>
-
-            {/* Card Content */}
-            <CardContent>
-              <div className="space-y-4">
-                {/* What We Delivered Section */}
-                <div>
-                  <h4 className="font-semibold text-text-light dark:text-text-dark mb-2">What We Delivered:</h4>
-                  {/* List of deliverables - you can add/remove items here */}
-                  <ul className="space-y-2 text-sm text-text-light/70 dark:text-text-dark/70">
-                    <li>• Online booking with payment options</li>
-                    <li>• Session descriptions and pricing</li>
-                    <li>• Member progress tracking platform</li>
-                    <li>• Mobile-responsive design</li>
-                  </ul>
-                </div>
-
-                {/* Results Section */}
-                <div>
-                  <h4 className="font-semibold text-text-light dark:text-text-dark mb-2">Results:</h4>
-                  {/* List of results - you can add/remove items here */}
-                  <ul className="space-y-2 text-sm text-text-light/70 dark:text-text-dark/70">
-                    <li>• 75% increase in online bookings</li>
-                    <li>• Enhanced professional brand image</li>
-                    <li>• Automated member onboarding</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
+            </div>
           </Card>
-
-          {/* =================================================================== */}
-          {/* TO ADD A NEW CASE STUDY: */}
-          {/* 1. Copy one of the Card sections above */}
-          {/* 2. Change the image src to your new image path */}
-          {/* 3. Update the badge text */}
-          {/* 4. Change the title and description */}
-          {/* 5. Update the deliverables and results lists */}
-          {/* =================================================================== */}
         </div>
 
         {/* CALL TO ACTION SECTION */}

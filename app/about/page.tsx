@@ -1,36 +1,22 @@
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { CheckCircle, Target, DollarSign, TrendingUp, Building2, Code } from "lucide-react"
 import Link from "next/link"
 import { HeaderNav } from "@/components/layout/header-nav"
 import { Footer } from "@/components/layout/footer"
+import { HeroPage } from "@/components/sections/hero-page"
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-background-dark">
       <HeaderNav />
 
-      {/* Hero Section */}
-      <section className="py-12 md:py-20 bg-gradient-to-br from-accent via-accent/80 to-primary/30 dark:from-accent dark:via-accent/80 dark:to-primary/30">
-        <div className="container px-4 md:px-6">
-          <div className="max-w-4xl mx-auto text-center space-y-6">
-            <Badge
-              variant="secondary"
-              className="w-fit mx-auto bg-secondary text-primary dark:bg-secondary dark:text-primary"
-            >
-              About Nexus Shift
-            </Badge>
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl dark:text-white">
-              Clarity through <span className="text-secondary">structure</span>
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto dark:text-white/90">
-              Founded by a systems engineer with a passion for problem-solving, we approach every project with the
-              mindset of an architect — understanding the foundations before ever laying down digital bricks.
-            </p>
-          </div>
-        </div>
-      </section>
+      <HeroPage
+        badge="About Us"
+        title="Clarity through"
+        highlightText="structure"
+        description="Founded by a systems engineer with a passion for problem-solving, we approach every project with the mindset of an architect — understanding the foundations before ever laying down digital bricks."
+      />
 
       {/* Who We Are */}
       <section className="py-12 md:py-20">

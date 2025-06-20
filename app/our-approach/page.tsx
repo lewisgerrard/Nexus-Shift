@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -17,29 +16,19 @@ import {
 import Link from "next/link"
 import { HeaderNav } from "@/components/layout/header-nav"
 import { Footer } from "@/components/layout/footer"
+import { HeroPage } from "@/components/sections/hero-page"
 
 export default function OurApproachPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-background-dark">
       <HeaderNav />
 
-      {/* Hero Section */}
-      <section className="py-12 md:py-20 bg-gradient-to-br from-accent via-accent/80 to-secondary/30 dark:from-accent dark:via-accent/80 dark:to-secondary/30">
-        <div className="container px-4 md:px-6">
-          <div className="max-w-4xl mx-auto text-center space-y-6">
-            <Badge variant="secondary" className="w-fit mx-auto bg-primary text-white dark:bg-primary dark:text-white">
-              Our Approach
-            </Badge>
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl dark:text-white">
-              We don't just "make websites" — we build <span className="text-secondary">systems that grow</span>
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto dark:text-white/90">
-              Our four-phase process ensures every project delivers lasting value and positions your business for
-              sustainable growth.
-            </p>
-          </div>
-        </div>
-      </section>
+      <HeroPage
+        badge="Our Approach"
+        title="We don't just make websites — we build"
+        highlightText="systems that grow"
+        description="Our four-phase process ensures every project delivers lasting value and positions your business for sustainable growth."
+      />
 
       {/* How We Work */}
       <section className="py-12 md:py-20">
@@ -159,12 +148,10 @@ export default function OurApproachPage() {
             <div className="relative">
               <div className="bg-gradient-to-br from-secondary/10 via-primary/20 to-accent/10 rounded-2xl p-12 shadow-xl dark:from-secondary/20 dark:via-primary/30 dark:to-accent/20">
                 <div className="relative">
-                  {/* Central hub */}
                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg z-10">
                     <Zap className="h-10 w-10 text-white" />
                   </div>
 
-                  {/* Connected nodes */}
                   <div className="grid grid-cols-3 gap-8 h-80">
                     <div className="flex flex-col justify-between">
                       <div className="w-16 h-16 bg-primary/20 rounded-lg flex items-center justify-center">
@@ -175,7 +162,7 @@ export default function OurApproachPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-center">{/* Central space for the main icon */}</div>
+                    <div className="flex items-center justify-center"></div>
 
                     <div className="flex flex-col justify-between">
                       <div className="w-16 h-16 bg-accent/20 rounded-lg flex items-center justify-center">
@@ -187,7 +174,6 @@ export default function OurApproachPage() {
                     </div>
                   </div>
 
-                  {/* Connection lines */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-30">
                     <div className="w-full h-px bg-gradient-to-r from-transparent via-primary to-transparent"></div>
                   </div>

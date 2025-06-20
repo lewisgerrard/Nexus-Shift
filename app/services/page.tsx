@@ -1,33 +1,25 @@
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { CheckCircle, Zap, Globe, Code, Layers, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { HeaderNav } from "@/components/layout/header-nav"
 import { Footer } from "@/components/layout/footer"
+import { HeroPage } from "@/components/sections/hero-page"
 
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-background-dark">
       <HeaderNav />
 
-      {/* Hero Section */}
-      <section className="py-12 md:py-20 bg-gradient-to-br from-secondary via-secondary/80 to-primary/30 dark:from-secondary dark:via-secondary/80 dark:to-primary/30">
-        <div className="container px-4 md:px-6">
-          <div className="max-w-4xl mx-auto text-center space-y-6">
-            <Badge variant="secondary" className="w-fit mx-auto bg-primary text-white dark:bg-primary dark:text-white">
-              Our Services
-            </Badge>
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl dark:text-white">
-              We don't just deliver websites — we design <span className="text-accent">intelligent systems</span>
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto dark:text-white/90">
-              Our services are customised based on where your business is in its digital journey, from initial strategy
-              to full-scale implementation.
-            </p>
-          </div>
-        </div>
-      </section>
+      <HeroPage
+        badge="Our Services"
+        title="We don't just deliver websites — we design"
+        highlightText="intelligent systems"
+        description="Our services are customised based on where your business is in its digital journey, from initial strategy to full-scale implementation."
+        gradientFrom="from-secondary"
+        gradientVia="via-secondary/80"
+        gradientTo="to-primary/30"
+      />
 
       {/* Digital Transformation Consultancy */}
       <section id="consultancy" className="py-12 md:py-20">
