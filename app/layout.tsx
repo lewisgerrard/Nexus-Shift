@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Nexus Shift - Digital Transformation Meets Structured Thinking",
   description:
     "We help innovative SMEs scale effectively by aligning their operations with digital systems, AI-powered tools, and structured business thinking.",
-    generator: 'v0.dev'
+  generator: "v0.dev",
 }
 
 export default function RootLayout({
