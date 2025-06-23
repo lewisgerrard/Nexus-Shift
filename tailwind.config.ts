@@ -20,7 +20,7 @@ const config = {
     },
     extend: {
       colors: {
-        // Custom brand colors
+        // Custom brand colors - EXACTLY AS BEFORE
         primary: {
           DEFAULT: "#0B1F3A", // Midnight Navy
           foreground: "#E2E8F0", // Frosted White

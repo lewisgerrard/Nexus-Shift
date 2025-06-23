@@ -2,16 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -47,7 +37,11 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom font variable */
+    --font-inter: "Inter", system-ui, -apple-system, sans-serif;
   }
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -88,8 +82,14 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-inter);
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 }
 
@@ -135,22 +135,52 @@ body {
   animation: spin-slow 20s linear infinite;
 }
 
-/* Mobile-First Responsive Utilities */
-@media (max-width: 640px) {
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
-
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
 /* Enhanced Focus States for Accessibility */
 @layer components {
   .focus-visible:focus-visible {
     @apply ring-2 ring-secondary ring-offset-2 ring-offset-background;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --primary: 0 0% 0%;
+    --secondary: 180 100% 25%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+  }
+
+  .dark {
+    --primary: 0 0% 100%;
+    --secondary: 180 100% 75%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
   }
 }
