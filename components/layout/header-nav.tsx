@@ -65,10 +65,10 @@ export function HeaderNav() {
           <ThemeToggle />
           <Button
             className="hidden sm:inline-flex bg-secondary hover:bg-secondary/90 text-primary border-0 transform hover:scale-105 transition-all duration-300"
-            onClick={() => (window.location.href = "/admin/login")}
+            onClick={() => scrollToSection("#contact")}
             size="sm"
           >
-            Portal
+            Get Started
           </Button>
           <Button
             variant="ghost"
@@ -96,9 +96,9 @@ export function HeaderNav() {
             ))}
             <Button
               className="w-full bg-secondary hover:bg-secondary/90 text-primary border-0 mt-4 transform hover:scale-105 transition-all duration-300"
-              onClick={() => (window.location.href = "/admin/login")}
+              onClick={() => scrollToSection("#contact")}
             >
-              Portal
+              Get Started
             </Button>
           </div>
         </div>

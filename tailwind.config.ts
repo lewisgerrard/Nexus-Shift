@@ -20,19 +20,33 @@ const config = {
     },
     extend: {
       colors: {
+        // Custom brand colors
+        primary: {
+          DEFAULT: "#0B1F3A", // Midnight Navy
+          foreground: "#E2E8F0", // Frosted White
+        },
+        secondary: {
+          DEFAULT: "#00C2CB", // Electric Teal
+          foreground: "#0A0E17", // Jet Black Blue
+        },
+        background: {
+          light: "#F5F8FB", // Cloud White
+          dark: "#0B1D3A", // Updated to match your request
+        },
+        surface: {
+          light: "#FFFFFF",
+          dark: "#1A202C", // Deep Slate
+        },
+        text: {
+          light: "#2B2B2B", // Charcoal
+          dark: "#E2E8F0", // Frosted White
+        },
+        // Keep existing shadcn colors for compatibility
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -40,10 +54,6 @@ const config = {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -53,6 +63,8 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        accent: "#E6F9FA", // Very light version of Electric Teal, much closer to white
+        "accent-foreground": "hsl(var(--accent-foreground))",
       },
       borderRadius: {
         lg: "var(--radius)",

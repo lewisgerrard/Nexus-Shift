@@ -74,10 +74,10 @@ export function HeroSection() {
             <Button
               size="lg"
               className="w-full sm:w-auto text-lg px-8 py-4 bg-secondary hover:bg-secondary/90 text-primary border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              onClick={() => (window.location.href = "/admin/login")}
+              onClick={() => scrollToSection("#contact")}
             >
               <Zap className="w-4 h-4 mr-2" />
-              Portal
+              Start Your Shift
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button

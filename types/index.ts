@@ -26,6 +26,8 @@ export interface ProjectCardProps {
 export interface TestimonialCardProps {
   quote: string
   author: string
+  role?: string
+  company?: string
 }
 
 export interface NavigationItem {
