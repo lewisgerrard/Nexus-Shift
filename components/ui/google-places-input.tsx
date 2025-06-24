@@ -152,16 +152,26 @@ export function GooglePlacesInput({
       {showSuggestions && suggestions.length > 0 && (
         <div
           ref={suggestionsRef}
-          className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto"
+          className="absolute z-[9999] w-full mt-1 bg-white border-2 border-gray-300 rounded-md shadow-2xl max-h-60 overflow-auto"
+          style={{
+            backgroundColor: "#ffffff",
+            border: "2px solid #d1d5db",
+            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+          }}
         >
           {suggestions.map((suggestion, index) => (
             <div
               key={suggestion.place_id}
-              className={`px-4 py-2 cursor-pointer hover:bg-gray-50 ${index === selectedIndex ? "bg-gray-100" : ""}`}
+              className={`px-4 py-3 cursor-pointer border-b border-gray-100 last:border-b-0 ${
+                index === selectedIndex ? "bg-secondary text-white" : "bg-white hover:bg-gray-50"
+              }`}
               onClick={() => handleSuggestionClick(suggestion)}
+              style={{
+                color: index === selectedIndex ? "#ffffff" : "#0B1F3A",
+                backgroundColor: index === selectedIndex ? "#00C2CB" : "#ffffff",
+              }}
             >
-              {/* Changed text-gray-900 to text-primary for better visibility */}
-              <div className="text-sm text-primary">{suggestion.formatted_address}</div>
+              <div className="text-sm font-medium">{suggestion.formatted_address}</div>
             </div>
           ))}
         </div>
