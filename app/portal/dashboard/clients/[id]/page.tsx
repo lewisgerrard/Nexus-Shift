@@ -222,7 +222,7 @@ export default function ClientDetailPage({ params }: Props) {
           </div>
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">{client.name || "Unknown Client"}</h1>
-            <p className="text-secondary text-lg">Client Details & Management</p>
+            <p className="text-secondary text-lg">{client.address || "No address provided"}</p>
           </div>
         </div>
       </div>
