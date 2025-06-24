@@ -21,6 +21,101 @@ A modern, responsive website for Nexus Shift, built with Next.js 15, TypeScript,
 - **Icons**: Lucide React
 - **Theme**: next-themes
 
+## 🎨 Component Architecture & Style Guidelines
+
+### Component Structure
+
+Our components follow a hierarchical structure for maximum reusability and maintainability:
+
+\`\`\`
+components/
+├── ui/                    # Base UI components (shadcn/ui)
+│   ├── button.tsx        # Reusable button component
+│   ├── card.tsx          # Card layouts
+│   └── ...               # Other primitive components
+├── sections/             # Page-specific sections
+│   ├── hero-section.tsx  # Homepage hero
+│   ├── services-section.tsx
+│   └── ...               # Other content sections
+└── layout/               # Layout components
+    ├── header-nav.tsx    # Navigation header
+    └── footer.tsx        # Site footer
+\`\`\`
+
+### Design System
+
+#### Color Palette
+- **Primary**: `#0B1F3A` (Midnight Navy) - Main brand color
+- **Secondary**: `#00C2CB` (Electric Teal) - Accent and highlights  
+- **Accent**: `#A45EE5` (Neon Purple) - Call-to-action elements
+- **Neutral**: Tailwind gray scale for text and backgrounds
+
+#### Typography Scale
+- **Headings**: `font-bold` with responsive sizing (`text-2xl md:text-4xl`)
+- **Body**: `text-base` with `leading-relaxed` for readability
+- **Captions**: `text-sm text-muted-foreground`
+
+#### Spacing System
+- Consistent use of Tailwind's spacing scale (4, 8, 12, 16, 24, 32px)
+- Section padding: `py-16 md:py-24` for vertical rhythm
+- Container max-width: `max-w-7xl mx-auto px-4`
+
+### Component Guidelines
+
+1. **Props Interface**: Always define TypeScript interfaces for component props
+2. **Responsive Design**: Mobile-first approach with `md:` and `lg:` breakpoints
+3. **Accessibility**: Include ARIA labels, semantic HTML, and keyboard navigation
+4. **Performance**: Use `next/image` for all images, lazy loading by default
+
+### File Naming Conventions
+- Components: `kebab-case.tsx` (e.g., `hero-section.tsx`)
+- Pages: `page.tsx` in respective folders
+- Types: `index.ts` in `types/` directory
+- Utilities: `kebab-case.ts` in `lib/` directory
+
+## 📸 Visual Overview
+
+### Homepage Layout
+\`\`\`
+┌─────────────────────────────────────┐
+│ Header Navigation                   │
+├─────────────────────────────────────┤
+│ Hero Section                        │
+│ - Main headline & CTA               │
+│ - Background animation              │
+├─────────────────────────────────────┤
+│ Services Grid                       │
+│ - 3-column responsive layout        │
+├─────────────────────────────────────┤
+│ About Section                       │
+│ - Company overview                  │
+├─────────────────────────────────────┤
+│ Case Studies                        │
+│ - Project showcases                 │
+├─────────────────────────────────────┤
+│ Testimonials                        │
+│ - Client feedback carousel          │
+├─────────────────────────────────────┤
+│ Footer                              │
+│ - Links, contact, social            │
+└─────────────────────────────────────┘
+\`\`\`
+
+### Portal Dashboard Layout
+\`\`\`
+┌─────────────────────────────────────┐
+│ Dashboard Header                    │
+├─────────────────────────────────────┤
+│ Stats Cards Row                     │
+│ [Total] [Active] [Pending]          │
+├─────────────────────────────────────┤
+│ Clients Table                       │
+│ - Sortable columns                  │
+│ - Action buttons                    │
+│ - Pagination                        │
+└─────────────────────────────────────┘
+\`\`\`
+
 ## 📁 Project Structure
 
 \`\`\`
