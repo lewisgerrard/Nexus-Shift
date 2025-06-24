@@ -160,7 +160,8 @@ export function GooglePlacesInput({
               className={`px-4 py-2 cursor-pointer hover:bg-gray-50 ${index === selectedIndex ? "bg-gray-100" : ""}`}
               onClick={() => handleSuggestionClick(suggestion)}
             >
-              <div className="text-sm text-gray-900">{suggestion.formatted_address}</div>
+              {/* Changed text-gray-900 to text-primary for better visibility */}
+              <div className="text-sm text-primary">{suggestion.formatted_address}</div>
             </div>
           ))}
         </div>
