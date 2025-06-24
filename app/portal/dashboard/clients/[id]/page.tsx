@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react"
 import { notFound } from "next/navigation"
-import { Mail, Phone, MapPin, Edit, Save, X } from "lucide-react"
+import { MapPin, Edit, Save, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -10,73 +10,103 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { updateClient } from "../../actions"
+import { AddContactDialog } from "../../components/add-contact-dialog"
+import { EditContactDialog } from "../../components/edit-contact-dialog"
 
-// Demo client data - in a real app, this would come from a database
+// Update the demo clients data structure
 const demoClients = [
   {
     id: 1,
-    contact_name: "Sarah Johnson",
-    company_name: "TechStart Solutions",
-    email: "sarah@techstart.com",
-    phone: "+1 (555) 123-4567",
+    name: "TechStart Solutions",
     address: "123 Innovation Drive, San Francisco, CA 94105",
-    client_type: "Technology",
+    business_type: "Technology",
     status: "active",
-    notes: "Looking to expand their digital presence with a modern website and mobile app.",
-    created_at: "2024-01-15",
-    updated_at: "2024-01-15",
+    contacts: [
+      {
+        id: 1,
+        first_name: "Sarah",
+        last_name: "Johnson",
+        role: "CEO",
+        email: "sarah@techstart.com",
+        phone: "+1 (555) 123-4567",
+      },
+      {
+        id: 2,
+        first_name: "Mike",
+        last_name: "Chen",
+        role: "CTO",
+        email: "mike@techstart.com",
+        phone: "+1 (555) 123-4568",
+      },
+    ],
   },
   {
     id: 2,
-    contact_name: "Michael Chen",
-    company_name: "Green Earth Consulting",
-    email: "michael@greenearth.com",
-    phone: "+1 (555) 987-6543",
+    name: "Green Earth Consulting",
     address: "456 Eco Street, Portland, OR 97201",
-    client_type: "Consulting",
+    business_type: "Consulting",
     status: "pending",
-    notes: "Environmental consulting firm needing a complete brand overhaul.",
-    created_at: "2024-02-03",
-    updated_at: "2024-02-03",
+    contacts: [
+      {
+        id: 3,
+        first_name: "Michael",
+        last_name: "Chen",
+        role: "CEO",
+        email: "michael@greenearth.com",
+        phone: "+1 (555) 987-6543",
+      },
+    ],
   },
   {
     id: 3,
-    contact_name: "Emily Rodriguez",
-    company_name: "Artisan Bakery Co.",
-    email: "emily@artisanbakery.com",
-    phone: "+1 (555) 456-7890",
+    name: "Artisan Bakery Co.",
     address: "789 Main Street, Austin, TX 73301",
-    client_type: "Retail",
+    business_type: "Retail",
     status: "active",
-    notes: "Local bakery chain looking to establish online ordering system.",
-    created_at: "2024-01-28",
-    updated_at: "2024-01-28",
+    contacts: [
+      {
+        id: 4,
+        first_name: "Emily",
+        last_name: "Rodriguez",
+        role: "Owner",
+        email: "emily@artisanbakery.com",
+        phone: "+1 (555) 456-7890",
+      },
+    ],
   },
   {
     id: 4,
-    contact_name: "David Kim",
-    company_name: "FinanceFlow Inc.",
-    email: "david@financeflow.com",
-    phone: "+1 (555) 321-0987",
+    name: "FinanceFlow Inc.",
     address: "321 Business Blvd, New York, NY 10001",
-    client_type: "Finance",
+    business_type: "Finance",
     status: "inactive",
-    notes: "Financial services company requiring compliance-focused web solutions.",
-    created_at: "2023-12-10",
-    updated_at: "2023-12-10",
+    contacts: [
+      {
+        id: 5,
+        first_name: "David",
+        last_name: "Kim",
+        role: "CFO",
+        email: "david@financeflow.com",
+        phone: "+1 (555) 321-0987",
+      },
+    ],
   },
   {
     id: 5,
-    contact_name: "Lisa Thompson",
-    company_name: "HealthWise Clinic",
-    email: "lisa@healthwise.com",
-    phone: "+1 (555) 654-3210",
+    name: "HealthWise Clinic",
     address: "654 Medical Center Dr, Chicago, IL 60601",
-    client_type: "Healthcare",
+    business_type: "Healthcare",
     status: "active",
-    notes: "Medical practice needing patient portal and appointment scheduling system.",
-    created_at: "2024-02-20",
-    updated_at: "2024-02-20",
+    contacts: [
+      {
+        id: 6,
+        first_name: "Lisa",
+        last_name: "Thompson",
+        role: "Director",
+        email: "lisa@healthwise.com",
+        phone: "+1 (555) 654-3210",
+      },
+    ],
   },
 ]
 
@@ -92,15 +122,14 @@ export default function ClientDetailPage({ params }: ClientDetailPageProps) {
 
   const [isEditing, setIsEditing] = useState(false)
   const [isPending, startTransition] = useTransition()
+  const [refreshKey, setRefreshKey] = useState(0)
+
+  // Update the form data state
   const [formData, setFormData] = useState({
-    contact_name: client?.contact_name || "",
-    company_name: client?.company_name || "",
-    email: client?.email || "",
-    phone: client?.phone || "",
+    name: client?.name || "",
     address: client?.address || "",
-    client_type: client?.client_type || "",
+    business_type: client?.business_type || "",
     status: client?.status || "",
-    notes: client?.notes || "",
   })
 
   if (!client) {
@@ -128,14 +157,10 @@ export default function ClientDetailPage({ params }: ClientDetailPageProps) {
     setIsEditing(false)
     // Reset form data to original values
     setFormData({
-      contact_name: client.contact_name,
-      company_name: client.company_name,
-      email: client.email,
-      phone: client.phone,
+      name: client.name,
       address: client.address,
-      client_type: client.client_type,
+      business_type: client.business_type,
       status: client.status,
-      notes: client.notes,
     })
   }
 
@@ -168,28 +193,29 @@ export default function ClientDetailPage({ params }: ClientDetailPageProps) {
     }))
   }
 
+  const handleContactChange = () => {
+    // Force a re-render by updating the refresh key
+    setRefreshKey((prev) => prev + 1)
+    // In a real app, you would refetch the data here
+    window.location.reload()
+  }
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" key={refreshKey}>
       {/* Header */}
       <div>
         {isEditing ? (
           <div className="space-y-2">
             <Input
-              value={formData.contact_name}
-              onChange={(e) => handleInputChange("contact_name", e.target.value)}
+              value={formData.name}
+              onChange={(e) => handleInputChange("name", e.target.value)}
               className="text-3xl font-bold text-primary border-0 p-0 h-auto bg-transparent shadow-none"
               style={{ fontSize: "1.875rem", lineHeight: "2.25rem" }}
-            />
-            <Input
-              value={formData.company_name}
-              onChange={(e) => handleInputChange("company_name", e.target.value)}
-              className="text-muted-foreground border-0 p-0 h-auto bg-transparent shadow-none"
             />
           </div>
         ) : (
           <div>
-            <h1 className="text-3xl font-bold text-primary">{formData.contact_name}</h1>
-            <p className="text-muted-foreground mt-2">{formData.company_name}</p>
+            <h1 className="text-3xl font-bold text-primary">{formData.name}</h1>
           </div>
         )}
       </div>
@@ -227,39 +253,20 @@ export default function ClientDetailPage({ params }: ClientDetailPageProps) {
           {/* Basic Info Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <Mail className="h-5 w-5 text-secondary" />
+              {/* Address */}
+              <div className="flex items-start space-x-3 pt-0">
+                <MapPin className="h-5 w-5 text-secondary mt-1" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-600">Email</p>
+                  <p className="text-sm font-medium text-gray-600">Address</p>
                   {isEditing ? (
-                    <Input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => handleInputChange("email", e.target.value)}
+                    <Textarea
+                      value={formData.address}
+                      onChange={(e) => handleInputChange("address", e.target.value)}
                       className="mt-1"
+                      rows={2}
                     />
                   ) : (
-                    <a href={`mailto:${formData.email}`} className="text-secondary hover:underline">
-                      {formData.email}
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-secondary" />
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-600">Phone</p>
-                  {isEditing ? (
-                    <Input
-                      value={formData.phone}
-                      onChange={(e) => handleInputChange("phone", e.target.value)}
-                      className="mt-1"
-                    />
-                  ) : (
-                    <a href={`tel:${formData.phone}`} className="text-secondary hover:underline">
-                      {formData.phone}
-                    </a>
+                    <p className="text-gray-700">{formData.address}</p>
                   )}
                 </div>
               </div>
@@ -287,11 +294,11 @@ export default function ClientDetailPage({ params }: ClientDetailPageProps) {
               </div>
 
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-2">Client Type</p>
+                <p className="text-sm font-medium text-gray-600 mb-2">Business Type</p>
                 {isEditing ? (
                   <Select
-                    value={formData.client_type}
-                    onValueChange={(value) => handleInputChange("client_type", value)}
+                    value={formData.business_type}
+                    onValueChange={(value) => handleInputChange("business_type", value)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select type" />
@@ -310,44 +317,78 @@ export default function ClientDetailPage({ params }: ClientDetailPageProps) {
                   </Select>
                 ) : (
                   <Badge variant="outline" className="border-secondary text-secondary">
-                    {formData.client_type}
+                    {formData.business_type}
                   </Badge>
                 )}
               </div>
             </div>
           </div>
+        </CardContent>
+      </Card>
 
-          {/* Address */}
-          <div className="flex items-start space-x-3 pt-4 border-t">
-            <MapPin className="h-5 w-5 text-secondary mt-1" />
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-600">Address</p>
-              {isEditing ? (
-                <Textarea
-                  value={formData.address}
-                  onChange={(e) => handleInputChange("address", e.target.value)}
-                  className="mt-1"
-                  rows={2}
-                />
-              ) : (
-                <p className="text-gray-700">{formData.address}</p>
-              )}
-            </div>
-          </div>
-
-          {/* Notes */}
-          <div className="pt-4 border-t">
-            <p className="text-sm font-medium text-gray-600 mb-2">Notes</p>
-            {isEditing ? (
-              <Textarea
-                value={formData.notes}
-                onChange={(e) => handleInputChange("notes", e.target.value)}
-                rows={3}
-                placeholder="Additional notes about the client..."
-              />
-            ) : (
-              <p className="text-gray-700 leading-relaxed">{formData.notes}</p>
-            )}
+      {/* Contacts Card */}
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle className="text-primary">Contacts</CardTitle>
+          <AddContactDialog clientId={client.id} onContactAdded={handleContactChange} />
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr>
+                  <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    First Name
+                  </th>
+                  <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Last Name
+                  </th>
+                  <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Role
+                  </th>
+                  <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Phone
+                  </th>
+                  <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {client.contacts.map((contact) => (
+                  <tr key={contact.id}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {contact.first_name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{contact.last_name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{contact.role}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <a href={`mailto:${contact.email}`} className="text-secondary hover:underline">
+                        {contact.email}
+                      </a>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <a href={`tel:${contact.phone}`} className="text-secondary hover:underline">
+                        {contact.phone}
+                      </a>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <EditContactDialog contact={contact} onContactUpdated={handleContactChange} />
+                    </td>
+                  </tr>
+                ))}
+                {client.contacts.length === 0 && (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-4 text-center text-gray-500">
+                      No contacts found. Click "Add Contact" to get started.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         </CardContent>
       </Card>

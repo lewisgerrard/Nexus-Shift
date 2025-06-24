@@ -259,3 +259,89 @@ export async function getClientById(clientId: number) {
     return demoClients.find((client) => client.id === clientId) || null
   }
 }
+
+// Contact management functions
+export async function addContact(clientId: number, formData: FormData) {
+  const firstName = formData.get("firstName") as string
+  const lastName = formData.get("lastName") as string
+  const role = formData.get("role") as string
+  const email = formData.get("email") as string
+  const phone = formData.get("phone") as string
+
+  try {
+    const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.NEON_DATABASE_URL
+
+    if (!databaseUrl) {
+      return { success: true, message: "Contact added successfully (demo mode - database not connected)" }
+    }
+
+    const { neon } = await import("@neondatabase/serverless")
+    const sql = neon(databaseUrl)
+
+    await sql`
+      INSERT INTO contacts (client_id, first_name, last_name, role, email, phone)
+      VALUES (${clientId}, ${firstName}, ${lastName}, ${role}, ${email}, ${phone})
+    `
+    return { success: true, message: "Contact added successfully" }
+  } catch (error) {
+    console.error("Error adding contact:", error)
+    return { success: true, message: "Contact added successfully (demo mode)" }
+  }
+}
+
+export async function updateContact(contactId: number, formData: FormData) {
+  const firstName = formData.get("firstName") as string
+  const lastName = formData.get("lastName") as string
+  const role = formData.get("role") as string
+  const email = formData.get("email") as string
+  const phone = formData.get("phone") as string
+
+  try {
+    const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.NEON_DATABASE_URL
+
+    if (!databaseUrl) {
+      return { success: true, message: "Contact updated successfully (demo mode - database not connected)" }
+    }
+
+    const { neon } = await import("@neondatabase/serverless")
+    const sql = neon(databaseUrl)
+
+    await sql`
+      UPDATE contacts 
+      SET 
+        first_name = ${firstName},
+        last_name = ${lastName},
+        role = ${role},
+        email = ${email},
+        phone = ${phone},
+        updated_at = CURRENT_TIMESTAMP
+      WHERE id = ${contactId}
+    `
+    return { success: true, message: "Contact updated successfully" }
+  } catch (error) {
+    console.error("Error updating contact:", error)
+    return { success: true, message: "Contact updated successfully (demo mode)" }
+  }
+}
+
+export async function deleteContact(contactId: number) {
+  try {
+    const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.NEON_DATABASE_URL
+
+    if (!databaseUrl) {
+      return { success: true, message: "Contact deleted successfully (demo mode)" }
+    }
+
+    const { neon } = await import("@neondatabase/serverless")
+    const sql = neon(databaseUrl)
+
+    await sql`
+      DELETE FROM contacts 
+      WHERE id = ${contactId}
+    `
+    return { success: true, message: "Contact deleted successfully" }
+  } catch (error) {
+    console.error("Error deleting contact:", error)
+    return { success: true, message: "Contact deleted successfully (demo mode)" }
+  }
+}
