@@ -32,7 +32,7 @@ export function LoginForm() {
         )
 
         // Use replace to avoid back button issues
-        window.location.replace("/portal/dashboard")
+        window.location.replace("/portal")
       } else {
         setError("Invalid credentials. Use lewis.gerrard@outlook.com / password")
       }

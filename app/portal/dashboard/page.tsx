@@ -1,44 +1,40 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Users, Building2, UserCheck, Clock } from "lucide-react"
 
 export default function DashboardPage() {
-  const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    setTimeout(() => {
-      try {
-        const session = localStorage.getItem("portal-session")
-        if (session) {
-          const data = JSON.parse(session)
-          if (data.loggedIn) {
+    // Check authentication
+    if (typeof window !== "undefined") {
+      const session = localStorage.getItem("portal-session")
+      if (session) {
+        try {
+          const sessionData = JSON.parse(session)
+          if (sessionData.loggedIn) {
             setIsAuthenticated(true)
           } else {
-            window.location.href = "/portal"
+            window.location.replace("/login")
           }
-        } else {
-          window.location.href = "/portal"
+        } catch (e) {
+          localStorage.removeItem("portal-session")
+          window.location.replace("/login")
         }
-      } catch {
-        window.location.href = "/portal"
+      } else {
+        window.location.replace("/login")
       }
-      setIsLoading(false)
-    }, 500)
+    }
+    setIsLoading(false)
   }, [])
 
   if (isLoading) {
     return (
-      <div
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontFamily: "system-ui",
-        }}
-      >
-        <div>Loading...</div>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     )
   }
@@ -48,123 +44,113 @@ export default function DashboardPage() {
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        padding: "2rem",
-        fontFamily: "system-ui",
-        backgroundColor: "#f8f9fa",
-      }}
-    >
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "2rem",
-          }}
-        >
-          <h1 style={{ fontSize: "2rem", margin: 0 }}>Dashboard</h1>
-          <button
-            onClick={() => {
-              localStorage.removeItem("portal-session")
-              window.location.href = "/portal"
-            }}
-            style={{
-              padding: "0.5rem 1rem",
-              backgroundColor: "#dc2626",
-              color: "white",
-              border: "none",
-              borderRadius: "0.5rem",
-              cursor: "pointer",
-            }}
-          >
-            Logout
-          </button>
-        </div>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        <p className="text-muted-foreground">Welcome back, Lewis. Here's what's happening with your clients.</p>
+      </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-            gap: "1rem",
-            marginBottom: "2rem",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "1.5rem",
-              borderRadius: "0.5rem",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-            }}
-          >
-            <h3 style={{ margin: "0 0 0.5rem 0", color: "#666" }}>Total Clients</h3>
-            <p style={{ fontSize: "2rem", fontWeight: "bold", margin: 0 }}>12</p>
-          </div>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Clients</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">12</div>
+            <p className="text-xs text-muted-foreground">+2 from last month</p>
+          </CardContent>
+        </Card>
 
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "1.5rem",
-              borderRadius: "0.5rem",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-            }}
-          >
-            <h3 style={{ margin: "0 0 0.5rem 0", color: "#666" }}>Active Projects</h3>
-            <p style={{ fontSize: "2rem", fontWeight: "bold", margin: 0 }}>8</p>
-          </div>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Active Projects</CardTitle>
+            <Building2 className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">8</div>
+            <p className="text-xs text-muted-foreground">+1 from last week</p>
+          </CardContent>
+        </Card>
 
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "1.5rem",
-              borderRadius: "0.5rem",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-            }}
-          >
-            <h3 style={{ margin: "0 0 0.5rem 0", color: "#666" }}>Completed</h3>
-            <p style={{ fontSize: "2rem", fontWeight: "bold", margin: 0, color: "#16a34a" }}>24</p>
-          </div>
-        </div>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Completed</CardTitle>
+            <UserCheck className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">24</div>
+            <p className="text-xs text-muted-foreground">+4 this month</p>
+          </CardContent>
+        </Card>
 
-        <div
-          style={{
-            backgroundColor: "white",
-            padding: "1.5rem",
-            borderRadius: "0.5rem",
-            boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h2 style={{ marginBottom: "1rem" }}>Quick Actions</h2>
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            <a
-              href="/portal/dashboard/clients"
-              style={{
-                padding: "0.75rem 1.5rem",
-                backgroundColor: "#1e293b",
-                color: "white",
-                textDecoration: "none",
-                borderRadius: "0.5rem",
-              }}
-            >
-              Manage Clients
-            </a>
-            <button
-              style={{
-                padding: "0.75rem 1.5rem",
-                backgroundColor: "#6b7280",
-                color: "white",
-                border: "none",
-                borderRadius: "0.5rem",
-                cursor: "pointer",
-              }}
-            >
-              Schedule Meeting
-            </button>
-          </div>
-        </div>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Pending</CardTitle>
+            <Clock className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">3</div>
+            <p className="text-xs text-muted-foreground">-1 from yesterday</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+        <Card className="col-span-4">
+          <CardHeader>
+            <CardTitle>Recent Activity</CardTitle>
+            <CardDescription>Latest updates from your client projects</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-4">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">TechCorp website launched</p>
+                  <p className="text-xs text-muted-foreground">2 hours ago</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">New client onboarded: RetailPlus</p>
+                  <p className="text-xs text-muted-foreground">1 day ago</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">HealthCare Inc. project milestone reached</p>
+                  <p className="text-xs text-muted-foreground">3 days ago</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="col-span-3">
+          <CardHeader>
+            <CardTitle>Quick Actions</CardTitle>
+            <CardDescription>Common tasks and shortcuts</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <button className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors">
+                <p className="text-sm font-medium">Add New Client</p>
+                <p className="text-xs text-muted-foreground">Create a new client profile</p>
+              </button>
+              <button className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors">
+                <p className="text-sm font-medium">View All Projects</p>
+                <p className="text-xs text-muted-foreground">See project status overview</p>
+              </button>
+              <button className="w-full text-left p-2 rounded-lg hover:bg-muted transition-colors">
+                <p className="text-sm font-medium">Generate Report</p>
+                <p className="text-xs text-muted-foreground">Create monthly summary</p>
+              </button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

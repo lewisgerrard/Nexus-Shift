@@ -75,7 +75,7 @@ export function HeaderNav() {
           <ThemeToggle />
           <Button
             className="hidden sm:inline-flex bg-secondary hover:bg-secondary/90 text-primary border-0 transform hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary"
-            onClick={() => (window.location.href = "/portal")}
+            onClick={() => (window.location.href = "/login")}
             size="sm"
           >
             Portal
@@ -109,7 +109,7 @@ export function HeaderNav() {
             ))}
             <Button
               className="w-full bg-secondary hover:bg-secondary/90 text-primary border-0 mt-4 transform hover:scale-105 transition-all duration-300"
-              onClick={() => (window.location.href = "/portal")}
+              onClick={() => (window.location.href = "/login")}
             >
               Portal
             </Button>

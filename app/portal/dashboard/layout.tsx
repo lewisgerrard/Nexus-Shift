@@ -78,8 +78,14 @@ export default function DashboardLayout({
             </div>
           </div>
           <Link
-            href="/portal"
+            href="/login"
             className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-all duration-200"
+            onClick={() => {
+              // Clear session on logout
+              if (typeof window !== "undefined") {
+                localStorage.removeItem("portal-session")
+              }
+            }}
           >
             <LogOut className="h-4 w-4" />
             <span>Sign Out</span>
