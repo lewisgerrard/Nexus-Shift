@@ -12,42 +12,64 @@ async function getClientsFromDatabase() {
     // Check if database environment variables are available
     const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.NEON_DATABASE_URL
 
+    console.log("Database URL exists:", !!databaseUrl)
+    console.log("Database URL preview:", databaseUrl ? databaseUrl.substring(0, 20) + "..." : "none")
+
     if (!databaseUrl) {
       console.log("No database URL found")
-      return null
+      return { clients: null, error: "No database URL configured" }
     }
 
     // Try to import and use Neon
     const { neon } = await import("@neondatabase/serverless")
     const sql = neon(databaseUrl)
 
+    console.log("Attempting to connect to database...")
+
+    // First, let's check if the table exists
+    const tableCheck = await sql`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_schema = 'public' 
+        AND table_name = 'clients'
+      );
+    `
+
+    console.log("Table exists check:", tableCheck)
+
+    if (!tableCheck[0]?.exists) {
+      console.log("Clients table does not exist")
+      return { clients: null, error: "Clients table does not exist" }
+    }
+
+    // Get table structure
+    const tableStructure = await sql`
+      SELECT column_name, data_type 
+      FROM information_schema.columns 
+      WHERE table_name = 'clients' 
+      ORDER BY ordinal_position;
+    `
+
+    console.log("Table structure:", tableStructure)
+
+    // Try to get clients
     const clients = await sql`
-      SELECT 
-        id,
-        contact_name,
-        company_name,
-        email,
-        phone,
-        address,
-        client_type,
-        status,
-        notes,
-        created_at,
-        updated_at
-      FROM clients 
+      SELECT * FROM clients 
       ORDER BY created_at DESC
     `
 
     console.log(`Successfully fetched ${clients.length} clients from database`)
-    return clients
+    console.log("Sample client data:", clients[0])
+
+    return { clients, error: null }
   } catch (error) {
     console.error("Database connection failed:", error)
-    return null
+    return { clients: null, error: error.message }
   }
 }
 
 function getStatusColor(status: string) {
-  switch (status.toLowerCase()) {
+  switch (status?.toLowerCase()) {
     case "active":
       return "bg-green-100 text-green-800 hover:bg-green-200"
     case "pending":
@@ -60,7 +82,7 @@ function getStatusColor(status: string) {
 }
 
 function getTypeColor(type: string) {
-  switch (type.toLowerCase()) {
+  switch (type?.toLowerCase()) {
     case "enterprise":
       return "bg-blue-100 text-blue-800 hover:bg-blue-200"
     case "startup":
@@ -76,7 +98,7 @@ function getTypeColor(type: string) {
 
 export default async function ClientsPage() {
   // Try to get real data from database
-  const databaseClients = await getClientsFromDatabase()
+  const { clients: databaseClients, error } = await getClientsFromDatabase()
 
   // Fallback demo data if database fails
   const demoClients = [
@@ -118,10 +140,15 @@ export default async function ClientsPage() {
         <h1 className="text-3xl font-bold text-primary">Clients</h1>
         <p className="text-muted-foreground mt-2">Manage your client relationships</p>
         {usingDemoData && (
-          <div className="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded-md">
-            <p className="text-sm text-yellow-800">
-              ⚠️ Using demo data - Database connection issue. Check environment variables.
-            </p>
+          <div className="mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+            <p className="text-sm text-yellow-800 font-medium">⚠️ Using demo data - Database issue detected</p>
+            {error && <p className="text-xs text-yellow-700 mt-1">Error: {error}</p>}
+            <p className="text-xs text-yellow-600 mt-1">Check server logs for detailed debugging information</p>
+          </div>
+        )}
+        {!usingDemoData && (
+          <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-md">
+            <p className="text-sm text-green-800">✅ Connected to database - Showing {clients.length} real clients</p>
           </div>
         )}
       </div>
@@ -192,17 +219,17 @@ export default async function ClientsPage() {
                   <TableRow key={client.id} className="cursor-pointer hover:bg-muted/50">
                     <TableCell className="font-medium">
                       <Link href={`/portal/dashboard/clients/${client.id}`} className="block w-full">
-                        {client.company_name || client.contact_name}
+                        {client.company_name || client.contact_name || `Client ${client.id}`}
                       </Link>
                     </TableCell>
                     <TableCell>
                       <Badge variant="secondary" className={getTypeColor(client.client_type)}>
-                        {client.client_type}
+                        {client.client_type || "Unknown"}
                       </Badge>
                     </TableCell>
                     <TableCell>
                       <Badge variant="secondary" className={getStatusColor(client.status)}>
-                        {client.status.charAt(0).toUpperCase() + client.status.slice(1)}
+                        {client.status ? client.status.charAt(0).toUpperCase() + client.status.slice(1) : "Unknown"}
                       </Badge>
                     </TableCell>
                   </TableRow>
