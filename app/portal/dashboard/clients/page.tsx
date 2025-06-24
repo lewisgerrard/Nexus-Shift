@@ -1,3 +1,6 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import { Plus, Users, UserCheck, Clock, Building } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -5,68 +8,6 @@ import { AddClientDialog } from "../components/add-client-dialog"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-
-// Function to get clients from database
-async function getClientsFromDatabase() {
-  try {
-    // Check if database environment variables are available
-    const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.NEON_DATABASE_URL
-
-    console.log("Database URL exists:", !!databaseUrl)
-    console.log("Database URL preview:", databaseUrl ? databaseUrl.substring(0, 20) + "..." : "none")
-
-    if (!databaseUrl) {
-      console.log("No database URL found")
-      return { clients: null, error: "No database URL configured" }
-    }
-
-    // Try to import and use Neon
-    const { neon } = await import("@neondatabase/serverless")
-    const sql = neon(databaseUrl)
-
-    console.log("Attempting to connect to database...")
-
-    // First, let's check if the table exists
-    const tableCheck = await sql`
-      SELECT EXISTS (
-        SELECT FROM information_schema.tables 
-        WHERE table_schema = 'public' 
-        AND table_name = 'clients'
-      );
-    `
-
-    console.log("Table exists check:", tableCheck)
-
-    if (!tableCheck[0]?.exists) {
-      console.log("Clients table does not exist")
-      return { clients: null, error: "Clients table does not exist" }
-    }
-
-    // Get table structure
-    const tableStructure = await sql`
-      SELECT column_name, data_type 
-      FROM information_schema.columns 
-      WHERE table_name = 'clients' 
-      ORDER BY ordinal_position;
-    `
-
-    console.log("Table structure:", tableStructure)
-
-    // Try to get clients
-    const clients = await sql`
-      SELECT * FROM clients 
-      ORDER BY created_at DESC
-    `
-
-    console.log(`Successfully fetched ${clients.length} clients from database`)
-    console.log("Sample client data:", clients[0])
-
-    return { clients, error: null }
-  } catch (error) {
-    console.error("Database connection failed:", error)
-    return { clients: null, error: error.message }
-  }
-}
 
 function getStatusColor(status: string) {
   switch (status?.toLowerCase()) {
@@ -96,11 +37,13 @@ function getTypeColor(type: string) {
   }
 }
 
-export default async function ClientsPage() {
-  // Try to get real data from database
-  const { clients: databaseClients, error } = await getClientsFromDatabase()
+export default function ClientsPage() {
+  const [clients, setClients] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [usingDemoData, setUsingDemoData] = useState(false)
 
-  // Fallback demo data if database fails
+  // Demo data fallback
   const demoClients = [
     {
       id: 1,
@@ -125,9 +68,71 @@ export default async function ClientsPage() {
     },
   ]
 
-  // Use database data if available, otherwise use demo data
-  const clients = databaseClients || demoClients
-  const usingDemoData = !databaseClients
+  useEffect(() => {
+    async function fetchClients() {
+      try {
+        const response = await fetch("/api/clients")
+        const data = await response.json()
+
+        if (data.success) {
+          setClients(data.clients)
+          setUsingDemoData(false)
+        } else {
+          setClients(demoClients)
+          setUsingDemoData(true)
+          setError(data.error)
+        }
+      } catch (err) {
+        console.error("Failed to fetch clients:", err)
+        setClients(demoClients)
+        setUsingDemoData(true)
+        setError("Failed to connect to API")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchClients()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold text-primary">Clients</h1>
+          <p className="text-muted-foreground mt-2">Loading client data...</p>
+        </div>
+
+        {/* Loading skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {[1, 2, 3, 4].map((i) => (
+            <Card key={i}>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <div className="h-4 bg-gray-200 rounded w-20 animate-pulse"></div>
+                <div className="h-4 w-4 bg-gray-200 rounded animate-pulse"></div>
+              </CardHeader>
+              <CardContent>
+                <div className="h-8 bg-gray-200 rounded w-12 animate-pulse"></div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <Card>
+          <CardHeader>
+            <div className="h-6 bg-gray-200 rounded w-32 animate-pulse"></div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-12 bg-gray-100 rounded animate-pulse"></div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
 
   const totalClients = clients.length
   const activeClients = clients.filter((client) => client.status === "active").length
