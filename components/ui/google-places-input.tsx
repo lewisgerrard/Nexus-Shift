@@ -29,7 +29,6 @@ export function GooglePlacesInput({
   const [isLoading, setIsLoading] = useState(false)
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(-1)
-  const [debugInfo, setDebugInfo] = useState<string>("")
   const inputRef = useRef<HTMLInputElement>(null)
   const suggestionsRef = useRef<HTMLDivElement>(null)
   const debounceRef = useRef<NodeJS.Timeout>()
@@ -38,33 +37,20 @@ export function GooglePlacesInput({
     if (input.length < 3) {
       setSuggestions([])
       setShowSuggestions(false)
-      setDebugInfo("")
       return
     }
 
     setIsLoading(true)
-    setDebugInfo(`Searching for: "${input}"...`)
-
     try {
-      console.log("Fetching suggestions for:", input)
       const results = await searchPlaces(input)
-      console.log("API returned:", results)
-
-      if (results && results.length > 0) {
-        setSuggestions(results)
-        setShowSuggestions(true)
-        setDebugInfo(`Found ${results.length} results`)
-      } else {
-        setSuggestions([])
-        setShowSuggestions(false)
-        setDebugInfo("No results found")
-      }
+      console.log("Fetched suggestions:", results) // Debug log
+      setSuggestions(results)
+      setShowSuggestions(results.length > 0)
       setSelectedIndex(-1)
     } catch (error) {
       console.error("Error fetching suggestions:", error)
       setSuggestions([])
       setShowSuggestions(false)
-      setDebugInfo(`Error: ${error instanceof Error ? error.message : "Unknown error"}`)
     } finally {
       setIsLoading(false)
     }
@@ -89,6 +75,7 @@ export function GooglePlacesInput({
   }
 
   const handleSuggestionClick = async (suggestion: PlaceResult) => {
+    console.log("Clicked suggestion:", suggestion) // Debug log
     setIsLoading(true)
     try {
       const details = await getPlaceDetails(suggestion.place_id)
@@ -164,60 +151,67 @@ export function GooglePlacesInput({
         </div>
       )}
 
-      {/* Debug info */}
-      {debugInfo && (
-        <div
-          className="absolute w-full mt-1 px-3 py-2 text-xs rounded-md"
-          style={{
-            zIndex: 9999,
-            backgroundColor: "#f3f4f6",
-            color: "#374151",
-            border: "1px solid #d1d5db",
-          }}
-        >
-          {debugInfo}
-        </div>
-      )}
-
       {showSuggestions && suggestions.length > 0 && (
         <div
           ref={suggestionsRef}
-          className="absolute w-full mt-1 rounded-md max-h-60 overflow-auto"
           style={{
+            position: "absolute",
+            top: "100%",
+            left: "0",
+            right: "0",
             zIndex: 10000,
+            marginTop: "4px",
             backgroundColor: "#ffffff",
             border: "2px solid #d1d5db",
+            borderRadius: "6px",
             boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+            maxHeight: "240px",
+            overflowY: "auto",
           }}
         >
           {suggestions.map((suggestion, index) => (
             <div
               key={suggestion.place_id}
-              className="px-4 py-3 cursor-pointer border-b last:border-b-0"
               onClick={() => handleSuggestionClick(suggestion)}
-              style={{
-                backgroundColor: index === selectedIndex ? "#00C2CB" : "#ffffff",
-                color: index === selectedIndex ? "#ffffff" : "#0B1F3A",
-                borderBottomColor: "#e5e7eb",
-                fontWeight: "500",
-                fontSize: "14px",
-                lineHeight: "1.25rem",
-              }}
               onMouseEnter={() => setSelectedIndex(index)}
               onMouseLeave={() => setSelectedIndex(-1)}
+              style={{
+                padding: "12px 16px",
+                cursor: "pointer",
+                backgroundColor: index === selectedIndex ? "#00C2CB" : "#ffffff",
+                borderBottom: index < suggestions.length - 1 ? "1px solid #e5e7eb" : "none",
+                fontSize: "14px",
+                fontWeight: "500",
+                lineHeight: "1.25rem",
+                color: index === selectedIndex ? "#ffffff" : "#000000", // Changed to pure black
+                fontFamily: "system-ui, -apple-system, sans-serif", // Explicit font family
+                textAlign: "left" as const,
+                whiteSpace: "nowrap" as const,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
             >
-              {suggestion.formatted_address || "No address available"}
+              <span
+                style={{
+                  color: index === selectedIndex ? "#ffffff" : "#000000",
+                  display: "block",
+                  width: "100%",
+                }}
+              >
+                {suggestion.formatted_address}
+              </span>
             </div>
           ))}
 
-          {/* Debug section at bottom of dropdown */}
+          {/* Debug info - remove this after testing */}
           <div
             style={{
-              backgroundColor: "#f9fafb",
-              color: "#6b7280",
-              fontSize: "12px",
               padding: "8px 16px",
+              backgroundColor: "#f3f4f6",
               borderTop: "1px solid #e5e7eb",
+              fontSize: "12px",
+              color: "#000000",
+              fontFamily: "monospace",
             }}
           >
             Debug: {suggestions.length} suggestions loaded
