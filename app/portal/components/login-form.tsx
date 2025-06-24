@@ -18,23 +18,27 @@ export function LoginForm() {
     setError("")
 
     try {
-      // Simple client-side validation
-      if (email === "lewis.gerrard@outlook.com" && password === "password") {
-        // Set session in localStorage
-        localStorage.setItem(
-          "portal-session",
-          JSON.stringify({
-            email: "lewis.gerrard@outlook.com",
-            name: "Lewis Gerrard",
-            loggedIn: true,
-            timestamp: Date.now(),
-          }),
-        )
+      // Create FormData and call the server action
+      const formData = new FormData()
+      formData.append("email", email)
+      formData.append("password", password)
 
-        // Use replace to avoid back button issues
-        window.location.replace("/portal/dashboard")
+      // Call the server action
+      const result = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      })
+
+      const data = await result.json()
+
+      if (data.success) {
+        // Redirect to dashboard on success
+        window.location.href = "/portal/dashboard"
       } else {
-        setError("Invalid credentials. Use lewis.gerrard@outlook.com / password")
+        setError(data.error || "Login failed. Please try again.")
       }
     } catch (err) {
       setError("Login failed. Please try again.")

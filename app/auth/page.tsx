@@ -21,29 +21,28 @@ export default function AuthPage() {
     setIsLoading(true)
     setError("")
 
-    // Add a small delay to show loading state
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      })
 
-    // Simple demo authentication
-    if (email === "lewis.gerrard@outlook.com" && password === "password") {
-      // Set session in localStorage
-      localStorage.setItem(
-        "portal-session",
-        JSON.stringify({
-          loggedIn: true,
-          email: email,
-          name: "Lewis Gerrard",
-          timestamp: Date.now(),
-        }),
-      )
+      const data = await response.json()
 
-      // Direct navigation to dashboard
-      window.location.href = "/portal/dashboard"
-    } else {
-      setError("Invalid credentials. Use lewis.gerrard@outlook.com / password")
+      if (data.success) {
+        // Redirect to dashboard on success
+        window.location.href = "/portal/dashboard"
+      } else {
+        setError(data.error || "Login failed. Please try again.")
+      }
+    } catch (err) {
+      setError("Login failed. Please try again.")
+    } finally {
+      setIsLoading(false)
     }
-
-    setIsLoading(false)
   }
 
   return (
