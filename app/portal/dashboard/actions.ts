@@ -25,67 +25,19 @@ export async function getClients() {
       return { success: false, clients: [], error: "Clients table does not exist" }
     }
 
-    // Get table structure to understand what columns we have
-    const tableStructure = await sql`
-      SELECT column_name, data_type 
-      FROM information_schema.columns 
-      WHERE table_name = 'clients' 
-      ORDER BY ordinal_position;
+    // Get clients using the new simplified structure
+    const clients = await sql`
+      SELECT 
+        id,
+        name,
+        size,
+        address,
+        status,
+        created_at,
+        updated_at
+      FROM clients 
+      ORDER BY created_at DESC
     `
-
-    // Check what columns are available
-    const columnNames = tableStructure.map((col) => col.column_name)
-    const hasNewStructure = columnNames.includes("name") && columnNames.includes("size")
-    const hasOldStructure = columnNames.includes("contact_name") && columnNames.includes("client_type")
-
-    // Try to get clients with flexible column selection
-    let clients
-    if (hasNewStructure) {
-      // Use new 4-field structure
-      clients = await sql`
-        SELECT 
-          id,
-          name,
-          size,
-          address,
-          status,
-          created_at,
-          updated_at
-        FROM clients 
-        ORDER BY created_at DESC
-      `
-    } else if (hasOldStructure) {
-      // Use old structure but map to new format
-      clients = await sql`
-        SELECT 
-          id,
-          COALESCE(company_name, contact_name, 'Unnamed Client') as name,
-          COALESCE(client_type, 'Unknown') as size,
-          COALESCE(address, '') as address,
-          COALESCE(status, 'pending') as status,
-          created_at,
-          updated_at
-        FROM clients 
-        ORDER BY created_at DESC
-      `
-    } else {
-      // Fallback - get whatever columns exist
-      clients = await sql`
-        SELECT * FROM clients 
-        ORDER BY created_at DESC
-      `
-
-      // Map the data to expected format
-      clients = clients.map((client) => ({
-        id: client.id,
-        name: client.name || client.company_name || client.contact_name || "Unnamed Client",
-        size: client.size || client.client_type || "Unknown",
-        address: client.address || "",
-        status: client.status || "pending",
-        created_at: client.created_at,
-        updated_at: client.updated_at,
-      }))
-    }
 
     return { success: true, clients, error: null }
   } catch (error) {
@@ -129,76 +81,28 @@ export async function addClient(formData: FormData) {
 
     const sql = neon(databaseUrl)
 
-    // Check what columns exist in the table
-    const tableStructure = await sql`
-      SELECT column_name, is_nullable
-      FROM information_schema.columns 
-      WHERE table_name = 'clients'
+    // Insert using the new simplified structure
+    await sql`
+      INSERT INTO clients (
+        name, 
+        size, 
+        address, 
+        status,
+        created_at,
+        updated_at
+      ) VALUES (
+        ${name}, 
+        ${size}, 
+        ${address || ""}, 
+        ${status},
+        NOW(),
+        NOW()
+      )
     `
-
-    const columns = tableStructure.reduce((acc, col) => {
-      acc[col.column_name] = col.is_nullable === "YES"
-      return acc
-    }, {})
-
-    // Determine the best insertion strategy based on available columns
-    if (columns.name && columns.size) {
-      // New structure exists - use it
-      await sql`
-        INSERT INTO clients (
-          name, 
-          size, 
-          address, 
-          status,
-          created_at,
-          updated_at
-        ) VALUES (
-          ${name}, 
-          ${size}, 
-          ${address || ""}, 
-          ${status},
-          NOW(),
-          NOW()
-        )
-      `
-    } else {
-      // Old structure - populate all required fields
-      await sql`
-        INSERT INTO clients (
-          contact_name,
-          company_name,
-          email,
-          phone,
-          address,
-          client_type,
-          status,
-          created_at,
-          updated_at
-        ) VALUES (
-          ${name},
-          ${name},
-          ${""},
-          ${""},
-          ${address || ""},
-          ${size},
-          ${status},
-          NOW(),
-          NOW()
-        )
-      `
-    }
 
     return { success: true, message: "Client added successfully" }
   } catch (error) {
     console.error("Error adding client:", error)
-
-    if (error.message.includes("not-null constraint")) {
-      return {
-        success: false,
-        message: "Database schema mismatch. Please run the latest migration script.",
-      }
-    }
-
     return { success: false, message: `Failed to add client: ${error.message}` }
   }
 }
@@ -218,40 +122,16 @@ export async function updateClient(id: number, formData: FormData) {
     const address = formData.get("address") as string
     const status = formData.get("status") as string
 
-    // Check what columns exist in the table
-    const tableStructure = await sql`
-      SELECT column_name 
-      FROM information_schema.columns 
-      WHERE table_name = 'clients'
+    // Update using the new simplified structure
+    await sql`
+      UPDATE clients SET
+        name = ${name},
+        size = ${size},
+        address = ${address},
+        status = ${status},
+        updated_at = NOW()
+      WHERE id = ${id}
     `
-
-    const columnNames = tableStructure.map((col) => col.column_name)
-    const hasNewStructure = columnNames.includes("name") && columnNames.includes("size")
-
-    if (hasNewStructure) {
-      // Use new 4-field structure
-      await sql`
-        UPDATE clients SET
-          name = ${name},
-          size = ${size},
-          address = ${address},
-          status = ${status},
-          updated_at = NOW()
-        WHERE id = ${id}
-      `
-    } else {
-      // Fallback to old structure
-      await sql`
-        UPDATE clients SET
-          contact_name = ${name},
-          company_name = ${name},
-          client_type = ${size},
-          address = ${address},
-          status = ${status},
-          updated_at = NOW()
-        WHERE id = ${id}
-      `
-    }
 
     return { success: true, message: "Client updated successfully" }
   } catch (error) {
