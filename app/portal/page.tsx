@@ -1,6 +1,43 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { LoginForm } from "./components/login-form"
 
 export default function PortalPage() {
+  const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
+
+  useEffect(() => {
+    // Check if user is already authenticated
+    const checkAuth = () => {
+      try {
+        const session = localStorage.getItem("portal-session")
+        if (session) {
+          const parsedSession = JSON.parse(session)
+          if (parsedSession.loggedIn) {
+            router.replace("/portal/dashboard")
+            return
+          }
+        }
+      } catch (error) {
+        console.error("Auth check error:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    checkAuth()
+  }, [router])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-primary flex items-center justify-center p-4">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-foreground"></div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-primary flex items-center justify-center p-4">
       <div className="w-full max-w-md">

@@ -19,7 +19,7 @@ export function LoginForm() {
     setError("")
 
     try {
-      // Simple client-side validation and redirect
+      // Simple client-side validation
       if (email === "lewis.gerrard@outlook.com" && password === "password") {
         // Set a simple session flag in localStorage for demo
         localStorage.setItem(
@@ -31,10 +31,10 @@ export function LoginForm() {
           }),
         )
 
-        // Force redirect
-        window.location.href = "/portal/dashboard"
+        // Use Next.js router for navigation instead of window.location
+        window.location.replace("/portal/dashboard")
       } else {
-        setError("Invalid credentials. Please try again.")
+        setError("Invalid credentials. Use lewis.gerrard@outlook.com / password")
       }
     } catch (err) {
       setError("Login failed. Please try again.")
