@@ -120,24 +120,77 @@ export async function GET() {
 
     console.log("✅ Clients table exists")
 
-    // Fetch clients
-    console.log("📊 Fetching clients...")
-    const clients = await sql`
-      SELECT 
-        id,
-        contact_name,
-        company_name,
-        email,
-        phone,
-        address,
-        client_type,
-        status,
-        notes,
-        created_at,
-        updated_at
-      FROM clients 
-      ORDER BY created_at DESC
+    // Get table structure to understand what columns we have
+    console.log("🔍 Checking table structure...")
+    const tableStructure = await sql`
+      SELECT column_name, data_type 
+      FROM information_schema.columns 
+      WHERE table_name = 'clients' 
+      ORDER BY ordinal_position
     `
+
+    console.log("📊 Table structure:", tableStructure)
+
+    // Check what columns are available
+    const columnNames = tableStructure.map((col) => col.column_name)
+    const hasNewStructure = columnNames.includes("name") && columnNames.includes("size")
+    const hasOldStructure = columnNames.includes("contact_name") && columnNames.includes("client_type")
+
+    console.log("Available columns:", columnNames)
+    console.log("Has new structure (name, size):", hasNewStructure)
+    console.log("Has old structure (contact_name, client_type):", hasOldStructure)
+
+    // Fetch clients with flexible column selection
+    let clients
+    if (hasNewStructure) {
+      // Use new 4-field structure
+      console.log("📊 Using new 4-field structure")
+      clients = await sql`
+        SELECT 
+          id,
+          name,
+          size,
+          address,
+          status,
+          created_at,
+          updated_at
+        FROM clients 
+        ORDER BY created_at DESC
+      `
+    } else if (hasOldStructure) {
+      // Use old structure but map to new format
+      console.log("📊 Using old structure, mapping to new format")
+      clients = await sql`
+        SELECT 
+          id,
+          COALESCE(company_name, contact_name, 'Unnamed Client') as name,
+          COALESCE(client_type, 'Unknown') as size,
+          COALESCE(address, '') as address,
+          COALESCE(status, 'pending') as status,
+          created_at,
+          updated_at
+        FROM clients 
+        ORDER BY created_at DESC
+      `
+    } else {
+      // Fallback - get whatever columns exist
+      console.log("📊 Using fallback query")
+      const rawClients = await sql`
+        SELECT * FROM clients 
+        ORDER BY created_at DESC
+      `
+
+      // Map the data to expected format
+      clients = rawClients.map((client) => ({
+        id: client.id,
+        name: client.name || client.company_name || client.contact_name || "Unnamed Client",
+        size: client.size || client.client_type || "Unknown",
+        address: client.address || "",
+        status: client.status || "pending",
+        created_at: client.created_at,
+        updated_at: client.updated_at,
+      }))
+    }
 
     console.log(`✅ Successfully fetched ${clients.length} clients`)
 
@@ -145,6 +198,11 @@ export async function GET() {
       success: true,
       clients,
       error: null,
+      debug: {
+        tableStructure: hasNewStructure ? "new" : hasOldStructure ? "old" : "mixed",
+        columnCount: columnNames.length,
+        availableColumns: columnNames,
+      },
     })
   } catch (error) {
     console.error("❌ Database error:", error)
@@ -178,32 +236,54 @@ export async function POST(request: Request) {
     const body = await request.json()
     console.log("📝 Adding new client:", body)
 
-    const { contactName, companyName, email, phone, address, clientType, status, notes } = body
+    const { name, size, address, status } = body
 
     const { neon } = await import("@neondatabase/serverless")
     const sql = neon(databaseUrl)
 
-    await sql`
-      INSERT INTO clients (
-        contact_name, 
-        company_name, 
-        email, 
-        phone, 
-        address, 
-        client_type, 
-        status, 
-        notes
-      ) VALUES (
-        ${contactName}, 
-        ${companyName}, 
-        ${email}, 
-        ${phone || null}, 
-        ${address || null}, 
-        ${clientType}, 
-        ${status || "active"}, 
-        ${notes || null}
-      )
+    // Check table structure first
+    const tableStructure = await sql`
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'clients'
     `
+
+    const columnNames = tableStructure.map((col) => col.column_name)
+    const hasNewStructure = columnNames.includes("name") && columnNames.includes("size")
+
+    if (hasNewStructure) {
+      // Use new 4-field structure
+      await sql`
+        INSERT INTO clients (
+          name, 
+          size, 
+          address, 
+          status
+        ) VALUES (
+          ${name}, 
+          ${size}, 
+          ${address || ""}, 
+          ${status || "pending"}
+        )
+      `
+    } else {
+      // Fallback to old structure
+      await sql`
+        INSERT INTO clients (
+          contact_name, 
+          company_name, 
+          client_type, 
+          address, 
+          status
+        ) VALUES (
+          ${name}, 
+          ${name}, 
+          ${size}, 
+          ${address || ""}, 
+          ${status || "pending"}
+        )
+      `
+    }
 
     console.log("✅ Client added successfully")
 
