@@ -19,12 +19,20 @@ export default function LoginPage() {
 
   useEffect(() => {
     setMounted(true)
+
+    // Clear any existing sessions when landing on login page
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("portal-session")
+    }
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError("")
+
+    // Add a small delay to show loading state
+    await new Promise((resolve) => setTimeout(resolve, 500))
 
     // Simple demo authentication
     if (email === "lewis.gerrard@outlook.com" && password === "password") {
@@ -40,8 +48,8 @@ export default function LoginPage() {
           }),
         )
 
-        // Direct navigation to dashboard
-        window.location.href = "/portal/dashboard"
+        // Use window.location.replace to prevent back button issues
+        window.location.replace("/portal/dashboard")
       }
     } else {
       setError("Invalid credentials. Use lewis.gerrard@outlook.com / password")

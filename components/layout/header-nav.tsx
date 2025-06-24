@@ -6,7 +6,6 @@ import Image from "next/image"
 import { useState, useCallback } from "react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import type { NavigationItem } from "@/types"
-import Link from "next/link"
 
 const navigation: NavigationItem[] = [
   { name: "Home", href: "#home" },
@@ -32,6 +31,11 @@ export function HeaderNav() {
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => !prev)
+  }, [])
+
+  const handlePortalClick = useCallback(() => {
+    // Use window.location for more reliable navigation in deployed environments
+    window.location.href = "/login"
   }, [])
 
   return (
@@ -74,15 +78,13 @@ export function HeaderNav() {
         {/* Actions */}
         <div className="flex items-center space-x-2 sm:space-x-4">
           <ThemeToggle />
-          <Link href="/login" passHref>
-            <Button
-              className="hidden sm:inline-flex bg-secondary hover:bg-secondary/90 text-primary border-0 transform hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary"
-              size="sm"
-              asChild
-            >
-              <span>Portal</span>
-            </Button>
-          </Link>
+          <Button
+            className="hidden sm:inline-flex bg-secondary hover:bg-secondary/90 text-primary border-0 transform hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary"
+            onClick={handlePortalClick}
+            size="sm"
+          >
+            Portal
+          </Button>
           <Button
             variant="ghost"
             size="icon"
@@ -110,14 +112,12 @@ export function HeaderNav() {
                 {item.name}
               </button>
             ))}
-            <Link href="/login" passHref>
-              <Button
-                className="w-full bg-secondary hover:bg-secondary/90 text-primary border-0 mt-4 transform hover:scale-105 transition-all duration-300"
-                asChild
-              >
-                <span>Portal</span>
-              </Button>
-            </Link>
+            <Button
+              className="w-full bg-secondary hover:bg-secondary/90 text-primary border-0 mt-4 transform hover:scale-105 transition-all duration-300"
+              onClick={handlePortalClick}
+            >
+              Portal
+            </Button>
           </nav>
         </div>
       )}
