@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Plus, Users, UserCheck, Clock, Building } from "lucide-react"
+import { Plus, Users, UserCheck, Clock, Building, RefreshCw } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { AddClientDialog } from "../components/add-client-dialog"
@@ -42,6 +42,7 @@ export default function ClientsPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [usingDemoData, setUsingDemoData] = useState(false)
+  const [debugInfo, setDebugInfo] = useState(null)
 
   // Demo data fallback
   const demoClients = [
@@ -68,30 +69,45 @@ export default function ClientsPage() {
     },
   ]
 
-  useEffect(() => {
-    async function fetchClients() {
-      try {
-        const response = await fetch("/api/clients")
-        const data = await response.json()
+  const fetchClients = async () => {
+    setLoading(true)
+    try {
+      console.log("Fetching clients from API...")
+      const response = await fetch("/api/clients", {
+        cache: "no-store",
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      })
 
-        if (data.success) {
-          setClients(data.clients)
-          setUsingDemoData(false)
-        } else {
-          setClients(demoClients)
-          setUsingDemoData(true)
-          setError(data.error)
-        }
-      } catch (err) {
-        console.error("Failed to fetch clients:", err)
+      console.log("API Response status:", response.status)
+      const data = await response.json()
+      console.log("API Response data:", data)
+
+      if (data.success) {
+        setClients(data.clients)
+        setUsingDemoData(false)
+        setError(null)
+        console.log("✅ Using real database data:", data.clients.length, "clients")
+      } else {
         setClients(demoClients)
         setUsingDemoData(true)
-        setError("Failed to connect to API")
-      } finally {
-        setLoading(false)
+        setError(data.error)
+        console.log("⚠️ Using demo data due to error:", data.error)
       }
-    }
 
+      setDebugInfo(data.debug)
+    } catch (err) {
+      console.error("Failed to fetch clients:", err)
+      setClients(demoClients)
+      setUsingDemoData(true)
+      setError("Failed to connect to API: " + err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
     fetchClients()
   }, [])
 
@@ -142,18 +158,45 @@ export default function ClientsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-primary">Clients</h1>
-        <p className="text-muted-foreground mt-2">Manage your client relationships</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-primary">Clients</h1>
+            <p className="text-muted-foreground mt-2">Manage your client relationships</p>
+          </div>
+          <Button onClick={fetchClients} variant="outline" size="sm" disabled={loading}>
+            <RefreshCw className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`} />
+            Refresh
+          </Button>
+        </div>
+
         {usingDemoData && (
-          <div className="mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-            <p className="text-sm text-yellow-800 font-medium">⚠️ Using demo data - Database issue detected</p>
-            {error && <p className="text-xs text-yellow-700 mt-1">Error: {error}</p>}
-            <p className="text-xs text-yellow-600 mt-1">Check server logs for detailed debugging information</p>
+          <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md">
+            <p className="text-sm text-red-800 font-medium">❌ Database Connection Failed - Using Demo Data</p>
+            {error && <p className="text-xs text-red-700 mt-1">Error: {error}</p>}
+            {debugInfo && (
+              <details className="mt-2">
+                <summary className="text-xs text-red-600 cursor-pointer">Debug Information</summary>
+                <pre className="text-xs text-red-600 mt-1 bg-red-100 p-2 rounded overflow-auto">
+                  {JSON.stringify(debugInfo, null, 2)}
+                </pre>
+              </details>
+            )}
+            <p className="text-xs text-red-600 mt-2">
+              Check the browser console and Vercel function logs for detailed debugging information.
+            </p>
           </div>
         )}
+
         {!usingDemoData && (
-          <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-md">
-            <p className="text-sm text-green-800">✅ Connected to database - Showing {clients.length} real clients</p>
+          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-md">
+            <p className="text-sm text-green-800 font-medium">✅ Connected to Database</p>
+            <p className="text-xs text-green-700 mt-1">Showing {clients.length} real clients from your database</p>
+            {debugInfo && (
+              <p className="text-xs text-green-600 mt-1">
+                Records in DB: {debugInfo.recordCount} | Connection:{" "}
+                {debugInfo.connectionWorking ? "Working" : "Failed"}
+              </p>
+            )}
           </div>
         )}
       </div>
