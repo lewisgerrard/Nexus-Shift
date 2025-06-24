@@ -9,22 +9,31 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Simple authentication check
-    const session = localStorage.getItem("portal-session")
-    if (session) {
-      try {
-        const sessionData = JSON.parse(session)
-        if (sessionData.loggedIn) {
-          setIsAuthenticated(true)
-        } else {
+    // Check authentication only once
+    if (typeof window !== "undefined") {
+      const session = localStorage.getItem("portal-session")
+      if (session) {
+        try {
+          const sessionData = JSON.parse(session)
+          if (sessionData.loggedIn) {
+            setIsAuthenticated(true)
+          } else {
+            // Clear invalid session and redirect
+            localStorage.removeItem("portal-session")
+            window.location.href = "/login"
+            return
+          }
+        } catch (e) {
+          // Clear corrupted session and redirect
+          localStorage.removeItem("portal-session")
           window.location.href = "/login"
+          return
         }
-      } catch (e) {
-        localStorage.removeItem("portal-session")
+      } else {
+        // No session, redirect to login
         window.location.href = "/login"
+        return
       }
-    } else {
-      window.location.href = "/login"
     }
     setIsLoading(false)
   }, [])
@@ -38,7 +47,13 @@ export default function DashboardPage() {
   }
 
   if (!isAuthenticated) {
-    return null
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <p className="text-muted-foreground">Redirecting to login...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
