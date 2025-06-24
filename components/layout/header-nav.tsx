@@ -6,6 +6,7 @@ import Image from "next/image"
 import { useState, useCallback } from "react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import type { NavigationItem } from "@/types"
+import { useRouter } from "next/navigation"
 
 const navigation: NavigationItem[] = [
   { name: "Home", href: "#home" },
@@ -18,6 +19,7 @@ const navigation: NavigationItem[] = [
 
 export function HeaderNav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const router = useRouter()
 
   const scrollToSection = useCallback((href: string) => {
     if (href.startsWith("#")) {
@@ -75,7 +77,7 @@ export function HeaderNav() {
           <ThemeToggle />
           <Button
             className="hidden sm:inline-flex bg-secondary hover:bg-secondary/90 text-primary border-0 transform hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary"
-            onClick={() => (window.location.href = "/login")}
+            onClick={() => router.push("/login")}
             size="sm"
           >
             Portal
@@ -109,7 +111,7 @@ export function HeaderNav() {
             ))}
             <Button
               className="w-full bg-secondary hover:bg-secondary/90 text-primary border-0 mt-4 transform hover:scale-105 transition-all duration-300"
-              onClick={() => (window.location.href = "/login")}
+              onClick={() => router.push("/login")}
             >
               Portal
             </Button>
