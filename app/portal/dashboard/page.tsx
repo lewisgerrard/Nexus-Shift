@@ -5,34 +5,52 @@ import { useEffect, useState } from "react"
 export default function DashboardPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [userName, setUserName] = useState("")
 
   useEffect(() => {
     const checkAuth = () => {
+      console.log("Checking authentication...")
+
       try {
         const session = localStorage.getItem("portal-session")
+        console.log("Session from localStorage:", session)
+
         if (session) {
           const sessionData = JSON.parse(session)
-          if (sessionData?.loggedIn) {
+          console.log("Parsed session data:", sessionData)
+
+          if (sessionData && sessionData.loggedIn === true) {
+            console.log("User is authenticated")
             setIsAuthenticated(true)
+            setUserName(sessionData.name || "User")
           } else {
-            window.location.href = "/portal"
+            console.log("Session exists but user not logged in")
+            window.location.replace("/portal")
+            return
           }
         } else {
-          window.location.href = "/portal"
+          console.log("No session found")
+          window.location.replace("/portal")
+          return
         }
       } catch (error) {
+        console.error("Session check error:", error)
         localStorage.removeItem("portal-session")
-        window.location.href = "/portal"
+        window.location.replace("/portal")
+        return
       }
+
       setIsLoading(false)
     }
 
-    checkAuth()
+    // Add a small delay to ensure localStorage is available
+    setTimeout(checkAuth, 100)
   }, [])
 
   const handleLogout = () => {
+    console.log("Logging out...")
     localStorage.removeItem("portal-session")
-    window.location.href = "/portal"
+    window.location.replace("/portal")
   }
 
   if (isLoading) {
@@ -57,7 +75,13 @@ export default function DashboardPage() {
   }
 
   if (!isAuthenticated) {
-    return null
+    return (
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "400px" }}>
+        <div style={{ textAlign: "center" }}>
+          <p style={{ color: "#64748b" }}>Redirecting to login...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -65,7 +89,9 @@ export default function DashboardPage() {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
         <div>
           <h1 style={{ fontSize: "2rem", fontWeight: "bold", color: "#1e293b", margin: 0 }}>Dashboard</h1>
-          <p style={{ color: "#64748b", marginTop: "0.5rem" }}>Welcome back, Lewis. Here's your client overview.</p>
+          <p style={{ color: "#64748b", marginTop: "0.5rem" }}>
+            Welcome back, {userName}. Here's your client overview.
+          </p>
         </div>
         <button
           onClick={handleLogout}

@@ -124,6 +124,19 @@ export default function PortalPage() {
               }}
             ></div>
 
+            <div
+              id="success"
+              style={{
+                display: "none",
+                padding: "0.75rem",
+                fontSize: "0.875rem",
+                color: "#16a34a",
+                backgroundColor: "#f0fdf4",
+                border: "1px solid #bbf7d0",
+                borderRadius: "0.375rem",
+              }}
+            ></div>
+
             <button
               type="submit"
               style={{
@@ -183,12 +196,31 @@ export default function PortalPage() {
       <script
         dangerouslySetInnerHTML={{
           __html: `
+          // Check if already logged in when page loads
+          window.addEventListener('load', function() {
+            try {
+              const session = localStorage.getItem('portal-session');
+              if (session) {
+                const sessionData = JSON.parse(session);
+                if (sessionData && sessionData.loggedIn === true) {
+                  console.log('Already logged in, redirecting...');
+                  window.location.replace('/portal/dashboard');
+                  return;
+                }
+              }
+            } catch (e) {
+              console.log('Session check error:', e);
+              localStorage.removeItem('portal-session');
+            }
+          });
+
           document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const errorDiv = document.getElementById('error');
+            const successDiv = document.getElementById('success');
             const buttonText = document.getElementById('buttonText');
             const buttonLoading = document.getElementById('buttonLoading');
             
@@ -196,22 +228,43 @@ export default function PortalPage() {
             buttonText.style.display = 'none';
             buttonLoading.style.display = 'inline-flex';
             errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
             
             setTimeout(function() {
               if (email === 'lewis.gerrard@outlook.com' && password === 'password') {
-                // Set session
-                localStorage.setItem('portal-session', JSON.stringify({
+                // Create session data
+                const sessionData = {
                   email: 'lewis.gerrard@outlook.com',
                   name: 'Lewis Gerrard',
                   loggedIn: true,
                   timestamp: Date.now()
-                }));
+                };
                 
-                // Redirect
-                window.location.href = '/portal/dashboard';
+                // Set session
+                try {
+                  localStorage.setItem('portal-session', JSON.stringify(sessionData));
+                  console.log('Session saved:', sessionData);
+                  
+                  // Show success message
+                  successDiv.textContent = 'Login successful! Redirecting...';
+                  successDiv.style.display = 'block';
+                  
+                  // Redirect after a short delay
+                  setTimeout(function() {
+                    console.log('Redirecting to dashboard...');
+                    window.location.replace('/portal/dashboard');
+                  }, 1000);
+                  
+                } catch (e) {
+                  console.error('Failed to save session:', e);
+                  errorDiv.textContent = 'Failed to save login session. Please try again.';
+                  errorDiv.style.display = 'block';
+                  buttonText.style.display = 'inline';
+                  buttonLoading.style.display = 'none';
+                }
               } else {
                 // Show error
-                errorDiv.textContent = 'Invalid credentials. Please try again.';
+                errorDiv.textContent = 'Invalid credentials. Please use the demo credentials shown below.';
                 errorDiv.style.display = 'block';
                 
                 // Hide loading
