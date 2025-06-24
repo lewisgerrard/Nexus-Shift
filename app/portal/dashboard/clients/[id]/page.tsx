@@ -38,17 +38,29 @@ export default function ClientDetailPage({ params }: Props) {
 
   const fetchClient = async () => {
     try {
+      console.log("Fetching client with ID:", params.id)
+
       const response = await fetch(`/api/clients/${params.id}`, {
         cache: "no-store",
       })
+
+      console.log("Response status:", response.status)
 
       if (!response.ok) {
         setError("Client not found")
         return
       }
 
-      const clientData = await response.json()
-      setClient(clientData)
+      const data = await response.json()
+      console.log("API response data:", data)
+
+      if (data.success && data.client) {
+        setClient(data.client)
+        console.log("Client set:", data.client)
+      } else {
+        console.error("API returned error:", data.error)
+        setError(data.error || "Failed to load client")
+      }
     } catch (error) {
       console.error("Error fetching client:", error)
       setError("Failed to load client")
@@ -127,6 +139,9 @@ export default function ClientDetailPage({ params }: Props) {
     }
   }
 
+  // Debug logging
+  console.log("Current state - loading:", loading, "client:", client, "error:", error)
+
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
@@ -146,7 +161,8 @@ export default function ClientDetailPage({ params }: Props) {
         <div className="bg-primary px-8 py-12">
           <div className="max-w-7xl mx-auto">
             <h1 className="text-4xl font-bold text-white mb-2">Client Not Found</h1>
-            <p className="text-secondary text-lg">The requested client could not be found</p>
+            <p className="text-secondary text-lg">Error: {error || "The requested client could not be found"}</p>
+            <p className="text-white text-sm mt-2">Debug: Client ID = {params.id}</p>
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-8 py-12">
@@ -205,7 +221,7 @@ export default function ClientDetailPage({ params }: Props) {
             </div>
           </div>
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">{client.name}</h1>
+            <h1 className="text-4xl font-bold text-white mb-2">{client.name || "Unknown Client"}</h1>
             <p className="text-secondary text-lg">Client Details & Management</p>
           </div>
         </div>
@@ -225,13 +241,13 @@ export default function ClientDetailPage({ params }: Props) {
             <CardContent className="bg-white p-8 space-y-6">
               <div>
                 <label className="text-sm font-bold text-gray-500 uppercase tracking-wide">Company Name</label>
-                <p className="text-xl font-semibold text-primary mt-1">{client.name}</p>
+                <p className="text-xl font-semibold text-primary mt-1">{client.name || "N/A"}</p>
               </div>
               <div>
                 <label className="text-sm font-bold text-gray-500 uppercase tracking-wide">Size</label>
                 <div className="mt-2">
                   <Badge className={`${getSizeColor(client.size)} text-sm font-semibold px-3 py-1`}>
-                    {client.size}
+                    {client.size || "Unknown"}
                   </Badge>
                 </div>
               </div>
@@ -239,7 +255,7 @@ export default function ClientDetailPage({ params }: Props) {
                 <label className="text-sm font-bold text-gray-500 uppercase tracking-wide">Status</label>
                 <div className="mt-2">
                   <Badge className={`${getStatusColor(client.status)} text-sm font-semibold px-3 py-1`}>
-                    {client.status}
+                    {client.status || "Unknown"}
                   </Badge>
                 </div>
               </div>
@@ -280,7 +296,9 @@ export default function ClientDetailPage({ params }: Props) {
               )}
               <div className="flex items-center">
                 <Calendar className="h-5 w-5 text-secondary mr-4" />
-                <span className="text-lg text-primary">Added {new Date(client.created_at).toLocaleDateString()}</span>
+                <span className="text-lg text-primary">
+                  Added {client.created_at ? new Date(client.created_at).toLocaleDateString() : "Unknown"}
+                </span>
               </div>
             </CardContent>
           </Card>
