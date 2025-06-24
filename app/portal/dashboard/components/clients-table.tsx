@@ -3,11 +3,6 @@
 import type React from "react"
 
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, Mail, Phone, Trash2 } from "lucide-react"
-import { updateClientStatus, deleteClient } from "../actions"
-import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 
 interface Client {
@@ -29,32 +24,16 @@ interface ClientsTableProps {
 
 export function ClientsTable({ clients }: ClientsTableProps) {
   console.log("ClientsTable received clients:", clients)
-  const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
   const handleRowClick = (clientId: number, event: React.MouseEvent) => {
     console.log("Row clicked! Client ID:", clientId)
-    alert(`Clicked on client ${clientId}`) // Test alert
 
     try {
       router.push(`/portal/dashboard/clients/${clientId}`)
       console.log("Navigation attempted to:", `/portal/dashboard/clients/${clientId}`)
     } catch (error) {
       console.error("Navigation error:", error)
-    }
-  }
-
-  const handleStatusChange = (clientId: number, newStatus: string) => {
-    startTransition(() => {
-      updateClientStatus(clientId, newStatus)
-    })
-  }
-
-  const handleDelete = (clientId: number) => {
-    if (confirm("Are you sure you want to delete this client?")) {
-      startTransition(() => {
-        deleteClient(clientId)
-      })
     }
   }
 
@@ -84,12 +63,9 @@ export function ClientsTable({ clients }: ClientsTableProps) {
       <table className="w-full">
         <thead>
           <tr className="border-b border-gray-200">
-            <th className="text-left py-3 px-4 font-medium text-primary">Contact</th>
-            <th className="text-left py-3 px-4 font-medium text-primary">Company</th>
+            <th className="text-left py-3 px-4 font-medium text-primary">Name</th>
             <th className="text-left py-3 px-4 font-medium text-primary">Type</th>
             <th className="text-left py-3 px-4 font-medium text-primary">Status</th>
-            <th className="text-left py-3 px-4 font-medium text-primary">Contact Info</th>
-            <th className="text-right py-3 px-4 font-medium text-primary">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -101,12 +77,8 @@ export function ClientsTable({ clients }: ClientsTableProps) {
               style={{ cursor: "pointer" }}
             >
               <td className="py-4 px-4">
-                <div>
-                  <div className="font-medium text-primary">{client.contact_name}</div>
-                  {client.notes && <div className="text-sm text-gray-500 mt-1">{client.notes}</div>}
-                </div>
+                <div className="font-medium text-primary">{client.company_name || client.contact_name}</div>
               </td>
-              <td className="py-4 px-4 text-gray-900">{client.company_name}</td>
               <td className="py-4 px-4">
                 <Badge variant="outline" className="border-secondary text-secondary">
                   {client.client_type}
@@ -114,44 +86,6 @@ export function ClientsTable({ clients }: ClientsTableProps) {
               </td>
               <td className="py-4 px-4">
                 <Badge className={getStatusColor(client.status)}>{client.status}</Badge>
-              </td>
-              <td className="py-4 px-4">
-                <div className="space-y-1">
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Mail className="h-3 w-3 mr-2" />
-                    {client.email}
-                  </div>
-                  {client.phone && (
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Phone className="h-3 w-3 mr-2" />
-                      {client.phone}
-                    </div>
-                  )}
-                </div>
-              </td>
-              <td className="py-4 px-4 text-right" onClick={(e) => e.stopPropagation()}>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" disabled={isPending}>
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => handleStatusChange(client.id, "active")}>
-                      Mark as Active
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleStatusChange(client.id, "pending")}>
-                      Mark as Pending
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleStatusChange(client.id, "inactive")}>
-                      Mark as Inactive
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleDelete(client.id)} className="text-red-600">
-                      <Trash2 className="h-4 w-4 mr-2" />
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </td>
             </tr>
           ))}

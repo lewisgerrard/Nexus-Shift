@@ -1,13 +1,67 @@
 import { Plus, Users, UserCheck, Clock, Building } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ClientsTable } from "../components/clients-table"
-import { AddClientDialog } from "../components/add-client-dialog"
 import { Button } from "@/components/ui/button"
-import { getClients } from "../actions"
+import { AddClientDialog } from "../components/add-client-dialog"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
 
-export default async function ClientsPage() {
-  // Fetch real data from database instead of using demo data
-  const clients = await getClients()
+// Simple demo data that matches expected structure
+const demoClients = [
+  {
+    id: 1,
+    contact_name: "John Smith",
+    company_name: "Tech Corp",
+    client_type: "Enterprise",
+    status: "active",
+  },
+  {
+    id: 2,
+    contact_name: "Sarah Johnson",
+    company_name: "StartupCo",
+    client_type: "Startup",
+    status: "active",
+  },
+  {
+    id: 3,
+    contact_name: "Mike Davis",
+    company_name: "Business Solutions",
+    client_type: "SMB",
+    status: "pending",
+  },
+]
+
+function getStatusColor(status: string) {
+  switch (status.toLowerCase()) {
+    case "active":
+      return "bg-green-100 text-green-800 hover:bg-green-200"
+    case "pending":
+      return "bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
+    case "inactive":
+      return "bg-gray-100 text-gray-800 hover:bg-gray-200"
+    default:
+      return "bg-gray-100 text-gray-800 hover:bg-gray-200"
+  }
+}
+
+function getTypeColor(type: string) {
+  switch (type.toLowerCase()) {
+    case "enterprise":
+      return "bg-blue-100 text-blue-800 hover:bg-blue-200"
+    case "startup":
+      return "bg-purple-100 text-purple-800 hover:bg-purple-200"
+    case "smb":
+      return "bg-green-100 text-green-800 hover:bg-green-200"
+    case "agency":
+      return "bg-orange-100 text-orange-800 hover:bg-orange-200"
+    default:
+      return "bg-gray-100 text-gray-800 hover:bg-gray-200"
+  }
+}
+
+export default function ClientsPage() {
+  // Use demo data for now to avoid database issues
+  const clients = demoClients
 
   const totalClients = clients.length
   const activeClients = clients.filter((client) => client.status === "active").length
@@ -73,7 +127,38 @@ export default async function ClientsPage() {
           </AddClientDialog>
         </CardHeader>
         <CardContent>
-          <ClientsTable clients={clients} />
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {clients.map((client) => (
+                  <TableRow key={client.id} className="cursor-pointer hover:bg-muted/50">
+                    <TableCell className="font-medium">
+                      <Link href={`/portal/dashboard/clients/${client.id}`} className="block w-full">
+                        {client.company_name}
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="secondary" className={getTypeColor(client.client_type)}>
+                        {client.client_type}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="secondary" className={getStatusColor(client.status)}>
+                        {client.status.charAt(0).toUpperCase() + client.status.slice(1)}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>
