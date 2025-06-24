@@ -1,7 +1,7 @@
 "use client"
 
 import type * as React from "react"
-import { BarChart3, Users, Settings, Home, FileText, Calendar, Mail } from "lucide-react"
+import { Home, Users } from "lucide-react"
 
 import {
   Sidebar,
@@ -31,31 +31,6 @@ const data = {
       title: "Clients",
       url: "/portal/dashboard/clients",
       icon: Users,
-    },
-    {
-      title: "Projects",
-      url: "/portal/dashboard/projects",
-      icon: FileText,
-    },
-    {
-      title: "Analytics",
-      url: "/portal/dashboard/analytics",
-      icon: BarChart3,
-    },
-    {
-      title: "Calendar",
-      url: "/portal/dashboard/calendar",
-      icon: Calendar,
-    },
-    {
-      title: "Messages",
-      url: "/portal/dashboard/messages",
-      icon: Mail,
-    },
-    {
-      title: "Settings",
-      url: "/portal/dashboard/settings",
-      icon: Settings,
     },
   ],
 }
