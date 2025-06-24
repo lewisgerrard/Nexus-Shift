@@ -33,11 +33,6 @@ export function HeaderNav() {
     setIsMenuOpen((prev) => !prev)
   }, [])
 
-  const handlePortalClick = useCallback(() => {
-    // Use window.location for more reliable navigation in deployed environments
-    window.location.href = "/login"
-  }, [])
-
   return (
     <header className="sticky top-0 z-50 w-full bg-primary/95 backdrop-blur-md border-b border-secondary/20">
       <div className="container flex h-14 sm:h-16 items-center justify-between px-4 sm:px-6">
@@ -78,13 +73,12 @@ export function HeaderNav() {
         {/* Actions */}
         <div className="flex items-center space-x-2 sm:space-x-4">
           <ThemeToggle />
-          <Button
-            className="hidden sm:inline-flex bg-secondary hover:bg-secondary/90 text-primary border-0 transform hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary"
-            onClick={handlePortalClick}
-            size="sm"
+          <a
+            href="/login"
+            className="hidden sm:inline-flex h-9 px-4 py-2 bg-secondary hover:bg-secondary/90 text-primary border-0 transform hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary rounded-md text-sm font-medium items-center justify-center whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
           >
             Portal
-          </Button>
+          </a>
           <Button
             variant="ghost"
             size="icon"
@@ -112,12 +106,12 @@ export function HeaderNav() {
                 {item.name}
               </button>
             ))}
-            <Button
-              className="w-full bg-secondary hover:bg-secondary/90 text-primary border-0 mt-4 transform hover:scale-105 transition-all duration-300"
-              onClick={handlePortalClick}
+            <a
+              href="/login"
+              className="w-full bg-secondary hover:bg-secondary/90 text-primary border-0 mt-4 transform hover:scale-105 transition-all duration-300 h-10 px-4 py-2 rounded-md text-sm font-medium inline-flex items-center justify-center whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
             >
               Portal
-            </Button>
+            </a>
           </nav>
         </div>
       )}

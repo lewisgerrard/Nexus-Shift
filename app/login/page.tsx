@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -15,16 +15,6 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-
-    // Clear any existing sessions when landing on login page
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("portal-session")
-    }
-  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,34 +27,23 @@ export default function LoginPage() {
     // Simple demo authentication
     if (email === "lewis.gerrard@outlook.com" && password === "password") {
       // Set session in localStorage
-      if (typeof window !== "undefined") {
-        localStorage.setItem(
-          "portal-session",
-          JSON.stringify({
-            loggedIn: true,
-            email: email,
-            name: "Lewis Gerrard",
-            timestamp: Date.now(),
-          }),
-        )
+      localStorage.setItem(
+        "portal-session",
+        JSON.stringify({
+          loggedIn: true,
+          email: email,
+          name: "Lewis Gerrard",
+          timestamp: Date.now(),
+        }),
+      )
 
-        // Use window.location.replace to prevent back button issues
-        window.location.replace("/portal/dashboard")
-      }
+      // Direct navigation to dashboard
+      window.location.href = "/portal/dashboard"
     } else {
       setError("Invalid credentials. Use lewis.gerrard@outlook.com / password")
     }
 
     setIsLoading(false)
-  }
-
-  // Don't render until mounted to prevent hydration issues
-  if (!mounted) {
-    return (
-      <div className="min-h-screen bg-primary flex items-center justify-center p-4">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-      </div>
-    )
   }
 
   return (
