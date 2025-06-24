@@ -1,7 +1,8 @@
 "use client"
 
 import type * as React from "react"
-import { Home, Users } from "lucide-react"
+import { Home, Users, LogOut } from "lucide-react"
+import { logoutAction } from "../../actions"
 
 import {
   Sidebar,
@@ -9,15 +10,16 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 // Menu items.
 const data = {
@@ -36,38 +38,62 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname()
+
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <div className="flex items-center gap-2 px-2 py-2">
-          <Image src="/nexus-shift-logo.png" alt="Nexus Shift" width={32} height={32} className="h-8 w-8" />
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">Nexus Shift</span>
-            <span className="truncate text-xs text-muted-foreground">Portal</span>
+    <Sidebar collapsible="icon" className="border-r-0" {...props}>
+      <SidebarHeader className="bg-primary border-b border-primary/10">
+        <div className="flex items-center gap-3 px-4 py-6">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary">
+            <Image src="/nexus-shift-logo.png" alt="Nexus Shift" width={24} height={24} className="h-6 w-6" />
+          </div>
+          <div className="grid flex-1 text-left">
+            <span className="text-lg font-bold text-white">Nexus Shift</span>
+            <span className="text-sm text-secondary">Portal</span>
           </div>
         </div>
       </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+
+      <SidebarContent className="bg-primary">
+        <SidebarGroup className="px-4 py-6">
           <SidebarGroupContent>
-            <SidebarMenu>
-              {data.navMain.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+            <SidebarMenu className="space-y-2">
+              {data.navMain.map((item) => {
+                const isActive = pathname === item.url
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      className={`h-12 rounded-lg transition-all duration-200 ${
+                        isActive
+                          ? "bg-secondary text-primary font-semibold shadow-lg"
+                          : "text-white hover:bg-white/10 hover:text-secondary"
+                      }`}
+                    >
+                      <Link href={item.url} className="flex items-center gap-3 px-4">
+                        <item.icon className="h-5 w-5" />
+                        <span className="text-sm">{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <div className="p-2 text-xs text-muted-foreground">© 2024 Nexus Shift</div>
+
+      <SidebarFooter className="bg-primary border-t border-primary/10 p-4">
+        <form action={logoutAction}>
+          <Button
+            type="submit"
+            variant="ghost"
+            className="w-full justify-start h-12 text-white hover:bg-white/10 hover:text-secondary transition-all duration-200"
+          >
+            <LogOut className="h-5 w-5 mr-3" />
+            <span className="text-sm">Logout</span>
+          </Button>
+        </form>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

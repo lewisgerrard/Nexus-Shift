@@ -12,26 +12,26 @@ import Link from "next/link"
 function getStatusColor(status: string) {
   switch (status?.toLowerCase()) {
     case "active":
-      return "bg-green-100 text-green-800 hover:bg-green-200"
+      return "bg-secondary text-primary"
     case "pending":
-      return "bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
+      return "bg-primary text-white"
     case "inactive":
-      return "bg-gray-100 text-gray-800 hover:bg-gray-200"
+      return "bg-gray-200 text-gray-800"
     default:
-      return "bg-gray-100 text-gray-800 hover:bg-gray-200"
+      return "bg-gray-200 text-gray-800"
   }
 }
 
 function getSizeColor(size: string) {
   switch (size?.toLowerCase()) {
     case "micro (1–10 employees)":
-      return "bg-blue-100 text-blue-800 hover:bg-blue-200"
+      return "bg-secondary/20 text-primary border border-secondary"
     case "small (11–50 employees)":
-      return "bg-purple-100 text-purple-800 hover:bg-purple-200"
+      return "bg-primary/20 text-primary border border-primary"
     case "medium (51–250 employees)":
-      return "bg-green-100 text-green-800 hover:bg-green-200"
+      return "bg-secondary text-primary"
     default:
-      return "bg-gray-100 text-gray-800 hover:bg-gray-200"
+      return "bg-gray-100 text-gray-800"
   }
 }
 
@@ -81,100 +81,77 @@ export default function ClientsPage() {
 
   if (loading) {
     return (
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold text-primary">Clients</h1>
-          <p className="text-muted-foreground mt-2">Loading clients...</p>
-          <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-            <div className="flex items-center">
-              <RefreshCw className="h-4 w-4 animate-spin text-blue-600 mr-2" />
-              <p className="text-sm text-blue-800">Connecting to database...</p>
-            </div>
+      <div className="min-h-screen bg-white">
+        <div className="bg-primary px-8 py-12">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-4xl font-bold text-white mb-2">Clients</h1>
+            <p className="text-secondary text-lg">Loading your client data...</p>
           </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-8 py-12">
+          <Card className="border-0 shadow-lg">
+            <CardContent className="p-8">
+              <div className="flex items-center justify-center">
+                <RefreshCw className="h-8 w-8 animate-spin text-secondary mr-4" />
+                <p className="text-lg text-primary">Connecting to database...</p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     )
   }
 
   if (error) {
-    // Check if it's a table missing error (connection works but no tables)
     const isTableMissing = error.includes("does not exist")
 
-    if (isTableMissing) {
-      return (
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold text-primary">Clients</h1>
-            <div className="mt-4 p-6 bg-yellow-50 border border-yellow-200 rounded-lg">
-              <div className="flex items-start">
-                <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 mr-4 flex-shrink-0" />
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-yellow-800 mb-2">✅ Database Connected - Setup Required</h3>
-                  <p className="text-sm text-yellow-700 mb-4">
-                    Great! Your database connection is working, but the clients table doesn't exist yet. Let's set up
-                    your database tables.
+    return (
+      <div className="min-h-screen bg-white">
+        <div className="bg-primary px-8 py-12">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-4xl font-bold text-white mb-2">Clients</h1>
+            <p className="text-secondary text-lg">Database setup required</p>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-8 py-12">
+          <Card className="border-0 shadow-lg">
+            <CardHeader className={isTableMissing ? "bg-secondary text-primary" : "bg-red-500 text-white"}>
+              <div className="flex items-center">
+                {isTableMissing ? <CheckCircle className="h-6 w-6 mr-3" /> : <AlertCircle className="h-6 w-6 mr-3" />}
+                <CardTitle className="text-xl font-bold">
+                  {isTableMissing ? "Database Connected - Setup Required" : "Database Connection Issue"}
+                </CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="bg-white p-8">
+              {isTableMissing ? (
+                <div>
+                  <p className="text-lg text-primary mb-6">
+                    Great! Your database connection is working, but the clients table doesn't exist yet.
                   </p>
-
-                  <div className="bg-white p-4 rounded border border-yellow-200 mb-4">
-                    <h4 className="font-medium text-yellow-800 mb-3">🚀 Database Setup Required:</h4>
-
+                  <div className="bg-gray-50 p-6 rounded-lg mb-6">
+                    <h4 className="font-bold text-primary mb-4">🚀 Database Setup Required:</h4>
                     <div className="space-y-4">
-                      <div className="p-4 bg-blue-50 border border-blue-200 rounded">
-                        <p className="text-sm font-medium text-blue-800 mb-2">Next Steps:</p>
-                        <ol className="text-sm text-blue-700 space-y-2 list-decimal list-inside">
+                      <div className="bg-secondary/10 p-4 rounded border border-secondary">
+                        <p className="font-semibold text-primary mb-2">Next Steps:</p>
+                        <ol className="text-primary space-y-2 list-decimal list-inside">
                           <li>Run the database setup scripts to create tables</li>
                           <li>Add sample data to test the system</li>
                           <li>Start managing your clients</li>
                         </ol>
                       </div>
-
-                      <div className="p-4 bg-green-50 border border-green-200 rounded">
-                        <p className="text-sm font-medium text-green-800 mb-2">✅ What's Working:</p>
-                        <ul className="text-sm text-green-700 space-y-1 list-disc list-inside">
-                          <li>Database connection established</li>
-                          <li>Environment variables configured</li>
-                          <li>Application deployed successfully</li>
-                          <li>Ready to create tables</li>
-                        </ul>
-                      </div>
                     </div>
                   </div>
-
-                  <div className="flex gap-3 flex-wrap">
-                    <Button onClick={fetchClients} size="sm" variant="outline">
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Test Connection
-                    </Button>
-                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    }
-
-    // Other errors (connection issues, etc.)
-    return (
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold text-primary">Clients</h1>
-          <div className="mt-4 p-6 bg-red-50 border border-red-200 rounded-lg">
-            <div className="flex items-start">
-              <AlertCircle className="h-6 w-6 text-red-500 mt-0.5 mr-4 flex-shrink-0" />
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-red-800 mb-2">Database Connection Issue</h3>
-                <p className="text-sm text-red-700 mb-4">{error}</p>
-
-                <div className="flex gap-3 flex-wrap">
-                  <Button onClick={fetchClients} size="sm" variant="outline">
-                    <RefreshCw className="h-4 w-4 mr-2" />
-                    Retry Connection
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+              ) : (
+                <p className="text-lg text-red-600 mb-6">{error}</p>
+              )}
+              <Button onClick={fetchClients} className="bg-secondary hover:bg-secondary/90 text-primary font-semibold">
+                <RefreshCw className="h-4 w-4 mr-2" />
+                {isTableMissing ? "Test Connection" : "Retry Connection"}
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </div>
     )
@@ -185,111 +162,142 @@ export default function ClientsPage() {
   const pendingClients = clients.filter((client) => client.status === "pending").length
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-primary">Clients</h1>
-        <p className="text-muted-foreground mt-2">Manage your client relationships</p>
-        <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-md">
-          <p className="text-sm text-green-800">✅ Database Connected - {clients.length} clients loaded</p>
+      <div className="bg-primary px-8 py-12">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold text-white mb-2">Clients</h1>
+            <p className="text-secondary text-lg">Manage your client relationships</p>
+            <div className="mt-4 inline-flex items-center px-4 py-2 bg-secondary/20 rounded-lg">
+              <CheckCircle className="h-5 w-5 text-secondary mr-2" />
+              <span className="text-secondary font-semibold">Database Connected - {clients.length} clients loaded</span>
+            </div>
+          </div>
+          <AddClientDialog />
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Clients</CardTitle>
-            <Users className="h-4 w-4 text-secondary" />
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-8 py-12">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+          <Card className="border-0 shadow-lg">
+            <CardHeader className="bg-secondary text-primary pb-4">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg font-bold">Total Clients</CardTitle>
+                <Users className="h-6 w-6" />
+              </div>
+            </CardHeader>
+            <CardContent className="bg-white pt-6">
+              <div className="text-3xl font-bold text-primary">{totalClients}</div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-lg">
+            <CardHeader className="bg-primary text-white pb-4">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg font-bold">Active</CardTitle>
+                <UserCheck className="h-6 w-6" />
+              </div>
+            </CardHeader>
+            <CardContent className="bg-white pt-6">
+              <div className="text-3xl font-bold text-secondary">{activeClients}</div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-lg">
+            <CardHeader className="bg-secondary text-primary pb-4">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg font-bold">Pending</CardTitle>
+                <Clock className="h-6 w-6" />
+              </div>
+            </CardHeader>
+            <CardContent className="bg-white pt-6">
+              <div className="text-3xl font-bold text-primary">{pendingClients}</div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-lg">
+            <CardHeader className="bg-primary text-white pb-4">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg font-bold">Companies</CardTitle>
+                <Building className="h-6 w-6" />
+              </div>
+            </CardHeader>
+            <CardContent className="bg-white pt-6">
+              <div className="text-3xl font-bold text-secondary">{totalClients}</div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Client Management Table */}
+        <Card className="border-0 shadow-lg">
+          <CardHeader className="bg-primary text-white">
+            <CardTitle className="text-xl font-bold">Client Management</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-primary">{totalClients}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Active</CardTitle>
-            <UserCheck className="h-4 w-4 text-green-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">{activeClients}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Pending</CardTitle>
-            <Clock className="h-4 w-4 text-yellow-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-yellow-600">{pendingClients}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Companies</CardTitle>
-            <Building className="h-4 w-4 text-secondary" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-primary">{totalClients}</div>
+          <CardContent className="bg-white p-0">
+            <div className="overflow-hidden">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-gray-50 border-b-2 border-gray-200">
+                    <TableHead className="font-bold text-primary py-4">Name</TableHead>
+                    <TableHead className="font-bold text-primary py-4">Size</TableHead>
+                    <TableHead className="font-bold text-primary py-4">Address</TableHead>
+                    <TableHead className="font-bold text-primary py-4">Status</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {clients.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={4} className="text-center py-16">
+                        <div className="flex flex-col items-center">
+                          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                            <Users className="h-8 w-8 text-gray-400" />
+                          </div>
+                          <p className="text-lg text-gray-600 mb-2">No clients found</p>
+                          <p className="text-gray-500">Add your first client to get started</p>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    clients.map((client) => (
+                      <TableRow
+                        key={client.id}
+                        className="hover:bg-gray-50 transition-colors duration-200 border-b border-gray-100"
+                      >
+                        <TableCell className="font-semibold text-primary py-4">
+                          <Link
+                            href={`/portal/dashboard/clients/${client.id}`}
+                            className="block w-full hover:text-secondary transition-colors"
+                          >
+                            {client.name || `Client ${client.id}`}
+                          </Link>
+                        </TableCell>
+                        <TableCell className="py-4">
+                          <Badge className={`${getSizeColor(client.size)} font-medium`}>
+                            {client.size || "Unknown"}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="max-w-xs py-4">
+                          <div className="truncate text-gray-700" title={client.address}>
+                            {client.address || "No address"}
+                          </div>
+                        </TableCell>
+                        <TableCell className="py-4">
+                          <Badge className={`${getStatusColor(client.status)} font-medium`}>
+                            {client.status ? client.status.charAt(0).toUpperCase() + client.status.slice(1) : "Unknown"}
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           </CardContent>
         </Card>
       </div>
-
-      {/* Client Management Table */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-primary">Client Management</CardTitle>
-          <AddClientDialog />
-        </CardHeader>
-        <CardContent>
-          <div className="rounded-md border">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Size</TableHead>
-                  <TableHead>Address</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {clients.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
-                      No clients found. Add your first client to get started.
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  clients.map((client) => (
-                    <TableRow key={client.id} className="cursor-pointer hover:bg-muted/50">
-                      <TableCell className="font-medium">
-                        <Link href={`/portal/dashboard/clients/${client.id}`} className="block w-full">
-                          {client.name || `Client ${client.id}`}
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="secondary" className={getSizeColor(client.size)}>
-                          {client.size || "Unknown"}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="max-w-xs">
-                        <div className="truncate" title={client.address}>
-                          {client.address || "No address"}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="secondary" className={getStatusColor(client.status)}>
-                          {client.status ? client.status.charAt(0).toUpperCase() + client.status.slice(1) : "Unknown"}
-                        </Badge>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   )
 }

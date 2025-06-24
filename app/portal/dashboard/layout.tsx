@@ -2,7 +2,6 @@ import type React from "react"
 import type { Metadata } from "next"
 import { getSession } from "../actions"
 import { redirect } from "next/navigation"
-import { DashboardHeader } from "./components/dashboard-header"
 import { AppSidebar } from "./components/app-sidebar"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 
@@ -27,18 +26,14 @@ export default async function DashboardLayout({
     redirect("/auth")
   }
 
-  const user = {
-    name: session.name || "Admin User",
-    email: session.email || "admin@nexusshift.com",
-  }
-
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <DashboardHeader user={user} />
-        <main className="flex-1 space-y-4 p-8 pt-6">{children}</main>
-      </SidebarInset>
-    </SidebarProvider>
+    <div className="min-h-screen bg-white">
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+          <main className="flex-1">{children}</main>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
   )
 }
