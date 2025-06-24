@@ -2,40 +2,43 @@
 
 import { LoginForm } from "./components/login-form"
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function PortalPage() {
-  const [isClient, setIsClient] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
-    setIsClient(true)
-
-    // Check if user is already logged in and redirect
-    if (typeof window !== "undefined") {
-      const session = localStorage.getItem("portal-session")
-      if (session) {
-        try {
-          const sessionData = JSON.parse(session)
-          if (sessionData.loggedIn) {
-            window.location.replace("/portal/dashboard")
-            return
-          }
-        } catch (e) {
-          // Invalid session, clear it
-          localStorage.removeItem("portal-session")
-        }
-      }
-    }
+    setMounted(true)
   }, [])
 
-  // Don't render anything until client-side hydration is complete
-  if (!isClient) {
+  useEffect(() => {
+    if (!mounted) return
+
+    // Check if user is already logged in
+    try {
+      const session = localStorage.getItem("portal-session")
+      if (session) {
+        const sessionData = JSON.parse(session)
+        if (sessionData?.loggedIn) {
+          router.replace("/portal/dashboard")
+        }
+      }
+    } catch (error) {
+      // Clear invalid session
+      localStorage.removeItem("portal-session")
+    }
+  }, [mounted, router])
+
+  // Show loading state until mounted
+  if (!mounted) {
     return (
-      <div className="min-h-screen bg-primary flex items-center justify-center p-4">
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
-          <div className="bg-card rounded-2xl shadow-xl border border-border p-8">
+          <div className="bg-white rounded-2xl shadow-xl border p-8">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-              <p className="mt-4 text-muted-foreground">Loading...</p>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900 mx-auto"></div>
+              <p className="mt-4 text-slate-600">Loading portal...</p>
             </div>
           </div>
         </div>
@@ -44,12 +47,12 @@ export default function PortalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-primary flex items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="bg-card rounded-2xl shadow-xl border border-border p-8">
+        <div className="bg-white rounded-2xl shadow-xl border p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-primary rounded-xl mx-auto mb-4 flex items-center justify-center">
-              <svg className="w-8 h-8 text-primary-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 bg-slate-900 rounded-xl mx-auto mb-4 flex items-center justify-center">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -58,8 +61,8 @@ export default function PortalPage() {
                 />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-foreground mb-2">Portal Access</h1>
-            <p className="text-muted-foreground">Sign in to manage your clients</p>
+            <h1 className="text-2xl font-bold text-slate-900 mb-2">Portal Access</h1>
+            <p className="text-slate-600">Sign in to manage your clients</p>
           </div>
 
           <LoginForm />
