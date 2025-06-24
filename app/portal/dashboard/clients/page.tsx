@@ -264,34 +264,30 @@ export default function ClientsPage() {
                     </TableRow>
                   ) : (
                     clients.map((client) => (
-                      <TableRow
-                        key={client.id}
-                        className="hover:bg-gray-50 transition-colors duration-200 border-b border-gray-100"
-                      >
-                        <TableCell className="font-semibold text-primary py-4">
-                          <Link
-                            href={`/portal/dashboard/clients/${client.id}`}
-                            className="block w-full hover:text-secondary transition-colors"
-                          >
+                      <Link key={client.id} href={`/portal/dashboard/clients/${client.id}`} className="contents">
+                        <TableRow className="hover:bg-gray-50 transition-colors duration-200 border-b border-gray-100 cursor-pointer">
+                          <TableCell className="font-semibold text-primary py-4 hover:text-secondary transition-colors">
                             {client.name || `Client ${client.id}`}
-                          </Link>
-                        </TableCell>
-                        <TableCell className="py-4">
-                          <Badge className={`${getSizeColor(client.size)} font-medium`}>
-                            {client.size || "Unknown"}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="max-w-xs py-4">
-                          <div className="truncate text-gray-700" title={client.address}>
-                            {client.address || "No address"}
-                          </div>
-                        </TableCell>
-                        <TableCell className="py-4">
-                          <Badge className={`${getStatusColor(client.status)} font-medium`}>
-                            {client.status ? client.status.charAt(0).toUpperCase() + client.status.slice(1) : "Unknown"}
-                          </Badge>
-                        </TableCell>
-                      </TableRow>
+                          </TableCell>
+                          <TableCell className="py-4">
+                            <Badge className={`${getSizeColor(client.size)} font-medium`}>
+                              {client.size || "Unknown"}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="max-w-xs py-4">
+                            <div className="truncate text-gray-700" title={client.address}>
+                              {client.address || "No address"}
+                            </div>
+                          </TableCell>
+                          <TableCell className="py-4">
+                            <Badge className={`${getStatusColor(client.status)} font-medium`}>
+                              {client.status
+                                ? client.status.charAt(0).toUpperCase() + client.status.slice(1)
+                                : "Unknown"}
+                            </Badge>
+                          </TableCell>
+                        </TableRow>
+                      </Link>
                     ))
                   )}
                 </TableBody>
