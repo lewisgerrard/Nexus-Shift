@@ -139,6 +139,7 @@ export default function PortalPage() {
 
             <button
               type="submit"
+              id="submitButton"
               style={{
                 width: "100%",
                 backgroundColor: "#1e293b",
@@ -150,8 +151,6 @@ export default function PortalPage() {
                 cursor: "pointer",
                 transition: "background-color 0.2s",
               }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = "#0f172a")}
-              onMouseOut={(e) => (e.target.style.backgroundColor = "#1e293b")}
             >
               <span id="buttonText">Sign In</span>
               <span id="buttonLoading" style={{ display: "none" }}>
@@ -196,24 +195,6 @@ export default function PortalPage() {
       <script
         dangerouslySetInnerHTML={{
           __html: `
-          // Check if already logged in when page loads
-          window.addEventListener('load', function() {
-            try {
-              const session = localStorage.getItem('portal-session');
-              if (session) {
-                const sessionData = JSON.parse(session);
-                if (sessionData && sessionData.loggedIn === true) {
-                  console.log('Already logged in, redirecting...');
-                  window.location.replace('/portal/dashboard');
-                  return;
-                }
-              }
-            } catch (e) {
-              console.log('Session check error:', e);
-              localStorage.removeItem('portal-session');
-            }
-          });
-
           document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -223,12 +204,14 @@ export default function PortalPage() {
             const successDiv = document.getElementById('success');
             const buttonText = document.getElementById('buttonText');
             const buttonLoading = document.getElementById('buttonLoading');
+            const submitButton = document.getElementById('submitButton');
             
             // Show loading
             buttonText.style.display = 'none';
             buttonLoading.style.display = 'inline-flex';
             errorDiv.style.display = 'none';
             successDiv.style.display = 'none';
+            submitButton.disabled = true;
             
             setTimeout(function() {
               if (email === 'lewis.gerrard@outlook.com' && password === 'password') {
@@ -240,36 +223,50 @@ export default function PortalPage() {
                   timestamp: Date.now()
                 };
                 
-                // Set session
                 try {
+                  // Clear any existing session first
+                  localStorage.removeItem('portal-session');
+                  
+                  // Set new session
                   localStorage.setItem('portal-session', JSON.stringify(sessionData));
-                  console.log('Session saved:', sessionData);
                   
-                  // Show success message
-                  successDiv.textContent = 'Login successful! Redirecting...';
-                  successDiv.style.display = 'block';
+                  // Verify session was saved
+                  const savedSession = localStorage.getItem('portal-session');
+                  const parsedSession = JSON.parse(savedSession);
                   
-                  // Redirect after a short delay
-                  setTimeout(function() {
-                    console.log('Redirecting to dashboard...');
-                    window.location.replace('/portal/dashboard');
-                  }, 1000);
+                  if (parsedSession && parsedSession.loggedIn === true) {
+                    console.log('Session verified:', parsedSession);
+                    
+                    // Show success message
+                    successDiv.textContent = 'Login successful! Redirecting to dashboard...';
+                    successDiv.style.display = 'block';
+                    
+                    // Redirect after verification
+                    setTimeout(function() {
+                      console.log('Redirecting to dashboard...');
+                      window.location.href = '/portal/dashboard';
+                    }, 1500);
+                  } else {
+                    throw new Error('Session verification failed');
+                  }
                   
                 } catch (e) {
-                  console.error('Failed to save session:', e);
+                  console.error('Session error:', e);
                   errorDiv.textContent = 'Failed to save login session. Please try again.';
                   errorDiv.style.display = 'block';
                   buttonText.style.display = 'inline';
                   buttonLoading.style.display = 'none';
+                  submitButton.disabled = false;
                 }
               } else {
                 // Show error
-                errorDiv.textContent = 'Invalid credentials. Please use the demo credentials shown below.';
+                errorDiv.textContent = 'Invalid credentials. Please use: lewis.gerrard@outlook.com / password';
                 errorDiv.style.display = 'block';
                 
                 // Hide loading
                 buttonText.style.display = 'inline';
                 buttonLoading.style.display = 'none';
+                submitButton.disabled = false;
               }
             }, 1000);
           });
