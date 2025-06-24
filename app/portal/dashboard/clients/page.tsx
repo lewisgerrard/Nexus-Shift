@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Plus, Users, UserCheck, Clock, Building, RefreshCw } from "lucide-react"
+import { Plus, Users, UserCheck, Clock, Building, AlertCircle, RefreshCw } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { AddClientDialog } from "../components/add-client-dialog"
@@ -41,67 +41,35 @@ export default function ClientsPage() {
   const [clients, setClients] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [usingDemoData, setUsingDemoData] = useState(false)
   const [debugInfo, setDebugInfo] = useState(null)
-
-  // Demo data fallback
-  const demoClients = [
-    {
-      id: 1,
-      contact_name: "John Smith",
-      company_name: "Tech Corp",
-      client_type: "Enterprise",
-      status: "active",
-    },
-    {
-      id: 2,
-      contact_name: "Sarah Johnson",
-      company_name: "StartupCo",
-      client_type: "Startup",
-      status: "active",
-    },
-    {
-      id: 3,
-      contact_name: "Mike Davis",
-      company_name: "Business Solutions",
-      client_type: "SMB",
-      status: "pending",
-    },
-  ]
 
   const fetchClients = async () => {
     setLoading(true)
     try {
-      console.log("Fetching clients from API...")
+      console.log("🔄 Fetching clients from API...")
       const response = await fetch("/api/clients", {
         cache: "no-store",
-        headers: {
-          "Cache-Control": "no-cache",
-        },
       })
 
-      console.log("API Response status:", response.status)
+      console.log("📡 API Response status:", response.status)
       const data = await response.json()
-      console.log("API Response data:", data)
+      console.log("📊 API Response data:", data)
 
       if (data.success) {
         setClients(data.clients)
-        setUsingDemoData(false)
         setError(null)
-        console.log("✅ Using real database data:", data.clients.length, "clients")
+        setDebugInfo(null)
+        console.log("✅ Successfully loaded clients:", data.clients.length)
       } else {
-        setClients(demoClients)
-        setUsingDemoData(true)
         setError(data.error)
-        console.log("⚠️ Using demo data due to error:", data.error)
+        setDebugInfo(data.debug)
+        setClients([])
+        console.log("❌ API returned error:", data.error)
       }
-
-      setDebugInfo(data.debug)
     } catch (err) {
-      console.error("Failed to fetch clients:", err)
-      setClients(demoClients)
-      setUsingDemoData(true)
-      setError("Failed to connect to API: " + err.message)
+      console.error("❌ Fetch error:", err)
+      setError(`Network error: ${err.message}`)
+      setClients([])
     } finally {
       setLoading(false)
     }
@@ -118,34 +86,56 @@ export default function ClientsPage() {
           <h1 className="text-3xl font-bold text-primary">Clients</h1>
           <p className="text-muted-foreground mt-2">Loading client data...</p>
         </div>
-
-        {/* Loading skeleton */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {[1, 2, 3, 4].map((i) => (
-            <Card key={i}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <div className="h-4 bg-gray-200 rounded w-20 animate-pulse"></div>
-                <div className="h-4 w-4 bg-gray-200 rounded animate-pulse"></div>
-              </CardHeader>
-              <CardContent>
-                <div className="h-8 bg-gray-200 rounded w-12 animate-pulse"></div>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="flex items-center justify-center p-8">
+          <RefreshCw className="h-8 w-8 animate-spin text-primary" />
         </div>
+      </div>
+    )
+  }
 
-        <Card>
-          <CardHeader>
-            <div className="h-6 bg-gray-200 rounded w-32 animate-pulse"></div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="h-12 bg-gray-100 rounded animate-pulse"></div>
-              ))}
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold text-primary">Clients</h1>
+          <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md">
+            <div className="flex items-start">
+              <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-3 flex-shrink-0" />
+              <div className="flex-1">
+                <p className="text-sm text-red-800 font-medium">Database Connection Error</p>
+                <p className="text-xs text-red-700 mt-1">{error}</p>
+
+                {debugInfo && (
+                  <details className="mt-3">
+                    <summary className="text-xs text-red-600 cursor-pointer hover:text-red-800">
+                      Show Debug Information
+                    </summary>
+                    <div className="mt-2 p-2 bg-red-100 rounded text-xs text-red-700">
+                      <pre>{JSON.stringify(debugInfo, null, 2)}</pre>
+                    </div>
+                  </details>
+                )}
+
+                <div className="mt-3 space-y-2">
+                  <Button onClick={fetchClients} size="sm" variant="outline">
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Retry Connection
+                  </Button>
+
+                  <div className="text-xs text-red-600">
+                    <p className="font-medium">Troubleshooting Steps:</p>
+                    <ul className="list-disc list-inside mt-1 space-y-1">
+                      <li>Check if DATABASE_URL is set in Vercel environment variables</li>
+                      <li>Verify your Neon database is active and accessible</li>
+                      <li>Run the database setup scripts if tables are missing</li>
+                      <li>Check Vercel function logs for detailed error information</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     )
   }
@@ -158,47 +148,11 @@ export default function ClientsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-primary">Clients</h1>
-            <p className="text-muted-foreground mt-2">Manage your client relationships</p>
-          </div>
-          <Button onClick={fetchClients} variant="outline" size="sm" disabled={loading}>
-            <RefreshCw className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`} />
-            Refresh
-          </Button>
+        <h1 className="text-3xl font-bold text-primary">Clients</h1>
+        <p className="text-muted-foreground mt-2">Manage your client relationships</p>
+        <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-md">
+          <p className="text-sm text-green-800">✅ Database Connected - {clients.length} clients loaded</p>
         </div>
-
-        {usingDemoData && (
-          <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md">
-            <p className="text-sm text-red-800 font-medium">❌ Database Connection Failed - Using Demo Data</p>
-            {error && <p className="text-xs text-red-700 mt-1">Error: {error}</p>}
-            {debugInfo && (
-              <details className="mt-2">
-                <summary className="text-xs text-red-600 cursor-pointer">Debug Information</summary>
-                <pre className="text-xs text-red-600 mt-1 bg-red-100 p-2 rounded overflow-auto">
-                  {JSON.stringify(debugInfo, null, 2)}
-                </pre>
-              </details>
-            )}
-            <p className="text-xs text-red-600 mt-2">
-              Check the browser console and Vercel function logs for detailed debugging information.
-            </p>
-          </div>
-        )}
-
-        {!usingDemoData && (
-          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-md">
-            <p className="text-sm text-green-800 font-medium">✅ Connected to Database</p>
-            <p className="text-xs text-green-700 mt-1">Showing {clients.length} real clients from your database</p>
-            {debugInfo && (
-              <p className="text-xs text-green-600 mt-1">
-                Records in DB: {debugInfo.recordCount} | Connection:{" "}
-                {debugInfo.connectionWorking ? "Working" : "Failed"}
-              </p>
-            )}
-          </div>
-        )}
       </div>
 
       {/* Stats Cards */}
@@ -263,25 +217,33 @@ export default function ClientsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {clients.map((client) => (
-                  <TableRow key={client.id} className="cursor-pointer hover:bg-muted/50">
-                    <TableCell className="font-medium">
-                      <Link href={`/portal/dashboard/clients/${client.id}`} className="block w-full">
-                        {client.company_name || client.contact_name || `Client ${client.id}`}
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="secondary" className={getTypeColor(client.client_type)}>
-                        {client.client_type || "Unknown"}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="secondary" className={getStatusColor(client.status)}>
-                        {client.status ? client.status.charAt(0).toUpperCase() + client.status.slice(1) : "Unknown"}
-                      </Badge>
+                {clients.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={3} className="text-center py-8 text-muted-foreground">
+                      No clients found. Add your first client to get started.
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  clients.map((client) => (
+                    <TableRow key={client.id} className="cursor-pointer hover:bg-muted/50">
+                      <TableCell className="font-medium">
+                        <Link href={`/portal/dashboard/clients/${client.id}`} className="block w-full">
+                          {client.company_name || client.contact_name || `Client ${client.id}`}
+                        </Link>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="secondary" className={getTypeColor(client.client_type)}>
+                          {client.client_type || "Unknown"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="secondary" className={getStatusColor(client.status)}>
+                          {client.status ? client.status.charAt(0).toUpperCase() + client.status.slice(1) : "Unknown"}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </div>
