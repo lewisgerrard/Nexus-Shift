@@ -1,49 +1,56 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, Building2, UserCheck, Clock, TrendingUp, Calendar } from "lucide-react"
-import Link from "next/link"
 
 export default function DashboardPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [userName, setUserName] = useState("")
-  const router = useRouter()
 
   useEffect(() => {
-    try {
-      const session = localStorage.getItem("portal-session")
-      if (session) {
-        const sessionData = JSON.parse(session)
-        if (sessionData?.loggedIn) {
-          setIsAuthenticated(true)
-          setUserName(sessionData.name || "User")
+    const checkAuth = () => {
+      try {
+        const session = localStorage.getItem("portal-session")
+        if (session) {
+          const sessionData = JSON.parse(session)
+          if (sessionData?.loggedIn) {
+            setIsAuthenticated(true)
+          } else {
+            window.location.href = "/portal"
+          }
         } else {
-          router.replace("/portal")
-          return
+          window.location.href = "/portal"
         }
-      } else {
-        router.replace("/portal")
-        return
+      } catch (error) {
+        localStorage.removeItem("portal-session")
+        window.location.href = "/portal"
       }
-    } catch (error) {
-      console.error("Session error:", error)
-      localStorage.removeItem("portal-session")
-      router.replace("/portal")
-      return
+      setIsLoading(false)
     }
 
-    setIsLoading(false)
-  }, [router])
+    checkAuth()
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem("portal-session")
+    window.location.href = "/portal"
+  }
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900 mx-auto"></div>
-          <p className="mt-4 text-slate-600">Loading dashboard...</p>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "400px" }}>
+        <div style={{ textAlign: "center" }}>
+          <div
+            style={{
+              width: "2rem",
+              height: "2rem",
+              border: "2px solid #e5e7eb",
+              borderTop: "2px solid #1e293b",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite",
+              margin: "0 auto",
+            }}
+          ></div>
+          <p style={{ marginTop: "1rem", color: "#64748b" }}>Loading dashboard...</p>
         </div>
       </div>
     )
@@ -54,126 +61,180 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900">Dashboard</h1>
-        <p className="text-slate-600">Welcome back, {userName}. Here's what's happening with your clients.</p>
+    <div style={{ padding: "2rem", maxWidth: "1200px", margin: "0 auto" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
+        <div>
+          <h1 style={{ fontSize: "2rem", fontWeight: "bold", color: "#1e293b", margin: 0 }}>Dashboard</h1>
+          <p style={{ color: "#64748b", marginTop: "0.5rem" }}>Welcome back, Lewis. Here's your client overview.</p>
+        </div>
+        <button
+          onClick={handleLogout}
+          style={{
+            backgroundColor: "#dc2626",
+            color: "white",
+            padding: "0.5rem 1rem",
+            borderRadius: "0.375rem",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          Logout
+        </button>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600">Total Clients</CardTitle>
-            <Users className="h-4 w-4 text-slate-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-slate-900">12</div>
-            <p className="text-xs text-slate-600 flex items-center">
-              <TrendingUp className="h-3 w-3 mr-1" />
-              +2 from last month
-            </p>
-          </CardContent>
-        </Card>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+          gap: "1.5rem",
+          marginBottom: "2rem",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "1.5rem",
+            borderRadius: "0.5rem",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <h3 style={{ fontSize: "0.875rem", fontWeight: "500", color: "#64748b", margin: "0 0 0.5rem 0" }}>
+            Total Clients
+          </h3>
+          <p style={{ fontSize: "2rem", fontWeight: "bold", color: "#1e293b", margin: 0 }}>12</p>
+          <p style={{ fontSize: "0.75rem", color: "#16a34a", marginTop: "0.25rem" }}>+2 from last month</p>
+        </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600">Active Projects</CardTitle>
-            <Building2 className="h-4 w-4 text-slate-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-slate-900">8</div>
-            <p className="text-xs text-slate-600">+1 from last week</p>
-          </CardContent>
-        </Card>
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "1.5rem",
+            borderRadius: "0.5rem",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <h3 style={{ fontSize: "0.875rem", fontWeight: "500", color: "#64748b", margin: "0 0 0.5rem 0" }}>
+            Active Projects
+          </h3>
+          <p style={{ fontSize: "2rem", fontWeight: "bold", color: "#1e293b", margin: 0 }}>8</p>
+          <p style={{ fontSize: "0.75rem", color: "#16a34a", marginTop: "0.25rem" }}>+1 from last week</p>
+        </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600">Completed</CardTitle>
-            <UserCheck className="h-4 w-4 text-green-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">24</div>
-            <p className="text-xs text-slate-600">+4 this month</p>
-          </CardContent>
-        </Card>
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "1.5rem",
+            borderRadius: "0.5rem",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <h3 style={{ fontSize: "0.875rem", fontWeight: "500", color: "#64748b", margin: "0 0 0.5rem 0" }}>
+            Completed
+          </h3>
+          <p style={{ fontSize: "2rem", fontWeight: "bold", color: "#16a34a", margin: 0 }}>24</p>
+          <p style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "0.25rem" }}>+4 this month</p>
+        </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600">Pending</CardTitle>
-            <Clock className="h-4 w-4 text-yellow-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-yellow-600">3</div>
-            <p className="text-xs text-slate-600">-1 from yesterday</p>
-          </CardContent>
-        </Card>
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "1.5rem",
+            borderRadius: "0.5rem",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <h3 style={{ fontSize: "0.875rem", fontWeight: "500", color: "#64748b", margin: "0 0 0.5rem 0" }}>Pending</h3>
+          <p style={{ fontSize: "2rem", fontWeight: "bold", color: "#eab308", margin: 0 }}>3</p>
+          <p style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "0.25rem" }}>-1 from yesterday</p>
+        </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle className="text-slate-900">Recent Activity</CardTitle>
-            <CardDescription>Latest updates from your client projects</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-4">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-slate-900">TechCorp website launched</p>
-                  <p className="text-xs text-slate-600">2 hours ago</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-slate-900">New client onboarded: RetailPlus</p>
-                  <p className="text-xs text-slate-600">1 day ago</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-slate-900">HealthCare Inc. project milestone reached</p>
-                  <p className="text-xs text-slate-600">3 days ago</p>
-                </div>
+      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "1.5rem" }}>
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "1.5rem",
+            borderRadius: "0.5rem",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <h3 style={{ fontSize: "1.125rem", fontWeight: "600", color: "#1e293b", marginBottom: "1rem" }}>
+            Recent Activity
+          </h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <div style={{ width: "0.5rem", height: "0.5rem", backgroundColor: "#16a34a", borderRadius: "50%" }}></div>
+              <div>
+                <p style={{ fontSize: "0.875rem", fontWeight: "500", color: "#1e293b", margin: 0 }}>
+                  TechCorp website launched
+                </p>
+                <p style={{ fontSize: "0.75rem", color: "#64748b", margin: 0 }}>2 hours ago</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-
-        <Card className="col-span-3">
-          <CardHeader>
-            <CardTitle className="text-slate-900">Quick Actions</CardTitle>
-            <CardDescription>Common tasks and shortcuts</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <Link
-                href="/portal/dashboard/clients"
-                className="block w-full text-left p-3 rounded-lg hover:bg-slate-50 transition-colors border border-slate-200"
-              >
-                <div className="flex items-center space-x-3">
-                  <Users className="h-5 w-5 text-slate-600" />
-                  <div>
-                    <p className="text-sm font-medium text-slate-900">Manage Clients</p>
-                    <p className="text-xs text-slate-600">View and manage all clients</p>
-                  </div>
-                </div>
-              </Link>
-
-              <button className="w-full text-left p-3 rounded-lg hover:bg-slate-50 transition-colors border border-slate-200">
-                <div className="flex items-center space-x-3">
-                  <Calendar className="h-5 w-5 text-slate-600" />
-                  <div>
-                    <p className="text-sm font-medium text-slate-900">Schedule Meeting</p>
-                    <p className="text-xs text-slate-600">Book a meeting with a client</p>
-                  </div>
-                </div>
-              </button>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <div style={{ width: "0.5rem", height: "0.5rem", backgroundColor: "#3b82f6", borderRadius: "50%" }}></div>
+              <div>
+                <p style={{ fontSize: "0.875rem", fontWeight: "500", color: "#1e293b", margin: 0 }}>
+                  New client onboarded: RetailPlus
+                </p>
+                <p style={{ fontSize: "0.75rem", color: "#64748b", margin: 0 }}>1 day ago</p>
+              </div>
             </div>
-          </CardContent>
-        </Card>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <div style={{ width: "0.5rem", height: "0.5rem", backgroundColor: "#eab308", borderRadius: "50%" }}></div>
+              <div>
+                <p style={{ fontSize: "0.875rem", fontWeight: "500", color: "#1e293b", margin: 0 }}>
+                  HealthCare Inc. milestone reached
+                </p>
+                <p style={{ fontSize: "0.75rem", color: "#64748b", margin: 0 }}>3 days ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "1.5rem",
+            borderRadius: "0.5rem",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <h3 style={{ fontSize: "1.125rem", fontWeight: "600", color: "#1e293b", marginBottom: "1rem" }}>
+            Quick Actions
+          </h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            <a
+              href="/portal/dashboard/clients"
+              style={{
+                display: "block",
+                padding: "0.75rem",
+                backgroundColor: "#f8fafc",
+                borderRadius: "0.375rem",
+                textDecoration: "none",
+                color: "#1e293b",
+                border: "1px solid #e2e8f0",
+              }}
+            >
+              <p style={{ fontSize: "0.875rem", fontWeight: "500", margin: "0 0 0.25rem 0" }}>Manage Clients</p>
+              <p style={{ fontSize: "0.75rem", color: "#64748b", margin: 0 }}>View and manage all clients</p>
+            </a>
+            <button
+              style={{
+                width: "100%",
+                textAlign: "left",
+                padding: "0.75rem",
+                backgroundColor: "#f8fafc",
+                borderRadius: "0.375rem",
+                border: "1px solid #e2e8f0",
+                cursor: "pointer",
+              }}
+            >
+              <p style={{ fontSize: "0.875rem", fontWeight: "500", margin: "0 0 0.25rem 0" }}>Schedule Meeting</p>
+              <p style={{ fontSize: "0.75rem", color: "#64748b", margin: 0 }}>Book a meeting with a client</p>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   )
