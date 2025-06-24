@@ -10,23 +10,34 @@ function getDatabaseUrl() {
     process.env.DATABASE_URL_UNPOOLED,
     process.env.POSTGRES_URL_NON_POOLING,
     process.env.POSTGRES_URL_NO_SSL,
-    process.env.NEON_PROJECT_ID ? `postgresql://user:pass@host/db` : null, // placeholder if project ID exists
   ]
 
   // Log all environment variables for debugging
   console.log("🔍 Environment Variables Check:")
-  console.log("DATABASE_URL:", process.env.DATABASE_URL ? "EXISTS" : "MISSING")
-  console.log("POSTGRES_URL:", process.env.POSTGRES_URL ? "EXISTS" : "MISSING")
-  console.log("NEON_DATABASE_URL:", process.env.NEON_DATABASE_URL ? "EXISTS" : "MISSING")
-  console.log("POSTGRES_PRISMA_URL:", process.env.POSTGRES_PRISMA_URL ? "EXISTS" : "MISSING")
-  console.log("DATABASE_URL_UNPOOLED:", process.env.DATABASE_URL_UNPOOLED ? "EXISTS" : "MISSING")
-  console.log("POSTGRES_URL_NON_POOLING:", process.env.POSTGRES_URL_NON_POOLING ? "EXISTS" : "MISSING")
-  console.log("NEON_PROJECT_ID:", process.env.NEON_PROJECT_ID ? "EXISTS" : "MISSING")
+  possibleUrls.forEach((url, index) => {
+    const varNames = [
+      "DATABASE_URL",
+      "POSTGRES_URL",
+      "NEON_DATABASE_URL",
+      "POSTGRES_PRISMA_URL",
+      "DATABASE_URL_UNPOOLED",
+      "POSTGRES_URL_NON_POOLING",
+      "POSTGRES_URL_NO_SSL",
+    ]
+    console.log(
+      `${varNames[index]}:`,
+      url ? `EXISTS (${url.length} chars, starts with: ${url.substring(0, 20)}...)` : "MISSING",
+    )
+  })
 
   // Return the first non-null URL
-  for (const url of possibleUrls) {
-    if (url && url !== "postgresql://user:pass@host/db") {
-      console.log("✅ Using database URL:", url.substring(0, 30) + "...")
+  for (let i = 0; i < possibleUrls.length; i++) {
+    const url = possibleUrls[i]
+    if (url) {
+      console.log(
+        `✅ Using database URL from ${["DATABASE_URL", "POSTGRES_URL", "NEON_DATABASE_URL", "POSTGRES_PRISMA_URL", "DATABASE_URL_UNPOOLED", "POSTGRES_URL_NON_POOLING", "POSTGRES_URL_NO_SSL"][i]}:`,
+        url.substring(0, 30) + "...",
+      )
       return url
     }
   }
@@ -36,19 +47,36 @@ function getDatabaseUrl() {
 
 export async function GET() {
   console.log("🚀 API /clients GET request started")
+  console.log("🌍 Environment:", process.env.NODE_ENV)
+  console.log("📊 Total environment variables:", Object.keys(process.env).length)
 
   const databaseUrl = getDatabaseUrl()
 
   if (!databaseUrl) {
     console.error("❌ No database URL found in any environment variable")
+
+    // Get detailed environment info for debugging
+    const allEnvVars = Object.keys(process.env)
+    const databaseRelatedVars = allEnvVars.filter(
+      (key) => key.includes("DATABASE") || key.includes("POSTGRES") || key.includes("NEON"),
+    )
+
     return NextResponse.json({
       success: false,
       clients: [],
-      error: "Database URL not configured. Please check your environment variables in Vercel dashboard.",
+      error: "No database URL found in any environment variable",
       debug: {
-        availableEnvVars: Object.keys(process.env).filter(
-          (key) => key.includes("DATABASE") || key.includes("POSTGRES") || key.includes("NEON"),
-        ),
+        totalEnvVars: allEnvVars.length,
+        databaseRelatedVars,
+        checkedVariables: [
+          "DATABASE_URL",
+          "POSTGRES_URL",
+          "NEON_DATABASE_URL",
+          "POSTGRES_PRISMA_URL",
+          "DATABASE_URL_UNPOOLED",
+          "POSTGRES_URL_NON_POOLING",
+        ],
+        suggestion: "Add DATABASE_URL to Vercel environment variables and redeploy",
       },
     })
   }
@@ -63,7 +91,7 @@ export async function GET() {
 
     // Test connection first
     console.log("🧪 Testing database connection...")
-    const connectionTest = await sql`SELECT 1 as test`
+    const connectionTest = await sql`SELECT 1 as test, NOW() as timestamp`
     console.log("✅ Database connection successful:", connectionTest)
 
     // Check if clients table exists
@@ -82,6 +110,11 @@ export async function GET() {
         success: false,
         clients: [],
         error: "Clients table does not exist. Please run the database setup scripts.",
+        debug: {
+          connectionWorking: true,
+          tableExists: false,
+          suggestion: "Run the database setup scripts to create the clients table",
+        },
       })
     }
 
@@ -119,6 +152,11 @@ export async function GET() {
       success: false,
       clients: [],
       error: `Database connection failed: ${error.message}`,
+      debug: {
+        errorType: error.name,
+        errorMessage: error.message,
+        suggestion: "Check if your DATABASE_URL is correct and your Neon database is active",
+      },
     })
   }
 }
