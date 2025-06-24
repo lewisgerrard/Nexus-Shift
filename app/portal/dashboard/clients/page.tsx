@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Plus, Users, UserCheck, Clock, Building, AlertCircle, RefreshCw, CheckCircle } from "lucide-react"
+import { Users, UserCheck, Clock, Building, AlertCircle, RefreshCw, CheckCircle } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { AddClientDialog } from "../components/add-client-dialog"
@@ -22,16 +22,14 @@ function getStatusColor(status: string) {
   }
 }
 
-function getTypeColor(type: string) {
-  switch (type?.toLowerCase()) {
-    case "enterprise":
+function getSizeColor(size: string) {
+  switch (size?.toLowerCase()) {
+    case "micro (1–10 employees)":
       return "bg-blue-100 text-blue-800 hover:bg-blue-200"
-    case "startup":
+    case "small (11–50 employees)":
       return "bg-purple-100 text-purple-800 hover:bg-purple-200"
-    case "smb":
+    case "medium (51–250 employees)":
       return "bg-green-100 text-green-800 hover:bg-green-200"
-    case "agency":
-      return "bg-orange-100 text-orange-800 hover:bg-orange-200"
     default:
       return "bg-gray-100 text-gray-800 hover:bg-gray-200"
   }
@@ -43,8 +41,63 @@ export default function ClientsPage() {
   const [error, setError] = useState(null)
   const [debugInfo, setDebugInfo] = useState(null)
 
+  // Demo data for preview environment with new size categories
+  const demoClients = [
+    {
+      id: 1,
+      contact_name: "John Smith",
+      company_name: "Tech Solutions Inc",
+      email: "john@techsolutions.com",
+      phone: "+1 (555) 123-4567",
+      size: "Medium (51–250 employees)",
+      status: "active",
+      created_at: "2024-01-15T10:00:00Z",
+    },
+    {
+      id: 2,
+      contact_name: "Sarah Johnson",
+      company_name: "StartupCo",
+      email: "sarah@startupco.com",
+      phone: "+1 (555) 987-6543",
+      size: "Micro (1–10 employees)",
+      status: "pending",
+      created_at: "2024-01-10T14:30:00Z",
+    },
+    {
+      id: 3,
+      contact_name: "Mike Wilson",
+      company_name: "Local Business LLC",
+      email: "mike@localbiz.com",
+      phone: "+1 (555) 456-7890",
+      size: "Small (11–50 employees)",
+      status: "active",
+      created_at: "2024-01-05T09:15:00Z",
+    },
+  ]
+
+  // Check if we're in preview environment (no real database access)
+  const isPreviewEnvironment =
+    typeof window !== "undefined" &&
+    (window.location.hostname.includes("v0.dev") ||
+      window.location.hostname.includes("localhost") ||
+      !process.env.DATABASE_URL)
+
   const fetchClients = async () => {
     setLoading(true)
+
+    // Use demo data in preview environment
+    if (isPreviewEnvironment) {
+      setTimeout(() => {
+        setClients(demoClients)
+        setError(null)
+        setDebugInfo(null)
+        setLoading(false)
+        console.log("📋 Using demo data in preview environment")
+      }, 1000) // Simulate loading time
+      return
+    }
+
+    // Rest of the existing fetchClients code for production...
     try {
       console.log("🔄 Fetching clients from API...")
       const response = await fetch("/api/clients", {
@@ -195,7 +248,11 @@ export default function ClientsPage() {
         <h1 className="text-3xl font-bold text-primary">Clients</h1>
         <p className="text-muted-foreground mt-2">Manage your client relationships</p>
         <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-md">
-          <p className="text-sm text-green-800">✅ Database Connected - {clients.length} clients loaded</p>
+          <p className="text-sm text-green-800">
+            {isPreviewEnvironment
+              ? "📋 Preview Mode - Showing demo data"
+              : `✅ Database Connected - ${clients.length} clients loaded`}
+          </p>
         </div>
       </div>
 
@@ -243,12 +300,7 @@ export default function ClientsPage() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-primary">Client Management</CardTitle>
-          <AddClientDialog>
-            <Button className="bg-primary hover:bg-primary/90 text-white">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Client
-            </Button>
-          </AddClientDialog>
+          <AddClientDialog />
         </CardHeader>
         <CardContent>
           <div className="rounded-md border">
@@ -256,7 +308,7 @@ export default function ClientsPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
-                  <TableHead>Type</TableHead>
+                  <TableHead>Size</TableHead>
                   <TableHead>Status</TableHead>
                 </TableRow>
               </TableHeader>
@@ -276,8 +328,8 @@ export default function ClientsPage() {
                         </Link>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="secondary" className={getTypeColor(client.client_type)}>
-                          {client.client_type || "Unknown"}
+                        <Badge variant="secondary" className={getSizeColor(client.size || client.client_type)}>
+                          {client.size || client.client_type || "Unknown"}
                         </Badge>
                       </TableCell>
                       <TableCell>
