@@ -43,7 +43,6 @@ export function GooglePlacesInput({
     setIsLoading(true)
     try {
       const results = await searchPlaces(input)
-      console.log("Fetched suggestions:", results) // Debug log
       setSuggestions(results)
       setShowSuggestions(results.length > 0)
       setSelectedIndex(-1)
@@ -75,7 +74,6 @@ export function GooglePlacesInput({
   }
 
   const handleSuggestionClick = async (suggestion: PlaceResult) => {
-    console.log("Clicked suggestion:", suggestion) // Debug log
     setIsLoading(true)
     try {
       const details = await getPlaceDetails(suggestion.place_id)
@@ -152,71 +150,64 @@ export function GooglePlacesInput({
       )}
 
       {showSuggestions && suggestions.length > 0 && (
-        <div
-          ref={suggestionsRef}
-          style={{
-            position: "absolute",
-            top: "100%",
-            left: "0",
-            right: "0",
-            zIndex: 10000,
-            marginTop: "4px",
-            backgroundColor: "#ffffff",
-            border: "2px solid #d1d5db",
-            borderRadius: "6px",
-            boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-            maxHeight: "240px",
-            overflowY: "auto",
-          }}
-        >
-          {suggestions.map((suggestion, index) => (
-            <div
-              key={suggestion.place_id}
-              onClick={() => handleSuggestionClick(suggestion)}
-              onMouseEnter={() => setSelectedIndex(index)}
-              onMouseLeave={() => setSelectedIndex(-1)}
-              style={{
-                padding: "12px 16px",
-                cursor: "pointer",
-                backgroundColor: index === selectedIndex ? "#00C2CB" : "#ffffff",
-                borderBottom: index < suggestions.length - 1 ? "1px solid #e5e7eb" : "none",
-                fontSize: "14px",
-                fontWeight: "500",
-                lineHeight: "1.25rem",
-                color: index === selectedIndex ? "#ffffff" : "#000000", // Changed to pure black
-                fontFamily: "system-ui, -apple-system, sans-serif", // Explicit font family
-                textAlign: "left" as const,
-                whiteSpace: "nowrap" as const,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              <span
-                style={{
-                  color: index === selectedIndex ? "#ffffff" : "#000000",
-                  display: "block",
-                  width: "100%",
-                }}
+        <>
+          <style jsx>{`
+            .google-places-dropdown {
+              position: absolute !important;
+              top: 100% !important;
+              left: 0 !important;
+              right: 0 !important;
+              z-index: 10000 !important;
+              margin-top: 4px !important;
+              background-color: #ffffff !important;
+              border: 2px solid #d1d5db !important;
+              border-radius: 6px !important;
+              box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+              max-height: 240px !important;
+              overflow-y: auto !important;
+            }
+            .google-places-item {
+              padding: 12px 16px !important;
+              cursor: pointer !important;
+              background-color: #ffffff !important;
+              border-bottom: 1px solid #e5e7eb !important;
+              font-size: 14px !important;
+              font-weight: 500 !important;
+              line-height: 1.25rem !important;
+              color: #000000 !important;
+              font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+              text-align: left !important;
+              white-space: nowrap !important;
+              overflow: hidden !important;
+              text-overflow: ellipsis !important;
+              text-shadow: none !important;
+              opacity: 1 !important;
+              visibility: visible !important;
+              display: block !important;
+            }
+            .google-places-item:hover,
+            .google-places-item.selected {
+              background-color: #00C2CB !important;
+              color: #ffffff !important;
+            }
+            .google-places-item:last-child {
+              border-bottom: none !important;
+            }
+          `}</style>
+          <div className="google-places-dropdown">
+            {suggestions.map((suggestion, index) => (
+              <div
+                key={suggestion.place_id}
+                className={`google-places-item ${index === selectedIndex ? "selected" : ""}`}
+                onClick={() => handleSuggestionClick(suggestion)}
+                onMouseEnter={() => setSelectedIndex(index)}
+                onMouseLeave={() => setSelectedIndex(-1)}
               >
                 {suggestion.formatted_address}
-              </span>
-            </div>
-          ))}
-
-          {/* Debug info - remove this after testing */}
-          <div
-            style={{
-              padding: "8px 16px",
-              backgroundColor: "#f3f4f6",
-              borderTop: "1px solid #e5e7eb",
-              fontSize: "12px",
-              color: "#000000",
-              fontFamily: "monospace",
-            }}
-          >
-            Debug: {suggestions.length} suggestions loaded
+              </div>
+            ))}
           </div>
-        </div>
+        </>
       )}
     </div>
   )
