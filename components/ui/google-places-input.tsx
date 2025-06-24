@@ -144,34 +144,39 @@ export function GooglePlacesInput({
       />
 
       {isLoading && (
-        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-secondary"></div>
+        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 z-[10000]">
+          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#00C2CB]"></div>
         </div>
       )}
 
       {showSuggestions && suggestions.length > 0 && (
         <div
           ref={suggestionsRef}
-          className="absolute z-[9999] w-full mt-1 bg-white border-2 border-gray-300 rounded-md shadow-2xl max-h-60 overflow-auto"
+          className="absolute w-full mt-1 rounded-md max-h-60 overflow-auto"
           style={{
+            zIndex: 10000,
             backgroundColor: "#ffffff",
             border: "2px solid #d1d5db",
-            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+            boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
           }}
         >
           {suggestions.map((suggestion, index) => (
             <div
               key={suggestion.place_id}
-              className={`px-4 py-3 cursor-pointer border-b border-gray-100 last:border-b-0 ${
-                index === selectedIndex ? "bg-secondary text-white" : "bg-white hover:bg-gray-50"
-              }`}
+              className="px-4 py-3 cursor-pointer border-b last:border-b-0"
               onClick={() => handleSuggestionClick(suggestion)}
               style={{
-                color: index === selectedIndex ? "#ffffff" : "#0B1F3A",
                 backgroundColor: index === selectedIndex ? "#00C2CB" : "#ffffff",
+                color: index === selectedIndex ? "#ffffff" : "#0B1F3A",
+                borderBottomColor: "#e5e7eb",
+                fontWeight: "500",
+                fontSize: "14px",
+                lineHeight: "1.25rem",
               }}
+              onMouseEnter={() => setSelectedIndex(index)}
+              onMouseLeave={() => setSelectedIndex(-1)}
             >
-              <div className="text-sm font-medium">{suggestion.formatted_address}</div>
+              {suggestion.formatted_address}
             </div>
           ))}
         </div>
