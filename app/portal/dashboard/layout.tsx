@@ -4,7 +4,6 @@ import { getSession } from "../actions"
 import { redirect } from "next/navigation"
 import { AppSidebar } from "./components/app-sidebar"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
-import { DashboardHeader } from "./components/dashboard-header"
 
 export const metadata: Metadata = {
   title: "Dashboard - Nexus Shift Portal",
@@ -32,7 +31,6 @@ export default async function DashboardLayout({
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
-          <DashboardHeader />
           <main className="flex-1">{children}</main>
         </SidebarInset>
       </SidebarProvider>
