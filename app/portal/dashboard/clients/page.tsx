@@ -40,6 +40,7 @@ export default function ClientsPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [debugInfo, setDebugInfo] = useState(null)
+  const [isUsingDemoData, setIsUsingDemoData] = useState(false)
 
   // Demo data for preview environment with new size categories
   const demoClients = [
@@ -75,29 +76,27 @@ export default function ClientsPage() {
     },
   ]
 
-  // Check if we're in preview environment (no real database access)
-  const isPreviewEnvironment =
-    typeof window !== "undefined" &&
-    (window.location.hostname.includes("v0.dev") ||
-      window.location.hostname.includes("localhost") ||
-      !process.env.DATABASE_URL)
+  // Check if we're in v0 preview environment
+  const isV0Preview = typeof window !== "undefined" && window.location.hostname.includes("v0.dev")
 
   const fetchClients = async () => {
     setLoading(true)
+    setIsUsingDemoData(false)
 
-    // Use demo data in preview environment
-    if (isPreviewEnvironment) {
+    // If we're in v0 preview, use demo data immediately
+    if (isV0Preview) {
       setTimeout(() => {
         setClients(demoClients)
         setError(null)
         setDebugInfo(null)
+        setIsUsingDemoData(true)
         setLoading(false)
-        console.log("📋 Using demo data in preview environment")
-      }, 1000) // Simulate loading time
+        console.log("📋 Using demo data in v0 preview environment")
+      }, 1000)
       return
     }
 
-    // Rest of the existing fetchClients code for production...
+    // For all other environments (including production), try the real API first
     try {
       console.log("🔄 Fetching clients from API...")
       const response = await fetch("/api/clients", {
@@ -116,17 +115,22 @@ export default function ClientsPage() {
         setClients(data.clients)
         setError(null)
         setDebugInfo(null)
-        console.log("✅ Successfully loaded clients:", data.clients.length)
+        setIsUsingDemoData(false)
+        console.log("✅ Successfully loaded clients from database:", data.clients.length)
       } else {
+        // API failed, but don't show demo data in production - show the error
         setError(data.error)
         setDebugInfo(data.debug)
         setClients([])
+        setIsUsingDemoData(false)
         console.log("❌ API returned error:", data.error)
       }
     } catch (err) {
       console.error("❌ Fetch error:", err)
+      // Network error - don't show demo data in production
       setError(`Network error: ${err.message}`)
       setClients([])
+      setIsUsingDemoData(false)
     } finally {
       setLoading(false)
     }
@@ -249,9 +253,9 @@ export default function ClientsPage() {
         <p className="text-muted-foreground mt-2">Manage your client relationships</p>
         <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-md">
           <p className="text-sm text-green-800">
-            {isPreviewEnvironment
+            {isUsingDemoData
               ? "📋 Preview Mode - Showing demo data"
-              : `✅ Database Connected - ${clients.length} clients loaded`}
+              : `✅ Database Connected - ${clients.length} clients loaded from Neon`}
           </p>
         </div>
       </div>
