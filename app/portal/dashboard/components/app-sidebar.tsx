@@ -44,8 +44,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar collapsible="icon" className="border-r-0" {...props}>
       <SidebarHeader className="bg-primary border-b border-primary/10">
         <div className="flex items-center gap-3 px-4 py-6">
-          <div className="flex h-12 w-12 items-center justify-center">
-            <Image src="/nexus-shift-logo.png" alt="Nexus Shift" width={48} height={48} className="h-12 w-12" />
+          <div className="flex h-10 w-10 items-center justify-center">
+            <Image src="/nexus-shift-logo.png" alt="Nexus Shift" width={24} height={24} className="h-6 w-6" />
           </div>
           <div className="grid flex-1 text-left">
             <span className="text-lg font-bold text-white">Nexus Shift</span>
