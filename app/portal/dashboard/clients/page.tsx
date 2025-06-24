@@ -50,6 +50,7 @@ export default function ClientsPage() {
       company_name: "Tech Solutions Inc",
       email: "john@techsolutions.com",
       phone: "+1 (555) 123-4567",
+      address: "123 Business Ave, Tech City, TC 12345",
       size: "Medium (51–250 employees)",
       status: "active",
       created_at: "2024-01-15T10:00:00Z",
@@ -60,6 +61,7 @@ export default function ClientsPage() {
       company_name: "StartupCo",
       email: "sarah@startupco.com",
       phone: "+1 (555) 987-6543",
+      address: "456 Innovation St, Startup Valley, SV 67890",
       size: "Micro (1–10 employees)",
       status: "pending",
       created_at: "2024-01-10T14:30:00Z",
@@ -70,6 +72,7 @@ export default function ClientsPage() {
       company_name: "Local Business LLC",
       email: "mike@localbiz.com",
       phone: "+1 (555) 456-7890",
+      address: "789 Main Street, Small Town, ST 11111",
       size: "Small (11–50 employees)",
       status: "active",
       created_at: "2024-01-05T09:15:00Z",
@@ -313,13 +316,14 @@ export default function ClientsPage() {
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>Size</TableHead>
+                  <TableHead>Address</TableHead>
                   <TableHead>Status</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {clients.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={3} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
                       No clients found. Add your first client to get started.
                     </TableCell>
                   </TableRow>
@@ -335,6 +339,11 @@ export default function ClientsPage() {
                         <Badge variant="secondary" className={getSizeColor(client.size || client.client_type)}>
                           {client.size || client.client_type || "Unknown"}
                         </Badge>
+                      </TableCell>
+                      <TableCell className="max-w-xs">
+                        <div className="truncate" title={client.address}>
+                          {client.address || "No address"}
+                        </div>
                       </TableCell>
                       <TableCell>
                         <Badge variant="secondary" className={getStatusColor(client.status)}>
