@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -19,22 +18,23 @@ export function LoginForm() {
     setError("")
 
     try {
-      // Simple client-side validation and redirect
+      // Simple client-side validation
       if (email === "lewis.gerrard@outlook.com" && password === "password") {
-        // Set a simple session flag in localStorage for demo
+        // Set session in localStorage
         localStorage.setItem(
           "portal-session",
           JSON.stringify({
             email: "lewis.gerrard@outlook.com",
             name: "Lewis Gerrard",
             loggedIn: true,
+            timestamp: Date.now(),
           }),
         )
 
-        // Force redirect
-        window.location.href = "/portal/dashboard"
+        // Use replace to avoid back button issues
+        window.location.replace("/portal/dashboard")
       } else {
-        setError("Invalid credentials. Please try again.")
+        setError("Invalid credentials. Use lewis.gerrard@outlook.com / password")
       }
     } catch (err) {
       setError("Login failed. Please try again.")
@@ -56,7 +56,7 @@ export function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
           className="bg-background border-border focus:border-secondary focus:ring-secondary"
-          placeholder="Enter your email"
+          placeholder="lewis.gerrard@outlook.com"
         />
       </div>
 
@@ -71,7 +71,7 @@ export function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           required
           className="bg-background border-border focus:border-secondary focus:ring-secondary"
-          placeholder="Enter your password"
+          placeholder="password"
         />
       </div>
 
@@ -95,6 +95,11 @@ export function LoginForm() {
           "Sign In"
         )}
       </Button>
+
+      <div className="text-center text-sm text-muted-foreground mt-4">
+        <p>Demo credentials:</p>
+        <p className="font-mono text-xs">lewis.gerrard@outlook.com / password</p>
+      </div>
     </form>
   )
 }

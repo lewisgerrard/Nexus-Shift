@@ -5,10 +5,10 @@ import { notFound } from "next/navigation"
 import { MapPin, Edit, Save, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { GooglePlacesInput } from "@/components/ui/google-places-input"
 import { updateClient } from "../../actions"
 import { AddContactDialog } from "../../components/add-contact-dialog"
 import { EditContactDialog } from "../../components/edit-contact-dialog"
@@ -267,16 +267,16 @@ export default function ClientDetailPage({ params }: ClientDetailPageProps) {
                 )}
               </div>
               {/* Address */}
-              <div className="flex items-start space-x-3 pt-0">
-                <MapPin className="h-5 w-5 text-secondary mt-1" />
+              <div className="flex items-center space-x-3">
+                <MapPin className="h-5 w-5 text-secondary" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-600">Address</p>
+                  <p className="text-sm font-medium text-gray-600 mb-2">Address</p>
                   {isEditing ? (
-                    <Textarea
+                    <GooglePlacesInput
                       value={formData.address}
-                      onChange={(e) => handleInputChange("address", e.target.value)}
+                      onChange={(value) => handleInputChange("address", value)}
+                      placeholder="Start typing an address..."
                       className="mt-1"
-                      rows={2}
                     />
                   ) : (
                     <p className="text-gray-700">{formData.address}</p>
