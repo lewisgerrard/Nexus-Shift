@@ -3,75 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ClientsTable } from "../components/clients-table"
 import { AddClientDialog } from "../components/add-client-dialog"
 import { Button } from "@/components/ui/button"
+import { getClients } from "../actions"
 
-// Demo client data
-const demoClients = [
-  {
-    id: 1,
-    contact_name: "John Smith",
-    company_name: "Tech Corp",
-    email: "john@techcorp.com",
-    phone: "+1-555-0101",
-    address: "123 Tech Street, Silicon Valley, CA",
-    client_type: "Enterprise",
-    status: "active",
-    notes: "Looking for e-commerce solution",
-    created_at: new Date().toISOString(),
-  },
-  {
-    id: 2,
-    contact_name: "Sarah Johnson",
-    company_name: "StartupCo",
-    email: "sarah@startup.com",
-    phone: "+1-555-0102",
-    address: "456 Innovation Ave, Austin, TX",
-    client_type: "Startup",
-    status: "active",
-    notes: "iOS and Android app development",
-    created_at: new Date().toISOString(),
-  },
-  {
-    id: 3,
-    contact_name: "Mike Davis",
-    company_name: "Business Solutions",
-    email: "mike@business.com",
-    phone: "+1-555-0103",
-    address: "789 Business Blvd, New York, NY",
-    client_type: "SMB",
-    status: "pending",
-    notes: "Digital transformation project",
-    created_at: new Date().toISOString(),
-  },
-  {
-    id: 4,
-    contact_name: "Emily Chen",
-    company_name: "Design Studio",
-    email: "emily@designstudio.com",
-    phone: "+1-555-0104",
-    address: "321 Creative Lane, Portland, OR",
-    client_type: "Agency",
-    status: "active",
-    notes: "Brand identity and website redesign",
-    created_at: new Date().toISOString(),
-  },
-  {
-    id: 5,
-    contact_name: "Robert Wilson",
-    company_name: "Manufacturing Inc",
-    email: "robert@manufacturing.com",
-    phone: "+1-555-0105",
-    address: "654 Industrial Way, Detroit, MI",
-    client_type: "Enterprise",
-    status: "inactive",
-    notes: "Legacy system modernization",
-    created_at: new Date().toISOString(),
-  },
-]
+export default async function ClientsPage() {
+  // Fetch real data from database instead of using demo data
+  const clients = await getClients()
 
-export default function ClientsPage() {
-  const totalClients = demoClients.length
-  const activeClients = demoClients.filter((client) => client.status === "active").length
-  const pendingClients = demoClients.filter((client) => client.status === "pending").length
+  const totalClients = clients.length
+  const activeClients = clients.filter((client) => client.status === "active").length
+  const pendingClients = clients.filter((client) => client.status === "pending").length
 
   return (
     <div className="space-y-6">
@@ -133,7 +73,7 @@ export default function ClientsPage() {
           </AddClientDialog>
         </CardHeader>
         <CardContent>
-          <ClientsTable clients={demoClients} />
+          <ClientsTable clients={clients} />
         </CardContent>
       </Card>
     </div>
