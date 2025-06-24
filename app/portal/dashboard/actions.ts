@@ -135,18 +135,29 @@ export async function addClient(formData: FormData) {
 
     console.log("Adding client with data:", { name, size, address, status })
 
+    // Validate required fields
+    if (!name || !size || !status) {
+      return { success: false, message: "Name, size, and status are required" }
+    }
+
     // Check what columns exist in the table
     const tableStructure = await sql`
-      SELECT column_name 
+      SELECT column_name, is_nullable
       FROM information_schema.columns 
       WHERE table_name = 'clients'
     `
 
-    const columnNames = tableStructure.map((col) => col.column_name)
-    const hasNewStructure = columnNames.includes("name") && columnNames.includes("size")
+    const columns = tableStructure.reduce((acc, col) => {
+      acc[col.column_name] = col.is_nullable === "YES"
+      return acc
+    }, {})
 
-    if (hasNewStructure) {
-      // Use new 4-field structure
+    console.log("Available columns:", Object.keys(columns))
+
+    // Determine the best insertion strategy based on available columns
+    if (columns.name && columns.size) {
+      // New structure exists - use it
+      console.log("Using new structure (name, size)")
       await sql`
         INSERT INTO clients (
           name, 
@@ -159,28 +170,45 @@ export async function addClient(formData: FormData) {
           ${name}, 
           ${size}, 
           ${address || ""}, 
-          ${status || "pending"},
+          ${status},
           NOW(),
           NOW()
         )
       `
     } else {
-      // Fallback to old structure
+      // Old structure - populate all required fields
+      console.log("Using old structure compatibility mode")
+
+      // Provide values for all potentially required old columns
+      const insertData = {
+        contact_name: name,
+        company_name: name, // Use same name for both
+        email: "", // Empty string for non-required field
+        phone: "", // Empty string for non-required field
+        address: address || "",
+        client_type: size,
+        status: status,
+      }
+
       await sql`
         INSERT INTO clients (
-          contact_name, 
-          company_name, 
-          client_type, 
-          address, 
+          contact_name,
+          company_name,
+          email,
+          phone,
+          address,
+          client_type,
           status,
           created_at,
           updated_at
         ) VALUES (
-          ${name}, 
-          ${name}, 
-          ${size}, 
-          ${address || ""}, 
-          ${status || "pending"},
+          ${insertData.contact_name},
+          ${insertData.company_name},
+          ${insertData.email},
+          ${insertData.phone},
+          ${insertData.address},
+          ${insertData.client_type},
+          ${insertData.status},
           NOW(),
           NOW()
         )
@@ -191,6 +219,15 @@ export async function addClient(formData: FormData) {
     return { success: true, message: "Client added successfully" }
   } catch (error) {
     console.error("Error adding client:", error)
+
+    // Provide more specific error messages
+    if (error.message.includes("not-null constraint")) {
+      return {
+        success: false,
+        message: "Database schema mismatch. Please run the latest migration script to update the table structure.",
+      }
+    }
+
     return { success: false, message: `Failed to add client: ${error.message}` }
   }
 }

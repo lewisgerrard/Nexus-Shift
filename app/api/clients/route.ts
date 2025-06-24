@@ -238,21 +238,35 @@ export async function POST(request: Request) {
 
     const { name, size, address, status } = body
 
+    // Validate required fields
+    if (!name || !size || !status) {
+      return NextResponse.json({
+        success: false,
+        message: "Name, size, and status are required",
+      })
+    }
+
     const { neon } = await import("@neondatabase/serverless")
     const sql = neon(databaseUrl)
 
     // Check table structure first
     const tableStructure = await sql`
-      SELECT column_name 
+      SELECT column_name, is_nullable
       FROM information_schema.columns 
       WHERE table_name = 'clients'
     `
 
-    const columnNames = tableStructure.map((col) => col.column_name)
-    const hasNewStructure = columnNames.includes("name") && columnNames.includes("size")
+    const columns = tableStructure.reduce((acc, col) => {
+      acc[col.column_name] = col.is_nullable === "YES"
+      return acc
+    }, {})
 
-    if (hasNewStructure) {
-      // Use new 4-field structure
+    console.log("Available columns:", Object.keys(columns))
+
+    // Use the appropriate insertion strategy
+    if (columns.name && columns.size) {
+      // New structure exists
+      console.log("Using new structure (name, size)")
       await sql`
         INSERT INTO clients (
           name, 
@@ -263,24 +277,29 @@ export async function POST(request: Request) {
           ${name}, 
           ${size}, 
           ${address || ""}, 
-          ${status || "pending"}
+          ${status}
         )
       `
     } else {
-      // Fallback to old structure
+      // Old structure - provide all required fields
+      console.log("Using old structure compatibility")
       await sql`
         INSERT INTO clients (
           contact_name, 
           company_name, 
-          client_type, 
+          email,
+          phone,
           address, 
+          client_type, 
           status
         ) VALUES (
           ${name}, 
           ${name}, 
-          ${size}, 
+          ${""}, 
+          ${""}, 
           ${address || ""}, 
-          ${status || "pending"}
+          ${size}, 
+          ${status}
         )
       `
     }
@@ -293,6 +312,19 @@ export async function POST(request: Request) {
     })
   } catch (error) {
     console.error("❌ Error adding client:", error)
+
+    // Provide helpful error messages
+    if (error.message.includes("not-null constraint")) {
+      return NextResponse.json({
+        success: false,
+        message: "Database schema needs to be updated. Please run the migration script.",
+        debug: {
+          error: error.message,
+          suggestion: "Run script 07-fix-clients-table-structure.sql to update the database schema",
+        },
+      })
+    }
+
     return NextResponse.json({
       success: false,
       message: `Failed to add client: ${error.message}`,
