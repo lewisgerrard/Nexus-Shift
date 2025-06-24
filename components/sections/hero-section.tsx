@@ -2,89 +2,151 @@
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Code, Zap, Globe, Building2, Target, TrendingUp } from "lucide-react"
+import { ArrowRight, Zap, Database, Cpu, Network, GitBranch, Layers, Code } from "lucide-react"
+import { useCallback } from "react"
 
-interface HeroSectionProps {
-  onGetStarted: () => void
-  onLearnMore: () => void
-}
+const techIcons = [
+  { icon: Database, delay: "0s" },
+  { icon: Network, delay: "0.5s" },
+  { icon: Code, delay: "1s" },
+  { icon: GitBranch, delay: "1.5s" },
+  { icon: Cpu, delay: "2s" },
+  { icon: Layers, delay: "2.5s" },
+]
 
-export function HeroSection({ onGetStarted, onLearnMore }: HeroSectionProps) {
+const techLabels = ["Innovate", "Digitise", "Structure"]
+
+export function HeroSection() {
+  const scrollToSection = useCallback((href: string) => {
+    const element = document.querySelector(href)
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  }, [])
+
   return (
     <section
       id="home"
-      className="py-12 md:py-20 bg-gradient-to-br from-primary via-primary/80 to-secondary/30 dark:from-primary dark:via-primary/90 dark:to-secondary/20"
+      className="min-h-screen flex items-center justify-center bg-primary relative overflow-hidden px-4 py-12"
     >
-      <div className="container px-4 md:px-6">
-        <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <Badge
-                variant="secondary"
-                className="w-fit bg-secondary text-primary dark:bg-secondary dark:text-primary"
-              >
-                Digital Transformation, Engineered for Growth
-              </Badge>
-              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl dark:text-white">
-                Where digital transformation meets
-                <span className="text-secondary"> structured thinking</span>
-              </h1>
-              <p className="text-xl text-white/90 max-w-2xl dark:text-white/90">
-                We help innovative SMEs scale effectively by aligning their operations with digital systems, AI-powered
-                tools, and structured business thinking.
-              </p>
-            </div>
+      {/* Animated Background */}
+      <div className="absolute inset-0 opacity-10" aria-hidden="true">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(0,194,203,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,194,203,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: "30px 30px",
+            animation: "grid-move 15s linear infinite",
+          }}
+        />
+      </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="text-lg px-8" onClick={onGetStarted}>
-                Start Your Shift
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="text-lg px-8 border-white text-white hover:bg-white hover:text-primary dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-primary"
-                onClick={onLearnMore}
-              >
-                Learn More
-              </Button>
-            </div>
+      {/* Floating Tech Elements */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div
+          className="absolute top-10 left-5 w-8 h-8 border border-secondary/20 rounded-lg rotate-45 animate-spin opacity-30"
+          style={{ animationDuration: "15s" }}
+        />
+        <div className="absolute top-20 right-5 w-6 h-6 border border-secondary/30 rounded-full animate-pulse opacity-40" />
+        <div className="absolute bottom-20 left-5 w-4 h-4 bg-secondary/10 rounded rotate-12 animate-bounce opacity-35" />
+        <div
+          className="absolute bottom-10 right-10 w-10 h-10 border border-secondary/15 rounded rotate-45 animate-spin opacity-25"
+          style={{ animationDuration: "25s" }}
+        />
+      </div>
+
+      <div className="container max-w-6xl mx-auto relative z-10">
+        <div className="text-center space-y-8">
+          {/* Badge */}
+          <Badge
+            variant="secondary"
+            className="bg-secondary/20 text-secondary border border-secondary/30 backdrop-blur-sm text-xs sm:text-sm px-3 py-1"
+          >
+            <Cpu className="w-3 h-3 mr-1" aria-hidden="true" />
+            Structured Digital Solutions
+          </Badge>
+
+          {/* Hero Title */}
+          <div className="space-y-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+              Structured, modern digital solutions to help your business
+              <span className="block text-secondary animate-bounce mt-2"> work smarter</span>
+            </h1>
+            <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+              From sole traders to SMEs, we design and build websites, web-based applications, and integrated tools that
+              improve engagement, reduce admin burdens, and streamline processes.
+            </p>
           </div>
 
-          <div className="relative">
-            <div className="relative">
-              <div className="relative bg-gradient-to-br from-secondary/20 via-secondary/10 to-primary/20 rounded-2xl p-12 shadow-2xl dark:from-secondary/20 dark:via-accent/30 dark:to-primary/20">
-                <div className="grid grid-cols-3 gap-8 opacity-20">
-                  <div className="space-y-4">
-                    <div className="w-16 h-16 bg-white/30 rounded-lg flex items-center justify-center">
-                      <Code className="h-8 w-8 text-white" />
-                    </div>
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                      <Zap className="h-6 w-6 text-white" />
-                    </div>
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button
+              size="lg"
+              className="w-full sm:w-auto text-lg px-8 py-4 bg-secondary hover:bg-secondary/90 text-primary border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary"
+              onClick={() => scrollToSection("#contact")}
+            >
+              <Zap className="w-4 h-4 mr-2" aria-hidden="true" />
+              Start Your Shift
+              <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
+            </Button>
+            <Button
+              size="lg"
+              className="w-full sm:w-auto text-lg px-8 py-4 bg-transparent border-2 border-secondary text-secondary hover:bg-secondary/10 transition-all duration-300 transform hover:scale-105 focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary"
+              onClick={() => scrollToSection("#about")}
+            >
+              <Database className="w-4 h-4 mr-2" aria-hidden="true" />
+              Learn More
+            </Button>
+          </div>
+
+          {/* Tech Showcase */}
+          <div className="mt-12 relative">
+            <div className="bg-secondary/20 rounded-2xl p-6 sm:p-8 backdrop-blur-sm border border-secondary/20 shadow-2xl max-w-4xl mx-auto">
+              {/* Tech Grid */}
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4 mb-6">
+                {techIcons.map((item, index) => (
+                  <div
+                    key={index}
+                    className="bg-secondary/20 rounded-lg p-3 sm:p-4 flex items-center justify-center hover:bg-secondary/30 transition-all duration-300 transform hover:scale-110 group relative"
+                    style={{ animationDelay: item.delay }}
+                  >
+                    <item.icon
+                      className="w-6 h-6 sm:w-8 sm:h-8 text-secondary group-hover:animate-pulse"
+                      aria-hidden="true"
+                    />
+                    <div
+                      className="absolute top-1 right-1 w-1 h-1 bg-secondary/60 rounded-full animate-ping"
+                      style={{ animationDelay: item.delay }}
+                      aria-hidden="true"
+                    />
                   </div>
-                  <div className="space-y-4 pt-8">
-                    <div className="w-20 h-20 bg-white/40 rounded-full flex items-center justify-center">
-                      <Globe className="h-10 w-10 text-white" />
-                    </div>
-                    <div className="w-14 h-14 bg-white/25 rounded-lg flex items-center justify-center">
-                      <Building2 className="h-7 w-7 text-white" />
-                    </div>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                      <Target className="h-6 w-6 text-white" />
-                    </div>
-                    <div className="w-18 h-18 bg-white/35 rounded-lg flex items-center justify-center">
-                      <TrendingUp className="h-9 w-9 text-white" />
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-24 h-24 bg-white/90 rounded-full flex items-center justify-center shadow-xl">
-                    <ArrowRight className="h-12 w-12 text-primary" />
-                  </div>
-                </div>
+                ))}
+              </div>
+
+              {/* Floating Elements */}
+              <div
+                className="absolute -top-2 -right-2 w-4 h-4 bg-secondary/30 rounded-full animate-pulse"
+                aria-hidden="true"
+              />
+              <div
+                className="absolute -bottom-1 -left-1 w-3 h-3 bg-secondary/20 rounded-full animate-ping"
+                aria-hidden="true"
+              />
+
+              {/* Tech Labels */}
+              <div className="flex flex-wrap gap-2 justify-center">
+                {techLabels.map((label, index) => (
+                  <span
+                    key={label}
+                    className="px-3 py-1 bg-secondary/30 text-white text-xs rounded-full border border-secondary/40 animate-pulse"
+                    style={{ animationDelay: `${index * 0.3}s` }}
+                  >
+                    {label}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss"
 
 const config = {
-  darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -20,7 +19,7 @@ const config = {
     },
     extend: {
       colors: {
-        // Custom brand colors
+        // Custom brand colors - EXACTLY AS BEFORE
         primary: {
           DEFAULT: "#0B1F3A", // Midnight Navy
           foreground: "#E2E8F0", // Frosted White
@@ -31,15 +30,12 @@ const config = {
         },
         background: {
           light: "#F5F8FB", // Cloud White
-          dark: "#0B1D3A", // Updated to match your request
         },
         surface: {
           light: "#FFFFFF",
-          dark: "#1A202C", // Deep Slate
         },
         text: {
           light: "#2B2B2B", // Charcoal
-          dark: "#E2E8F0", // Frosted White
         },
         // Keep existing shadcn colors for compatibility
         border: "hsl(var(--border))",

@@ -1,6 +1,8 @@
 import type React from "react"
+import type { ReactNode } from "react"
+
 export interface ServiceCardProps {
-  icon: React.ReactNode
+  icon: ReactNode
   title: string
   description: string
   features: string[]
@@ -14,13 +16,13 @@ export interface ProjectCardProps {
   description: string
   features: string[]
   results: Array<{
-    icon: React.ReactNode
+    icon: ReactNode
     title: string
     description: string
   }>
   badge: string
   link: string
-  visual: React.ReactNode
+  visual: ReactNode
 }
 
 export interface TestimonialCardProps {
@@ -33,4 +35,16 @@ export interface TestimonialCardProps {
 export interface NavigationItem {
   name: string
   href: string
+}
+
+export interface ContactMethod {
+  icon: React.ComponentType<{ className?: string }>
+  title: string
+  desc: string
+  delay: string
+}
+
+export interface ServiceOption {
+  value: string
+  label: string
 }

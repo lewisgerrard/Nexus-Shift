@@ -2,96 +2,115 @@
 
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
-import Link from "next/link"
 import Image from "next/image"
-import { useState } from "react"
-import { usePathname } from "next/navigation"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { useState, useCallback } from "react"
 import type { NavigationItem } from "@/types"
 
 const navigation: NavigationItem[] = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Services", href: "/services" },
-  { name: "Case Studies", href: "/case-studies" },
-  { name: "Our Approach", href: "/our-approach" },
-  { name: "Contact", href: "/contact" },
+  { name: "Home", href: "#home" },
+  { name: "Services", href: "#services" },
+  { name: "About", href: "#about" },
+  { name: "Process", href: "#approach" },
+  { name: "Case Studies", href: "#case-studies" },
+  { name: "Contact", href: "#contact" },
 ]
 
 export function HeaderNav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const pathname = usePathname()
+
+  const scrollToSection = useCallback((href: string) => {
+    if (href.startsWith("#")) {
+      const element = document.querySelector(href)
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" })
+        setIsMenuOpen(false)
+      }
+    }
+  }, [])
+
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen((prev) => !prev)
+  }, [])
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-primary backdrop-blur-sm">
-      <div className="container flex h-16 items-center justify-start px-4 md:px-6">
-        <div className="flex items-center space-x-2">
-          <Link href="/" className="flex items-center space-x-2">
-            <Image src="/nexus-shift-logo.png" alt="Nexus Shift" width={48} height={48} className="h-12 w-12" />
-            <span className="text-xl font-bold text-white dark:text-white">Nexus Shift</span>
-          </Link>
-        </div>
+    <header className="sticky top-0 z-50 w-full bg-primary/95 backdrop-blur-md border-b border-secondary/20">
+      <div className="container flex h-14 sm:h-16 items-center justify-between px-4 sm:px-6">
+        {/* Logo */}
+        <button
+          onClick={() => scrollToSection("#home")}
+          className="flex items-center space-x-2 group focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary rounded-lg p-1"
+          aria-label="Go to home section"
+        >
+          <Image
+            src="/nexus-shift-logo.png"
+            alt="Nexus Shift Logo"
+            width={40}
+            height={40}
+            className="h-8 w-8 sm:h-10 sm:w-10 group-hover:scale-110 transition-transform duration-300"
+            priority
+          />
+          <span className="text-lg sm:text-xl font-bold text-white group-hover:text-secondary transition-colors duration-300">
+            Nexus Shift
+          </span>
+        </button>
 
-        <div className="ml-auto flex items-center space-x-8">
-          <nav className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`text-sm font-medium transition-colors ${
-                  pathname === item.href ? "text-secondary" : "text-white/80 hover:text-secondary"
-                } dark:${pathname === item.href ? "text-secondary" : "text-white/80 hover:text-secondary"}`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8" role="navigation">
+          {navigation.map((item) => (
+            <button
+              key={item.name}
+              onClick={() => scrollToSection(item.href)}
+              className="text-sm font-medium transition-colors text-white/80 hover:text-secondary relative group focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary rounded px-2 py-1"
+              aria-label={`Go to ${item.name} section`}
+            >
+              {item.name}
+              <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full" />
+            </button>
+          ))}
+        </nav>
 
-          <div className="flex items-center space-x-4">
-            <ThemeToggle />
-            <Button
-              className="hidden md:inline-flex bg-secondary hover:bg-secondary/90 text-primary dark:bg-secondary dark:hover:bg-secondary/90 dark:text-primary"
-              asChild
-            >
-              <Link href="/contact">Get Started</Link>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden text-white hover:text-secondary dark:text-white dark:hover:text-secondary"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
-          </div>
+        {/* Actions */}
+        <div className="flex items-center space-x-2 sm:space-x-4">
+          <a
+            href="/auth"
+            className="hidden sm:inline-flex h-9 px-4 py-2 bg-secondary hover:bg-secondary/90 text-primary border-0 transform hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary rounded-md text-sm font-medium items-center justify-center whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+          >
+            Portal
+          </a>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden text-white hover:text-secondary hover:bg-secondary/10 transition-colors duration-300 focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary"
+            onClick={toggleMenu}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-gradient-to-r from-primary via-primary/95 to-secondary/20 border-t border-secondary/20">
-          <div className="container px-4 py-4 space-y-4">
+        <div className="lg:hidden bg-primary/95 backdrop-blur-md border-t border-secondary/20">
+          <nav className="container px-4 py-4 space-y-4" role="navigation">
             {navigation.map((item) => (
-              <Link
+              <button
                 key={item.name}
-                href={item.href}
-                className={`block text-sm font-medium transition-colors ${
-                  pathname === item.href ? "text-secondary" : "text-white/80 hover:text-secondary"
-                } dark:${pathname === item.href ? "text-secondary" : "text-white/80 hover:text-secondary"}`}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => scrollToSection(item.href)}
+                className="block text-sm font-medium transition-colors text-white/80 hover:text-secondary w-full text-left py-2 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary rounded px-2"
+                aria-label={`Go to ${item.name} section`}
               >
                 {item.name}
-              </Link>
+              </button>
             ))}
-            <Button
-              className="w-full bg-secondary hover:bg-secondary/90 text-primary dark:bg-secondary dark:hover:bg-secondary/90 dark:text-primary mt-4"
-              asChild
+            <a
+              href="/auth"
+              className="w-full bg-secondary hover:bg-secondary/90 text-primary border-0 mt-4 transform hover:scale-105 transition-all duration-300 h-10 px-4 py-2 rounded-md text-sm font-medium inline-flex items-center justify-center whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
             >
-              <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
-                Get Started
-              </Link>
-            </Button>
-          </div>
+              Portal
+            </a>
+          </nav>
         </div>
       )}
     </header>
