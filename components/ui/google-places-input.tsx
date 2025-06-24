@@ -29,6 +29,7 @@ export function GooglePlacesInput({
   const [isLoading, setIsLoading] = useState(false)
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(-1)
+  const [debugInfo, setDebugInfo] = useState<string>("")
   const inputRef = useRef<HTMLInputElement>(null)
   const suggestionsRef = useRef<HTMLDivElement>(null)
   const debounceRef = useRef<NodeJS.Timeout>()
@@ -37,19 +38,33 @@ export function GooglePlacesInput({
     if (input.length < 3) {
       setSuggestions([])
       setShowSuggestions(false)
+      setDebugInfo("")
       return
     }
 
     setIsLoading(true)
+    setDebugInfo(`Searching for: "${input}"...`)
+
     try {
+      console.log("Fetching suggestions for:", input)
       const results = await searchPlaces(input)
-      setSuggestions(results)
-      setShowSuggestions(results.length > 0)
+      console.log("API returned:", results)
+
+      if (results && results.length > 0) {
+        setSuggestions(results)
+        setShowSuggestions(true)
+        setDebugInfo(`Found ${results.length} results`)
+      } else {
+        setSuggestions([])
+        setShowSuggestions(false)
+        setDebugInfo("No results found")
+      }
       setSelectedIndex(-1)
     } catch (error) {
       console.error("Error fetching suggestions:", error)
       setSuggestions([])
       setShowSuggestions(false)
+      setDebugInfo(`Error: ${error instanceof Error ? error.message : "Unknown error"}`)
     } finally {
       setIsLoading(false)
     }
@@ -149,6 +164,21 @@ export function GooglePlacesInput({
         </div>
       )}
 
+      {/* Debug info */}
+      {debugInfo && (
+        <div
+          className="absolute w-full mt-1 px-3 py-2 text-xs rounded-md"
+          style={{
+            zIndex: 9999,
+            backgroundColor: "#f3f4f6",
+            color: "#374151",
+            border: "1px solid #d1d5db",
+          }}
+        >
+          {debugInfo}
+        </div>
+      )}
+
       {showSuggestions && suggestions.length > 0 && (
         <div
           ref={suggestionsRef}
@@ -176,9 +206,22 @@ export function GooglePlacesInput({
               onMouseEnter={() => setSelectedIndex(index)}
               onMouseLeave={() => setSelectedIndex(-1)}
             >
-              {suggestion.formatted_address}
+              {suggestion.formatted_address || "No address available"}
             </div>
           ))}
+
+          {/* Debug section at bottom of dropdown */}
+          <div
+            style={{
+              backgroundColor: "#f9fafb",
+              color: "#6b7280",
+              fontSize: "12px",
+              padding: "8px 16px",
+              borderTop: "1px solid #e5e7eb",
+            }}
+          >
+            Debug: {suggestions.length} suggestions loaded
+          </div>
         </div>
       )}
     </div>
