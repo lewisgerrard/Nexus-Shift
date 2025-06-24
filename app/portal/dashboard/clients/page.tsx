@@ -6,30 +6,45 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 
-// Simple demo data that matches expected structure
-const demoClients = [
-  {
-    id: 1,
-    contact_name: "John Smith",
-    company_name: "Tech Corp",
-    client_type: "Enterprise",
-    status: "active",
-  },
-  {
-    id: 2,
-    contact_name: "Sarah Johnson",
-    company_name: "StartupCo",
-    client_type: "Startup",
-    status: "active",
-  },
-  {
-    id: 3,
-    contact_name: "Mike Davis",
-    company_name: "Business Solutions",
-    client_type: "SMB",
-    status: "pending",
-  },
-]
+// Function to get clients from database
+async function getClientsFromDatabase() {
+  try {
+    // Check if database environment variables are available
+    const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.NEON_DATABASE_URL
+
+    if (!databaseUrl) {
+      console.log("No database URL found")
+      return null
+    }
+
+    // Try to import and use Neon
+    const { neon } = await import("@neondatabase/serverless")
+    const sql = neon(databaseUrl)
+
+    const clients = await sql`
+      SELECT 
+        id,
+        contact_name,
+        company_name,
+        email,
+        phone,
+        address,
+        client_type,
+        status,
+        notes,
+        created_at,
+        updated_at
+      FROM clients 
+      ORDER BY created_at DESC
+    `
+
+    console.log(`Successfully fetched ${clients.length} clients from database`)
+    return clients
+  } catch (error) {
+    console.error("Database connection failed:", error)
+    return null
+  }
+}
 
 function getStatusColor(status: string) {
   switch (status.toLowerCase()) {
@@ -59,9 +74,38 @@ function getTypeColor(type: string) {
   }
 }
 
-export default function ClientsPage() {
-  // Use demo data for now to avoid database issues
-  const clients = demoClients
+export default async function ClientsPage() {
+  // Try to get real data from database
+  const databaseClients = await getClientsFromDatabase()
+
+  // Fallback demo data if database fails
+  const demoClients = [
+    {
+      id: 1,
+      contact_name: "John Smith",
+      company_name: "Tech Corp",
+      client_type: "Enterprise",
+      status: "active",
+    },
+    {
+      id: 2,
+      contact_name: "Sarah Johnson",
+      company_name: "StartupCo",
+      client_type: "Startup",
+      status: "active",
+    },
+    {
+      id: 3,
+      contact_name: "Mike Davis",
+      company_name: "Business Solutions",
+      client_type: "SMB",
+      status: "pending",
+    },
+  ]
+
+  // Use database data if available, otherwise use demo data
+  const clients = databaseClients || demoClients
+  const usingDemoData = !databaseClients
 
   const totalClients = clients.length
   const activeClients = clients.filter((client) => client.status === "active").length
@@ -73,6 +117,13 @@ export default function ClientsPage() {
       <div>
         <h1 className="text-3xl font-bold text-primary">Clients</h1>
         <p className="text-muted-foreground mt-2">Manage your client relationships</p>
+        {usingDemoData && (
+          <div className="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded-md">
+            <p className="text-sm text-yellow-800">
+              ⚠️ Using demo data - Database connection issue. Check environment variables.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Stats Cards */}
@@ -141,7 +192,7 @@ export default function ClientsPage() {
                   <TableRow key={client.id} className="cursor-pointer hover:bg-muted/50">
                     <TableCell className="font-medium">
                       <Link href={`/portal/dashboard/clients/${client.id}`} className="block w-full">
-                        {client.company_name}
+                        {client.company_name || client.contact_name}
                       </Link>
                     </TableCell>
                     <TableCell>
