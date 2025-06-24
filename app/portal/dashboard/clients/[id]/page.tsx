@@ -253,6 +253,19 @@ export default function ClientDetailPage({ params }: ClientDetailPageProps) {
           {/* Basic Info Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
+              <div>
+                <p className="text-sm font-medium text-gray-600 mb-2">Business Name</p>
+                {isEditing ? (
+                  <Input
+                    value={formData.name}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
+                    className="mt-1"
+                    placeholder="Enter business name"
+                  />
+                ) : (
+                  <p className="text-gray-700 font-medium">{formData.name}</p>
+                )}
+              </div>
               {/* Address */}
               <div className="flex items-start space-x-3 pt-0">
                 <MapPin className="h-5 w-5 text-secondary mt-1" />
