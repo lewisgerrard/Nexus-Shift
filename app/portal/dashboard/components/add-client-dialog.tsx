@@ -6,15 +6,16 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { GooglePlacesInput } from "@/components/ui/google-places-input"
 import { Plus, Loader2 } from "lucide-react"
 import { addClient } from "../actions"
 
 export function AddClientDialog() {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [address, setAddress] = useState("")
 
   const handleOpenDialog = () => {
     console.log("🔄 Opening add client dialog...")
@@ -30,6 +31,7 @@ export function AddClientDialog() {
       for (const [key, value] of formData.entries()) {
         console.log(`- ${key}:`, value, `(type: ${typeof value})`)
       }
+      console.log("Address state:", address)
     }
   }
 
@@ -48,7 +50,6 @@ export function AddClientDialog() {
       // Extract and validate form data
       const name = formData.get("name") as string
       const size = formData.get("size") as string
-      const address = formData.get("address") as string
       const status = formData.get("status") as string
 
       console.log("📝 Form data extracted:", { name, size, address, status })
@@ -76,6 +77,8 @@ export function AddClientDialog() {
           alert("📋 Preview Mode: Client would be added to your real database when deployed!")
           setOpen(false)
           setLoading(false)
+          // Reset form
+          setAddress("")
         }, 1000)
       } else {
         // In production, actually add the client
@@ -85,7 +88,7 @@ export function AddClientDialog() {
         const serverFormData = new FormData()
         serverFormData.append("name", name.trim())
         serverFormData.append("size", size.trim())
-        serverFormData.append("address", address?.trim() || "")
+        serverFormData.append("address", address.trim())
         serverFormData.append("status", status.trim())
 
         const result = await addClient(serverFormData)
@@ -94,6 +97,8 @@ export function AddClientDialog() {
           console.log("✅ Client added successfully")
           alert("✅ Client added successfully!")
           setOpen(false)
+          // Reset form
+          setAddress("")
           // Refresh the page to show the new client
           window.location.reload()
         } else {
@@ -136,11 +141,11 @@ export function AddClientDialog() {
 
             <div className="space-y-2">
               <Label htmlFor="address">Address</Label>
-              <Textarea
-                id="address"
-                name="address"
-                placeholder="Enter address (optional)"
-                onChange={(e) => console.log("Address changed:", e.target.value)}
+              <GooglePlacesInput
+                value={address}
+                onChange={setAddress}
+                placeholder="Search for address..."
+                className="w-full"
               />
             </div>
 
