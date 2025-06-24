@@ -1,39 +1,33 @@
 import type React from "react"
-import type { Metadata } from "next"
-import { getSession } from "../actions"
+import { Inter } from "next/font/google"
+import Sidebar from "@/components/Sidebar"
+import DashboardHeader from "@/components/DashboardHeader"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
 import { redirect } from "next/navigation"
-import { AppSidebar } from "./components/app-sidebar"
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 
-export const metadata: Metadata = {
-  title: "Dashboard - Nexus Shift Portal",
-  description: "Manage your clients and projects with Nexus Shift",
-  icons: {
-    icon: "/nexus-shift-logo.png",
-    shortcut: "/nexus-shift-logo.png",
-    apple: "/nexus-shift-logo.png",
-  },
-}
+const inter = Inter({ subsets: ["latin"] })
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const session = await getSession()
+  const session = await getServerSession(authOptions)
 
   if (!session) {
-    redirect("/auth")
+    redirect("/auth/signin")
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <SidebarProvider>
-        <AppSidebar />
-        <SidebarInset>
-          <main className="flex-1">{children}</main>
-        </SidebarInset>
-      </SidebarProvider>
+    <div className="flex h-screen bg-gray-50">
+      <Sidebar />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <DashboardHeader />
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
+          <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">{children}</div>
+        </main>
+      </div>
     </div>
   )
 }
