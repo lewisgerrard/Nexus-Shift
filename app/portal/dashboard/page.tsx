@@ -9,24 +9,22 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Check authentication
-    if (typeof window !== "undefined") {
-      const session = localStorage.getItem("portal-session")
-      if (session) {
-        try {
-          const sessionData = JSON.parse(session)
-          if (sessionData.loggedIn) {
-            setIsAuthenticated(true)
-          } else {
-            window.location.replace("/login")
-          }
-        } catch (e) {
-          localStorage.removeItem("portal-session")
-          window.location.replace("/login")
+    // Simple authentication check
+    const session = localStorage.getItem("portal-session")
+    if (session) {
+      try {
+        const sessionData = JSON.parse(session)
+        if (sessionData.loggedIn) {
+          setIsAuthenticated(true)
+        } else {
+          window.location.href = "/login"
         }
-      } else {
-        window.location.replace("/login")
+      } catch (e) {
+        localStorage.removeItem("portal-session")
+        window.location.href = "/login"
       }
+    } else {
+      window.location.href = "/login"
     }
     setIsLoading(false)
   }, [])

@@ -1,48 +1,8 @@
 "use client"
 
 import { LoginForm } from "./components/login-form"
-import { useEffect, useState } from "react"
 
 export default function LoginPage() {
-  const [isClient, setIsClient] = useState(false)
-
-  useEffect(() => {
-    setIsClient(true)
-
-    // Check if user is already logged in and redirect
-    if (typeof window !== "undefined") {
-      const session = localStorage.getItem("portal-session")
-      if (session) {
-        try {
-          const sessionData = JSON.parse(session)
-          if (sessionData.loggedIn) {
-            window.location.replace("/portal")
-            return
-          }
-        } catch (e) {
-          // Invalid session, clear it
-          localStorage.removeItem("portal-session")
-        }
-      }
-    }
-  }, [])
-
-  // Don't render anything until client-side hydration is complete
-  if (!isClient) {
-    return (
-      <div className="min-h-screen bg-primary flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          <div className="bg-card rounded-2xl shadow-xl border border-border p-8">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-              <p className="mt-4 text-muted-foreground">Loading...</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="min-h-screen bg-primary flex items-center justify-center p-4">
       <div className="w-full max-w-md">

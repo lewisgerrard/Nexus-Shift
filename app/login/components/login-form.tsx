@@ -1,10 +1,13 @@
 "use client"
 
 import type React from "react"
+
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Loader2 } from "lucide-react"
 
 export function LoginForm() {
   const [email, setEmail] = useState("")
@@ -17,86 +20,73 @@ export function LoginForm() {
     setIsLoading(true)
     setError("")
 
-    try {
-      // Simple client-side validation
-      if (email === "lewis.gerrard@outlook.com" && password === "password") {
-        // Set session in localStorage
-        localStorage.setItem(
-          "portal-session",
-          JSON.stringify({
-            email: "lewis.gerrard@outlook.com",
-            name: "Lewis Gerrard",
-            loggedIn: true,
-            timestamp: Date.now(),
-          }),
-        )
+    // Simple demo authentication
+    if (email === "lewis.gerrard@outlook.com" && password === "password") {
+      // Set session in localStorage
+      localStorage.setItem(
+        "portal-session",
+        JSON.stringify({
+          loggedIn: true,
+          email: email,
+          name: "Lewis Gerrard",
+        }),
+      )
 
-        // Use replace to avoid back button issues
-        window.location.replace("/portal")
-      } else {
-        setError("Invalid credentials. Use lewis.gerrard@outlook.com / password")
-      }
-    } catch (err) {
-      setError("Login failed. Please try again.")
-    } finally {
-      setIsLoading(false)
+      // Redirect to portal dashboard
+      window.location.href = "/portal/dashboard"
+    } else {
+      setError("Invalid credentials. Use lewis.gerrard@outlook.com / password")
     }
+
+    setIsLoading(false)
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="email" className="text-foreground">
-          Email
-        </Label>
+        <Label htmlFor="email">Email</Label>
         <Input
           id="email"
           type="email"
+          placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="bg-background border-border focus:border-secondary focus:ring-secondary"
-          placeholder="lewis.gerrard@outlook.com"
+          disabled={isLoading}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="password" className="text-foreground">
-          Password
-        </Label>
+        <Label htmlFor="password">Password</Label>
         <Input
           id="password"
           type="password"
+          placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="bg-background border-border focus:border-secondary focus:ring-secondary"
-          placeholder="password"
+          disabled={isLoading}
         />
       </div>
 
       {error && (
-        <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg">
-          {error}
-        </div>
+        <Alert variant="destructive">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       )}
 
-      <Button
-        type="submit"
-        disabled={isLoading}
-        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2 px-4 rounded-lg transition-all duration-200 disabled:opacity-50"
-      >
+      <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading ? (
-          <div className="flex items-center justify-center">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground mr-2"></div>
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             Signing in...
-          </div>
+          </>
         ) : (
           "Sign In"
         )}
       </Button>
 
-      <div className="text-center text-sm text-muted-foreground mt-4">
+      <div className="text-center text-sm text-muted-foreground">
         <p>Demo credentials:</p>
         <p className="font-mono text-xs">lewis.gerrard@outlook.com / password</p>
       </div>
