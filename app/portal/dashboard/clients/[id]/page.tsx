@@ -228,214 +228,199 @@ export default function ClientDetailPage({ params }: Props) {
       </div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-8 py-12 space-y-12">
-        {/* INFORMATION SECTION */}
-        <section>
-          <div className="flex items-center mb-8">
-            <Building2 className="h-8 w-8 text-primary mr-4" />
-            <h2 className="text-3xl font-bold text-primary">Information</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Company Information Card */}
-            <Card className="border-0 shadow-lg">
-              <CardHeader className="bg-secondary text-primary">
-                <CardTitle className="flex items-center text-xl font-bold">
-                  <Building2 className="h-6 w-6 mr-3" />
-                  Company Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="bg-white p-8 space-y-6">
-                <div>
-                  <label className="text-sm font-bold text-gray-500 uppercase tracking-wide">Company Name</label>
-                  <p className="text-xl font-semibold text-primary mt-1">{client.name || "N/A"}</p>
-                </div>
-                <div>
-                  <label className="text-sm font-bold text-gray-500 uppercase tracking-wide">Size</label>
-                  <div className="mt-2">
-                    <Badge className={`${getSizeColor(client.size)} text-sm font-semibold px-3 py-1`}>
-                      {client.size || "Unknown"}
-                    </Badge>
-                  </div>
-                </div>
-                <div>
-                  <label className="text-sm font-bold text-gray-500 uppercase tracking-wide">Status</label>
-                  <div className="mt-2">
-                    <Badge className={`${getStatusColor(client.status)} text-sm font-semibold px-3 py-1`}>
-                      {client.status || "Unknown"}
-                    </Badge>
-                  </div>
-                </div>
-                {client.industry && (
-                  <div>
-                    <label className="text-sm font-bold text-gray-500 uppercase tracking-wide">Industry</label>
-                    <p className="text-lg text-primary mt-1">{client.industry}</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Contact Information Card */}
-            <Card className="border-0 shadow-lg">
-              <CardHeader className="bg-secondary text-primary">
-                <CardTitle className="flex items-center text-xl font-bold">
-                  <Phone className="h-6 w-6 mr-3" />
-                  Contact Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="bg-white p-8 space-y-6">
-                {client.email && (
-                  <div className="flex items-center">
-                    <Mail className="h-5 w-5 text-secondary mr-4" />
-                    <span className="text-lg text-primary">{client.email}</span>
-                  </div>
-                )}
-                {client.phone && (
-                  <div className="flex items-center">
-                    <Phone className="h-5 w-5 text-secondary mr-4" />
-                    <span className="text-lg text-primary">{client.phone}</span>
-                  </div>
-                )}
-                {client.address && (
-                  <div className="flex items-start">
-                    <MapPin className="h-5 w-5 text-secondary mr-4 mt-1" />
-                    <span className="text-lg text-primary">{client.address}</span>
-                  </div>
-                )}
-                <div className="flex items-center">
-                  <Calendar className="h-5 w-5 text-secondary mr-4" />
-                  <span className="text-lg text-primary">
-                    Added {client.created_at ? new Date(client.created_at).toLocaleDateString() : "Unknown"}
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Notes Section */}
-          {client.notes && (
-            <Card className="border-0 shadow-lg mt-8">
-              <CardHeader className="bg-secondary text-primary">
-                <CardTitle className="text-xl font-bold">Notes</CardTitle>
-              </CardHeader>
-              <CardContent className="bg-white p-8">
-                <p className="text-lg text-primary whitespace-pre-wrap leading-relaxed">{client.notes}</p>
-              </CardContent>
-            </Card>
-          )}
-        </section>
-
-        {/* CONTACTS SECTION */}
-        <section>
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center">
-              <Users className="h-8 w-8 text-primary mr-4" />
-              <h2 className="text-3xl font-bold text-primary">Contacts</h2>
-            </div>
-            <AddContactDialog clientId={Number.parseInt(params.id)} onContactAdded={fetchContacts} />
-          </div>
-
+      <div className="max-w-7xl mx-auto px-8 py-12">
+        {/* Client Information Card */}
+        <div className="mb-12">
           <Card className="border-0 shadow-lg">
             <CardHeader className="bg-secondary text-primary">
-              <CardTitle className="text-xl font-bold">Client Contacts</CardTitle>
+              <CardTitle className="flex items-center text-xl font-bold">
+                <Building2 className="h-6 w-6 mr-3" />
+                Information
+              </CardTitle>
             </CardHeader>
-            <CardContent className="bg-white p-0">
-              <div className="overflow-hidden">
-                <Table>
-                  <TableHeader>
-                    <TableRow className="bg-gray-50 border-b-2 border-gray-200">
-                      <TableHead className="font-bold text-primary py-4">Name</TableHead>
-                      <TableHead className="font-bold text-primary py-4">Role</TableHead>
-                      <TableHead className="font-bold text-primary py-4">Email</TableHead>
-                      <TableHead className="font-bold text-primary py-4">Phone</TableHead>
-                      <TableHead className="font-bold text-primary py-4">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {contacts.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan={5} className="text-center py-16">
-                          <div className="flex flex-col items-center">
-                            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                              <Users className="h-8 w-8 text-gray-400" />
-                            </div>
-                            <p className="text-lg text-gray-600 mb-2">No contacts found</p>
-                            <p className="text-gray-500">Add the first contact for this client</p>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      contacts.map((contact) => (
-                        <TableRow
-                          key={contact.id}
-                          className="hover:bg-gray-50 transition-colors duration-200 border-b border-gray-100"
-                        >
-                          <TableCell className="font-semibold text-primary py-4">
-                            {contact.first_name} {contact.last_name}
-                          </TableCell>
-                          <TableCell className="text-gray-700 py-4">{contact.role || "—"}</TableCell>
-                          <TableCell className="text-gray-700 py-4">{contact.email || "—"}</TableCell>
-                          <TableCell className="text-gray-700 py-4">{contact.phone || "—"}</TableCell>
-                          <TableCell className="py-4">
-                            <div className="flex gap-2">
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => setEditingContact(contact)}
-                                className="border-secondary text-secondary hover:bg-secondary hover:text-primary"
-                              >
-                                <Edit className="h-3 w-3" />
-                              </Button>
-                              <AlertDialog>
-                                <AlertDialogTrigger asChild>
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="border-red-300 text-red-600 hover:bg-red-50"
-                                  >
-                                    <Trash2 className="h-3 w-3" />
-                                  </Button>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                  <AlertDialogHeader>
-                                    <AlertDialogTitle>Delete Contact</AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                      Are you sure you want to delete {contact.first_name} {contact.last_name}? This
-                                      action cannot be undone.
-                                    </AlertDialogDescription>
-                                  </AlertDialogHeader>
-                                  <AlertDialogFooter>
-                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction
-                                      onClick={() => handleDeleteContact(contact.id)}
-                                      className="bg-red-600 hover:bg-red-700"
-                                    >
-                                      Delete
-                                    </AlertDialogAction>
-                                  </AlertDialogFooter>
-                                </AlertDialogContent>
-                              </AlertDialog>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    )}
-                  </TableBody>
-                </Table>
+            <CardContent className="bg-white p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Company Information */}
+                <div className="space-y-6">
+                  <h3 className="text-lg font-semibold text-primary mb-4">Company Details</h3>
+                  <div>
+                    <label className="text-sm font-bold text-gray-500 uppercase tracking-wide">Company Name</label>
+                    <p className="text-xl font-semibold text-primary mt-1">{client.name || "N/A"}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-bold text-gray-500 uppercase tracking-wide">Size</label>
+                    <div className="mt-2">
+                      <Badge className={`${getSizeColor(client.size)} text-sm font-semibold px-3 py-1`}>
+                        {client.size || "Unknown"}
+                      </Badge>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-sm font-bold text-gray-500 uppercase tracking-wide">Status</label>
+                    <div className="mt-2">
+                      <Badge className={`${getStatusColor(client.status)} text-sm font-semibold px-3 py-1`}>
+                        {client.status || "Unknown"}
+                      </Badge>
+                    </div>
+                  </div>
+                  {client.industry && (
+                    <div>
+                      <label className="text-sm font-bold text-gray-500 uppercase tracking-wide">Industry</label>
+                      <p className="text-lg text-primary mt-1">{client.industry}</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Contact Information */}
+                <div className="space-y-6">
+                  <h3 className="text-lg font-semibold text-primary mb-4">Contact Details</h3>
+                  {client.email && (
+                    <div className="flex items-center">
+                      <Mail className="h-5 w-5 text-secondary mr-4" />
+                      <span className="text-lg text-primary">{client.email}</span>
+                    </div>
+                  )}
+                  {client.phone && (
+                    <div className="flex items-center">
+                      <Phone className="h-5 w-5 text-secondary mr-4" />
+                      <span className="text-lg text-primary">{client.phone}</span>
+                    </div>
+                  )}
+                  {client.address && (
+                    <div className="flex items-start">
+                      <MapPin className="h-5 w-5 text-secondary mr-4 mt-1" />
+                      <span className="text-lg text-primary">{client.address}</span>
+                    </div>
+                  )}
+                  <div className="flex items-center">
+                    <Calendar className="h-5 w-5 text-secondary mr-4" />
+                    <span className="text-lg text-primary">
+                      Added {client.created_at ? new Date(client.created_at).toLocaleDateString() : "Unknown"}
+                    </span>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
-        </section>
+        </div>
+
+        {/* Contacts Section */}
+        <Card className="border-0 shadow-lg">
+          <CardHeader className="bg-secondary text-primary">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-xl font-bold">Client Contacts</CardTitle>
+              <AddContactDialog clientId={Number.parseInt(params.id)} onSuccess={fetchContacts} />
+            </div>
+          </CardHeader>
+          <CardContent className="bg-white p-0">
+            <div className="overflow-hidden">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-gray-50 border-b-2 border-gray-200">
+                    <TableHead className="font-bold text-primary py-4">Name</TableHead>
+                    <TableHead className="font-bold text-primary py-4">Role</TableHead>
+                    <TableHead className="font-bold text-primary py-4">Email</TableHead>
+                    <TableHead className="font-bold text-primary py-4">Phone</TableHead>
+                    <TableHead className="font-bold text-primary py-4">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {contacts.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center py-16">
+                        <div className="flex flex-col items-center">
+                          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                            <Users className="h-8 w-8 text-gray-400" />
+                          </div>
+                          <p className="text-lg text-gray-600 mb-2">No contacts found</p>
+                          <p className="text-gray-500">Add the first contact for this client</p>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    contacts.map((contact) => (
+                      <TableRow
+                        key={contact.id}
+                        className="hover:bg-gray-50 transition-colors duration-200 border-b border-gray-100"
+                      >
+                        <TableCell className="font-semibold text-primary py-4">
+                          {contact.first_name} {contact.last_name}
+                        </TableCell>
+                        <TableCell className="text-gray-700 py-4">{contact.role || "—"}</TableCell>
+                        <TableCell className="text-gray-700 py-4">{contact.email || "—"}</TableCell>
+                        <TableCell className="text-gray-700 py-4">{contact.phone || "—"}</TableCell>
+                        <TableCell className="py-4">
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => setEditingContact(contact)}
+                              className="border-secondary text-secondary hover:bg-secondary hover:text-primary"
+                            >
+                              <Edit className="h-3 w-3" />
+                            </Button>
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="border-red-300 text-red-600 hover:bg-red-50"
+                                >
+                                  <Trash2 className="h-3 w-3" />
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Delete Contact</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    Are you sure you want to delete {contact.first_name} {contact.last_name}? This
+                                    action cannot be undone.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction
+                                    onClick={() => handleDeleteContact(contact.id)}
+                                    className="bg-red-600 hover:bg-red-700"
+                                  >
+                                    Delete
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Notes Section */}
+        {client.notes && (
+          <Card className="border-0 shadow-lg mt-8">
+            <CardHeader className="bg-primary text-white">
+              <CardTitle className="text-xl font-bold">Notes</CardTitle>
+            </CardHeader>
+            <CardContent className="bg-white p-8">
+              <p className="text-lg text-primary whitespace-pre-wrap leading-relaxed">{client.notes}</p>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       {/* Edit Contact Dialog */}
       {editingContact && (
         <EditContactDialog
           contact={editingContact}
-          onContactUpdated={() => {
+          onSuccess={() => {
             fetchContacts()
             setEditingContact(null)
           }}
+          onClose={() => setEditingContact(null)}
         />
       )}
     </div>
