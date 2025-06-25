@@ -194,14 +194,14 @@ export default function ClientsPage() {
           </Card>
 
           <Card className="border-0 shadow-lg">
-            <CardHeader className="bg-primary text-white pb-4">
+            <CardHeader className="bg-secondary text-primary pb-4">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg font-bold">Active</CardTitle>
                 <UserCheck className="h-6 w-6" />
               </div>
             </CardHeader>
             <CardContent className="bg-white pt-6">
-              <div className="text-3xl font-bold text-secondary">{activeClients}</div>
+              <div className="text-3xl font-bold text-primary">{activeClients}</div>
             </CardContent>
           </Card>
 
@@ -218,14 +218,14 @@ export default function ClientsPage() {
           </Card>
 
           <Card className="border-0 shadow-lg">
-            <CardHeader className="bg-primary text-white pb-4">
+            <CardHeader className="bg-secondary text-primary pb-4">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg font-bold">Companies</CardTitle>
                 <Building className="h-6 w-6" />
               </div>
             </CardHeader>
             <CardContent className="bg-white pt-6">
-              <div className="text-3xl font-bold text-secondary">{totalClients}</div>
+              <div className="text-3xl font-bold text-primary">{totalClients}</div>
             </CardContent>
           </Card>
         </div>
