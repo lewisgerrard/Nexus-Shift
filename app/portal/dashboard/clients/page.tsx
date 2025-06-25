@@ -232,7 +232,7 @@ export default function ClientsPage() {
 
         {/* Client Management Table */}
         <Card className="border-0 shadow-lg">
-          <CardHeader className="bg-primary text-white">
+          <CardHeader className="bg-secondary text-primary">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl font-bold">Client Management</CardTitle>
               <AddClientDialog />
@@ -243,10 +243,10 @@ export default function ClientsPage() {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-gray-50 border-b-2 border-gray-200">
-                    <TableHead className="font-bold text-primary py-4">Name</TableHead>
-                    <TableHead className="font-bold text-primary py-4">Size</TableHead>
-                    <TableHead className="font-bold text-primary py-4">Address</TableHead>
-                    <TableHead className="font-bold text-primary py-4">Status</TableHead>
+                    <TableHead className="font-bold text-secondary py-4">Name</TableHead>
+                    <TableHead className="font-bold text-secondary py-4">Size</TableHead>
+                    <TableHead className="font-bold text-secondary py-4">Address</TableHead>
+                    <TableHead className="font-bold text-secondary py-4">Status</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
