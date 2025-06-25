@@ -40,21 +40,69 @@ export async function GET(request: Request, { params }: { params: { id: string }
   try {
     const sql = neon(databaseUrl)
 
-    // Get client using the correct structure
-    const result = await sql`
-      SELECT 
-        id,
-        name,
-        size,
-        COALESCE(address, '') as address,
-        status,
-        created_at,
-        updated_at
-      FROM clients 
-      WHERE id = ${clientId}
+    // Get table structure to understand what columns we have
+    const tableStructure = await sql`
+      SELECT column_name, data_type 
+      FROM information_schema.columns 
+      WHERE table_name = 'clients' 
+      ORDER BY ordinal_position
     `
 
-    const client = result[0]
+    const columnNames = tableStructure.map((col) => col.column_name)
+    const hasNewStructure = columnNames.includes("name") && columnNames.includes("size")
+    const hasOldStructure = columnNames.includes("contact_name") && columnNames.includes("client_type")
+
+    let client
+    if (hasNewStructure) {
+      // Use new 4-field structure
+      const result = await sql`
+        SELECT 
+          id,
+          name,
+          size,
+          address,
+          status,
+          created_at,
+          updated_at
+        FROM clients 
+        WHERE id = ${clientId}
+      `
+      client = result[0]
+    } else if (hasOldStructure) {
+      // Use old structure but map to new format
+      const result = await sql`
+        SELECT 
+          id,
+          COALESCE(company_name, contact_name, 'Unnamed Client') as name,
+          COALESCE(client_type, 'Unknown') as size,
+          COALESCE(address, '') as address,
+          COALESCE(status, 'pending') as status,
+          created_at,
+          updated_at
+        FROM clients 
+        WHERE id = ${clientId}
+      `
+      client = result[0]
+    } else {
+      // Fallback
+      const result = await sql`
+        SELECT * FROM clients 
+        WHERE id = ${clientId}
+      `
+      const rawClient = result[0]
+
+      if (rawClient) {
+        client = {
+          id: rawClient.id,
+          name: rawClient.name || rawClient.company_name || rawClient.contact_name || "Unnamed Client",
+          size: rawClient.size || rawClient.client_type || "Unknown",
+          address: rawClient.address || "",
+          status: rawClient.status || "pending",
+          created_at: rawClient.created_at,
+          updated_at: rawClient.updated_at,
+        }
+      }
+    }
 
     if (!client) {
       return NextResponse.json({
@@ -62,8 +110,6 @@ export async function GET(request: Request, { params }: { params: { id: string }
         error: "Client not found",
       })
     }
-
-    console.log("API returning client:", client)
 
     return NextResponse.json({
       success: true,
