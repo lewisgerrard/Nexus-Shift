@@ -1,14 +1,14 @@
 import { Resend } from "resend"
 
 if (!process.env.RESEND_API_KEY) {
-  throw new Error("RESEND_API_KEY environment variable is not set")
+  throw new Error("RESEND_API_KEY environment variable is required")
 }
 
 export const resend = new Resend(process.env.RESEND_API_KEY)
 
 // Use environment variable for the from email, with fallback
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "contact@yourdomain.com"
-const TO_EMAIL = process.env.CONTACT_EMAIL || "hello@nexusshift.co.uk"
+export const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev"
+const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "hello@nexusshift.co.uk"
 
 export interface ContactFormData {
   name: string
@@ -24,7 +24,7 @@ export async function sendContactEmail(data: ContactFormData) {
   try {
     const result = await resend.emails.send({
       from: FROM_EMAIL,
-      to: [TO_EMAIL],
+      to: [CONTACT_EMAIL],
       replyTo: email,
       subject: `New Contact Form Submission from ${name}`,
       html: `
@@ -239,7 +239,7 @@ export async function sendAutoReply(data: ContactFormData) {
                 <a href="https://nexusshift.co.uk" class="cta-button">Visit Our Website</a>
               </div>
               
-              <p>If you have any urgent questions, you can also reach us directly at <a href="mailto:hello@nexusshift.co.uk" style="color: #0f766e;">hello@nexusshift.co.uk</a>.</p>
+              <p>If you have any urgent questions, you can also reach us directly at <a href="mailto:${CONTACT_EMAIL}" style="color: #0f766e;">${CONTACT_EMAIL}</a>.</p>
               
               <p style="margin-top: 30px;">Best regards,<br><strong>The Nexus Shift Team</strong></p>
             </div>
@@ -247,7 +247,7 @@ export async function sendAutoReply(data: ContactFormData) {
             <div class="footer">
               <p><strong>Nexus Shift</strong></p>
               <p>Digital Transformation • Website Production • Web Applications</p>
-              <p><a href="mailto:hello@nexusshift.co.uk" style="color: #0f766e;">hello@nexusshift.co.uk</a></p>
+              <p><a href="mailto:${CONTACT_EMAIL}" style="color: #0f766e;">${CONTACT_EMAIL}</a></p>
             </div>
           </body>
         </html>
