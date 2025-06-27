@@ -9,15 +9,59 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Mail, MessageSquare, Clock } from "lucide-react"
+import { Mail, MessageSquare, Clock, Loader2 } from "lucide-react"
 
 export function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    business: "",
+    service: "",
+    message: "",
+  })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+    if (error) setError(null) // Clear error when user starts typing
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    setIsSubmitted(true)
+    setIsSubmitting(true)
+    setError(null)
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setIsSubmitted(true)
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          business: "",
+          service: "",
+          message: "",
+        })
+      } else {
+        setError(result.error || "Something went wrong. Please try again.")
+      }
+    } catch (err) {
+      setError("Network error. Please check your connection and try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isSubmitted) {
@@ -115,18 +159,39 @@ export function ContactForm() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {error && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-md">
+                    <p className="text-red-600 text-sm">{error}</p>
+                  </div>
+                )}
+
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="space-y-2">
                     <label htmlFor="name" className="text-sm font-medium text-text-light/80 dark:text-text-dark/80">
                       Name *
                     </label>
-                    <Input id="name" placeholder="Your name" required />
+                    <Input
+                      id="name"
+                      placeholder="Your name"
+                      required
+                      value={formData.name}
+                      onChange={(e) => handleInputChange("name", e.target.value)}
+                      disabled={isSubmitting}
+                    />
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="email" className="text-sm font-medium text-text-light/80 dark:text-text-dark/80">
                       Email *
                     </label>
-                    <Input id="email" type="email" placeholder="your@email.com" required />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="your@email.com"
+                      required
+                      value={formData.email}
+                      onChange={(e) => handleInputChange("email", e.target.value)}
+                      disabled={isSubmitting}
+                    />
                   </div>
                 </div>
 
@@ -134,14 +199,24 @@ export function ContactForm() {
                   <label htmlFor="business" className="text-sm font-medium text-text-light/80 dark:text-text-dark/80">
                     Business Name
                   </label>
-                  <Input id="business" placeholder="Your business name (optional)" />
+                  <Input
+                    id="business"
+                    placeholder="Your business name (optional)"
+                    value={formData.business}
+                    onChange={(e) => handleInputChange("business", e.target.value)}
+                    disabled={isSubmitting}
+                  />
                 </div>
 
                 <div className="space-y-2">
                   <label htmlFor="service" className="text-sm font-medium text-text-light/80 dark:text-text-dark/80">
                     What services are you interested in?
                   </label>
-                  <Select>
+                  <Select
+                    value={formData.service}
+                    onValueChange={(value) => handleInputChange("service", value)}
+                    disabled={isSubmitting}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select a service (optional)" />
                     </SelectTrigger>
@@ -161,14 +236,24 @@ export function ContactForm() {
                   </label>
                   <Textarea
                     id="message"
-                    placeholder="Tell us about your project, challenges, or goals. What would you like to achieve? (minimum 500 characters)"
+                    placeholder="Tell us about your project, challenges, or goals. What would you like to achieve? (minimum 50 characters)"
                     className="min-h-[150px]"
                     required
+                    value={formData.message}
+                    onChange={(e) => handleInputChange("message", e.target.value)}
+                    disabled={isSubmitting}
                   />
                 </div>
 
-                <Button type="submit" className="w-full" size="lg">
-                  Send Message
+                <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
                 </Button>
               </form>
             </CardContent>
