@@ -3,7 +3,7 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Database, Globe, Code, TrendingUp, Layers, ArrowRight, ExternalLink } from "lucide-react"
+import { Database, Globe, Code, ArrowRight, ExternalLink, Layers } from "lucide-react"
 import Image from "next/image"
 
 export function CaseStudiesSection() {
@@ -122,26 +122,6 @@ export function CaseStudiesSection() {
                       </ul>
                     </div>
 
-                    <div>
-                      <h4 className="font-semibold text-sm sm:text-base text-primary mb-3 flex items-center">
-                        <TrendingUp className="w-4 h-4 mr-2 text-secondary animate-pulse" />
-                        Results:
-                      </h4>
-                      <ul className="space-y-2">
-                        {["40% increase in new member registrations", "60% reduction in administrative overhead"].map(
-                          (result, index) => (
-                            <li key={index} className="flex items-center text-xs sm:text-sm text-primary/70">
-                              <div
-                                className="w-2 h-2 bg-secondary rounded-full mr-3 animate-pulse"
-                                style={{ animationDelay: `${index * 0.1}s` }}
-                              ></div>
-                              {result}
-                            </li>
-                          ),
-                        )}
-                      </ul>
-                    </div>
-
                     {/* Mobile-First CTA */}
                     <Button
                       className="w-full sm:w-auto bg-secondary hover:bg-secondary/90 text-primary transform hover:scale-105 transition-all duration-300 mt-4"
@@ -200,26 +180,6 @@ export function CaseStudiesSection() {
                             {item}
                           </li>
                         ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold text-sm sm:text-base text-primary mb-3 flex items-center">
-                        <TrendingUp className="w-4 h-4 mr-2 text-secondary animate-pulse" />
-                        Results:
-                      </h4>
-                      <ul className="space-y-2">
-                        {["75% increase in online bookings", "Enhanced professional brand image"].map(
-                          (result, index) => (
-                            <li key={index} className="flex items-center text-xs sm:text-sm text-primary/70">
-                              <div
-                                className="w-2 h-2 bg-secondary rounded-full mr-3 animate-pulse"
-                                style={{ animationDelay: `${index * 0.1}s` }}
-                              ></div>
-                              {result}
-                            </li>
-                          ),
-                        )}
                       </ul>
                     </div>
 
