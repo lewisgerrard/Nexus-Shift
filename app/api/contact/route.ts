@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { sendContactEmail, sendAutoReply, type ContactFormData } from "@/lib/resend"
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,47 +25,56 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Here you can add your preferred method of handling the form data:
+    // Prepare form data
+    const formData: ContactFormData = {
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      business: business?.trim() || undefined,
+      service: service || undefined,
+      message: message.trim(),
+    }
 
-    // Option 1: Send email (you'll need to set up email service)
-    // await sendEmail({
-    //   to: 'hello@nexusshift.co.uk',
-    //   subject: `New contact form submission from ${name}`,
-    //   html: `
-    //     <h2>New Contact Form Submission</h2>
-    //     <p><strong>Name:</strong> ${name}</p>
-    //     <p><strong>Email:</strong> ${email}</p>
-    //     <p><strong>Business:</strong> ${business || 'Not provided'}</p>
-    //     <p><strong>Service Interest:</strong> ${service || 'Not specified'}</p>
-    //     <p><strong>Message:</strong></p>
-    //     <p>${message}</p>
-    //   `
-    // })
+    // Send notification email to Nexus Shift
+    const emailResult = await sendContactEmail(formData)
 
-    // Option 2: Save to database (if you have a contacts table)
-    // const sql = neon(process.env.DATABASE_URL!)
-    // await sql`
-    //   INSERT INTO contacts (name, email, business, service, message, created_at)
-    //   VALUES (${name}, ${email}, ${business}, ${service}, ${message}, NOW())
-    // `
+    if (!emailResult.success) {
+      console.error("Failed to send notification email:", emailResult.error)
+      return NextResponse.json(
+        { success: false, error: "Failed to send message. Please try again or contact us directly." },
+        { status: 500 },
+      )
+    }
 
-    // Option 3: Log to console (for testing)
-    console.log("New contact form submission:", {
-      name,
-      email,
-      business,
-      service,
-      message,
+    // Send auto-reply to the user (don't fail the request if this fails)
+    const autoReplyResult = await sendAutoReply(formData)
+    if (!autoReplyResult.success) {
+      console.error("Failed to send auto-reply:", autoReplyResult.error)
+      // Continue anyway - the main email was sent successfully
+    }
+
+    // Log successful submission
+    console.log("Contact form submission successful:", {
+      name: formData.name,
+      email: formData.email,
+      business: formData.business,
+      service: formData.service,
       timestamp: new Date().toISOString(),
+      emailId: emailResult.data?.id,
+      autoReplyId: autoReplyResult.success ? autoReplyResult.data?.id : "failed",
     })
 
-    // For now, we'll just return success
     return NextResponse.json({
       success: true,
       message: "Thank you for your message! We'll get back to you within 1 business day.",
     })
   } catch (error) {
     console.error("Contact form error:", error)
-    return NextResponse.json({ success: false, error: "Something went wrong. Please try again." }, { status: 500 })
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Something went wrong. Please try again or contact us directly at hello@nexusshift.co.uk",
+      },
+      { status: 500 },
+    )
   }
 }
