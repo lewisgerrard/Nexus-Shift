@@ -8,7 +8,7 @@ export const resend = new Resend(process.env.RESEND_API_KEY)
 
 // Use environment variable for the from email, with fallback
 export const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev"
-const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "hello@nexusshift.co.uk"
+export const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "hello@nexusshift.co.uk"
 
 export interface ContactFormData {
   name: string
