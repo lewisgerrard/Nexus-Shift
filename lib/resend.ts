@@ -6,6 +6,10 @@ if (!process.env.RESEND_API_KEY) {
 
 export const resend = new Resend(process.env.RESEND_API_KEY)
 
+// Use environment variable for the from email, with fallback
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "contact@yourdomain.com"
+const TO_EMAIL = process.env.CONTACT_EMAIL || "hello@nexusshift.co.uk"
+
 export interface ContactFormData {
   name: string
   email: string
@@ -19,8 +23,8 @@ export async function sendContactEmail(data: ContactFormData) {
 
   try {
     const result = await resend.emails.send({
-      from: "Nexus Shift Contact Form <noreply@nexusshift.co.uk>",
-      to: ["hello@nexusshift.co.uk"],
+      from: FROM_EMAIL,
+      to: [TO_EMAIL],
       replyTo: email,
       subject: `New Contact Form Submission from ${name}`,
       html: `
@@ -158,7 +162,7 @@ export async function sendAutoReply(data: ContactFormData) {
 
   try {
     const result = await resend.emails.send({
-      from: "Nexus Shift <hello@nexusshift.co.uk>",
+      from: FROM_EMAIL,
       to: [email],
       subject: "Thank you for contacting Nexus Shift",
       html: `
